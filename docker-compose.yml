@@ -1,0 +1,15 @@
+faye:
+  build: faye
+  ports:
+    - "4000:4000"
+
+selenium-server:
+  dns: 192.168.1.238
+  image: selenium/standalone-firefox
+  ports:
+    - "4444:4444"
+
+sample-app:
+  build: sample-app
+  ports:
+    - "4567:4567"
