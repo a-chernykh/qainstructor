@@ -3,8 +3,52 @@ faye:
   ports:
     - "4000:4000"
 
+postgres:
+  build: postgres
+  env_file:
+    - ./common.env
+    - ./postgres.env
+  volumes:
+    - postgres:/var/lib/postgresql/data
+
+redis:
+  image: redis
+
+engine:
+  build: engine
+
+rails:
+  build: rails
+  env_file:
+    - ./common.env
+    - ./rails.env
+  links:
+    - postgres
+    - redis
+  ports:
+    - "3000:3000"
+  volumes:
+    - ./engine:/app
+
+sidekiq:
+  dns: ["192.168.1.238"]
+  build: sidekiq
+  env_file:
+    - ./common.env
+    - ./sidekiq.env
+  links:
+    - faye
+    - postgres
+    - redis
+    - selenium-server
+  volumes:
+    - ./engine:/app
+    - /var/run/docker.sock:/var/run/docker.sock
+    - /usr/local/bin/docker:/usr/local/bin/docker
+    - /Users/jobs:/Users/jobs
+
 selenium-server:
-  dns: 192.168.1.238
+  dns: ["192.168.1.238"]
   image: selenium/standalone-firefox
   ports:
     - "4444:4444"

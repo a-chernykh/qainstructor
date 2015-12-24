@@ -1,0 +1,8 @@
+#!/bin/bash
+
+export PGUSER=postgres
+psql <<- EOSQL
+    CREATE USER engine WITH PASSWORD '$ENGINE_POSTGRES_PASSWORD';
+    CREATE DATABASE engine;
+    GRANT ALL PRIVILEGES ON DATABASE engine TO engine;
+EOSQL
