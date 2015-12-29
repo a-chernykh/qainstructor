@@ -1,3 +1,5 @@
 FROM docker_engine
 
-CMD ["bundle", "exec", "sidekiq"]
+ADD bin/start.sh /usr/local/bin
+
+CMD ["/usr/local/bin/start.sh"]
