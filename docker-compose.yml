@@ -4,8 +4,8 @@ faye:
 postgres:
   build: postgres
   env_file:
-    - ./common.env
-    - ./postgres.env
+    - ./env/common.env
+    - ./env/postgres.env
   volumes:
     - postgres:/var/lib/postgresql/data
 
@@ -15,7 +15,7 @@ redis:
 nginx:
   build: nginx
   env_file:
-    - ./common.env
+    - ./env/common.env
   links:
     - rails
     - sample-app
@@ -29,8 +29,8 @@ engine:
 rails:
   build: rails
   env_file:
-    - ./common.env
-    - ./rails.env
+    - ./env/common.env
+    - ./env/rails.env
   links:
     - postgres
     - redis
@@ -41,8 +41,8 @@ sidekiq:
   dns: ["192.168.1.238"]
   build: sidekiq
   env_file:
-    - ./common.env
-    - ./sidekiq.env
+    - ./env/common.env
+    - ./env/sidekiq.env
   links:
     - faye
     - postgres
