@@ -1,7 +1,5 @@
 faye:
   build: faye
-  ports:
-    - "4000:4000"
 
 postgres:
   build: postgres
@@ -14,6 +12,17 @@ postgres:
 redis:
   image: redis
 
+nginx:
+  build: nginx
+  env_file:
+    - ./common.env
+  links:
+    - rails
+    - sample-app
+    - faye
+  ports:
+    - "80:80"
+
 engine:
   build: engine
 
@@ -25,8 +34,6 @@ rails:
   links:
     - postgres
     - redis
-  ports:
-    - "3000:3000"
   volumes:
     - ./engine:/app
 
@@ -50,10 +57,6 @@ sidekiq:
 selenium-server:
   dns: ["192.168.1.238"]
   image: selenium/standalone-firefox
-  ports:
-    - "4444:4444"
 
 sample-app:
   build: sample-app
-  ports:
-    - "4567:4567"
