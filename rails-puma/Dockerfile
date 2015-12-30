@@ -4,8 +4,4 @@ MAINTAINER Andrey Chernih <andrey.chernih@gmail.com>
 USER app
 ENV HOME /home/app
 
-ADD bin/start.sh /usr/local/bin
-
-EXPOSE 8080
-
-CMD ["/usr/local/bin/start.sh"]
+CMD ["bundle", "exec", "puma", "-e", "production", "-b", "tcp://0.0.0.0:8080"]

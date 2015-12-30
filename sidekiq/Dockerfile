@@ -1,4 +1,4 @@
-FROM docker_engine
+FROM qainstructor_engine:latest
 
 ADD bin/start.sh /usr/local/bin
 

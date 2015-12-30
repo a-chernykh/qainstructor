@@ -1,3 +1,13 @@
+postgres:
+  env_file:
+    - ./env/development.env
+  volumes:
+    - postgres-development:/var/lib/postgresql/data
+
+nginx:
+  env_file:
+    - ./env/development.env
+
 sidekiq:
   dns: ["192.168.1.238"]
   env_file:
@@ -10,6 +20,7 @@ selenium-server:
   dns: ["192.168.1.238"]
 
 rails:
+  build: rails
   env_file:
     - ./env/development.env
   volumes:

@@ -1,0 +1,47 @@
+engine:
+  env_file:
+    - ./env/common.env
+    - ./env/production.env
+  volumes:
+    - production-assets:/app/public/assets
+
+postgres:
+  restart: always
+  env_file:
+    - ./env/production.env
+  volumes:
+    - postgres-production:/var/lib/postgresql/data
+
+nginx:
+  restart: always
+  env_file:
+    - ./env/production.env
+  volumes:
+    - production-assets:/app/public/assets
+
+sidekiq:
+  restart: always
+  env_file:
+    - ./env/production.env
+  volumes:
+    - /jobs:/jobs
+
+rails:
+  restart: always
+  build: rails-puma
+  env_file:
+    - ./env/production.env
+  volumes:
+    - production-assets:/app/public/assets
+
+faye:
+  restart: always
+
+redis:
+  restart: always
+
+selenium-server:
+  restart: always
+
+sample-app:
+  restart: always
