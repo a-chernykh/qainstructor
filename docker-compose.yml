@@ -5,7 +5,6 @@ postgres:
   build: postgres
   env_file:
     - ./env/common.env
-    - ./env/postgres.env
   volumes:
     - postgres:/var/lib/postgresql/data
 
@@ -23,39 +22,31 @@ nginx:
   ports:
     - "80:80"
 
-engine:
-  build: engine
-
 rails:
   build: rails
   env_file:
     - ./env/common.env
-    - ./env/rails.env
   links:
     - postgres
     - redis
-  volumes:
-    - ./engine:/app
 
 sidekiq:
-  dns: ["192.168.1.238"]
   build: sidekiq
   env_file:
     - ./env/common.env
-    - ./env/sidekiq.env
   links:
     - faye
     - postgres
     - redis
     - selenium-server
+  # sidekiq container should be able to start docker containers using host docker.sock file
+  # also, it's important that job files inside container should share the host dir, otherwise
+  # volumes won't work
   volumes:
-    - ./engine:/app
     - /var/run/docker.sock:/var/run/docker.sock
     - /usr/local/bin/docker:/usr/local/bin/docker
-    - /Users/jobs:/Users/jobs
 
 selenium-server:
-  dns: ["192.168.1.238"]
   image: selenium/standalone-firefox
 
 sample-app:
