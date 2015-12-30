@@ -27,4 +27,6 @@ bin/production.sh build rails
 mkdir /jobs
 bin/production.sh build sidekiq
 
+docker volume create --name sample-app-assets
+docker run -v sample-app-assets:/sample-app-assets -u root qainstructor_sample-app /bin/bash -c 'cp -rf /app/public/* /sample-app-assets/ && chmod -R a+r /sample-app-assets/'
 bin/production.sh build nginx
