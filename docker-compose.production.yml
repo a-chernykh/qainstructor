@@ -20,10 +20,12 @@ nginx:
     - production-assets:/app/public/assets
 
 sidekiq:
+  dns: ["192.168.1.238"]
   restart: always
   env_file:
     - ./env/production.env
   volumes:
+    - /Users/jobs:/Users/jobs
     - /jobs:/jobs
 
 rails:
