@@ -34,10 +34,14 @@ nginx:
 
 engine:
   build: engine
+  volumes:
+    - bundle:/bundle
 
 rails:
   env_file:
     - ./env/common.env
+  volumes:
+    - bundle:/bundle
   links:
     - postgres
     - redis
@@ -55,6 +59,7 @@ sidekiq:
   # also, it's important that job files inside container should share the host dir, otherwise
   # volumes won't work
   volumes:
+    - bundle:/bundle
     - /var/run/docker.sock:/var/run/docker.sock
     - /usr/local/bin/docker:/usr/local/bin/docker
 
