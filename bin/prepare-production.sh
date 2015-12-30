@@ -24,7 +24,8 @@ bin/production.sh run --rm engine bundle exec rake assets:precompile
 
 bin/production.sh build rails
 
-mkdir /jobs
+#mkdir /jobs
+chmod a+rw /var/run/docker.sock
 bin/production.sh build sidekiq
 
 docker volume create --name sample-app-assets
