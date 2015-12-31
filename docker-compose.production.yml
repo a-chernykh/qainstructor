@@ -2,8 +2,6 @@ engine:
   env_file:
     - ./env/common.env
     - ./env/production.env
-  volumes:
-    - production-assets/assets:/app/public/assets
 
 postgres:
   restart: always
