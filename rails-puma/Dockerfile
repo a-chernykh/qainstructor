@@ -5,6 +5,7 @@ USER app
 ENV HOME /home/app
 
 ADD bin/start.sh /usr/local/bin
+ADD puma.rb .
 
 EXPOSE 8080
 
