@@ -33,6 +33,8 @@ rails:
   build: rails-puma
   env_file:
     - ./env/production.env
+  volumes:
+    - production-assets:/app/public
 
 faye:
   restart: always
