@@ -13,6 +13,8 @@ bin/production.sh build sample-app
 
 bin/production.sh build engine
 
+docker volume create production-assets
+
 docker volume create --name bundle
 # Do not remove the intermediate container with --rm flag intentionally because it will remove the mounted volume
 # https://github.com/docker/docker/pull/16809

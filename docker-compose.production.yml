@@ -3,7 +3,7 @@ engine:
     - ./env/common.env
     - ./env/production.env
   volumes:
-    - production-assets:/app/public/assets
+    - production-assets/assets:/app/public/assets
 
 postgres:
   restart: always
@@ -17,7 +17,7 @@ nginx:
   env_file:
     - ./env/production.env
   volumes:
-    - production-assets:/app/public/assets
+    - production-assets:/app/public
     - sample-app-assets:/sample-app/public
 
 sidekiq:
@@ -35,8 +35,6 @@ rails:
   build: rails-puma
   env_file:
     - ./env/production.env
-  volumes:
-    - production-assets:/app/public/assets
 
 faye:
   restart: always
