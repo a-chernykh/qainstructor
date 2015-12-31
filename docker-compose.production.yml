@@ -21,7 +21,6 @@ nginx:
     - sample-app-assets:/sample-app/public
 
 sidekiq:
-  dns: ["192.168.1.238"]
   restart: always
   env_file:
     - ./env/production.env
@@ -29,6 +28,7 @@ sidekiq:
     - /Users/jobs:/Users/jobs
     - /jobs:/jobs
     - /usr/bin/docker:/usr/local/bin/docker
+    - /usr/lib/x86_64-linux-gnu/libapparmor.so.1:/usr/lib/x86_64-linux-gnu/libapparmor.so.1
 
 rails:
   restart: always
@@ -45,7 +45,6 @@ redis:
   restart: always
 
 selenium-server:
-  dns: ["192.168.1.238"]
   restart: always
 
 sample-app:
