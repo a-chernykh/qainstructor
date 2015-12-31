@@ -1,6 +1,5 @@
 engine:
   env_file:
-    - ./env/common.env
     - ./env/production.env
 
 postgres:

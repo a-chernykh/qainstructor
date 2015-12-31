@@ -1,3 +1,7 @@
+engine:
+  env_file:
+    - ./env/development.env
+
 postgres:
   env_file:
     - ./env/development.env

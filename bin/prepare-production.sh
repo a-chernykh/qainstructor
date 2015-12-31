@@ -15,7 +15,6 @@ bin/production.sh build rails
 bin/production.sh build sidekiq
 bin/production.sh build nginx
 
-
 echo 'Creating volumes'
 docker volume create --name production-assets
 docker volume create --name bundle
@@ -25,7 +24,7 @@ echo 'Installing bundle'
 # Do not remove the intermediate container with --rm flag intentionally because it will remove the mounted volume
 # https://github.com/docker/docker/pull/16809
 docker run -v bundle:/bundle -u root qainstructor_engine /bin/bash -c 'mkdir -p /bundle/cache && chown -R app /bundle'
-bin/production.sh run --rm engine bundle install
+bin/engine-cmd.sh bundle install
 
 echo 'Precompiling assets, hold on'
 docker run --env-file=env/common.env --env-file=env/production.env -it -v bundle:/bundle  -v production-assets:/app/public qainstructor_engine bundle exec rake assets:precompile
