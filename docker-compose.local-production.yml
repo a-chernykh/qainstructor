@@ -1,0 +1,24 @@
+engine:
+  env_file:
+    - ./env/production.local.env
+
+postgres:
+  env_file:
+    - ./env/production.local.env
+
+nginx:
+  env_file:
+    - ./env/production.local.env
+
+sidekiq:
+  dns: ["192.168.1.238"]
+  env_file:
+    - ./env/production.local.env
+
+rails:
+  dns: ["192.168.1.238"]
+  env_file:
+    - ./env/production.local.env
+
+selenium-server:
+  dns: ["192.168.1.238"]
