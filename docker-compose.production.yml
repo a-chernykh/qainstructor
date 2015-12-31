@@ -28,6 +28,7 @@ sidekiq:
   volumes:
     - /Users/jobs:/Users/jobs
     - /jobs:/jobs
+    - /usr/bin/docker:/usr/local/bin/docker
 
 rails:
   restart: always
