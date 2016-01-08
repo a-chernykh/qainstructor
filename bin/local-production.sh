@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker-compose -f docker-compose.yml -f docker-compose.production.yml -f docker-compose.local-production.yml "$@"
+docker-compose -f docker-compose.yml -f docker-compose.common.yml -f docker-compose.local-production.yml "$@"

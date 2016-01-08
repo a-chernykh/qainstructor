@@ -14,6 +14,8 @@ sidekiq:
   dns: ["192.168.1.238"]
   env_file:
     - ./env/production.local.env
+  volumes:
+    - /Users/jobs:/Users/jobs
 
 rails:
   dns: ["192.168.1.238"]
