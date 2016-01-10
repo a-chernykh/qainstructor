@@ -9,5 +9,7 @@ RUN chmod 700 /etc/nginx/ssl
 
 COPY ./ssl/* /etc/nginx/ssl/
 
+COPY landing /usr/share/nginx/html
+
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
