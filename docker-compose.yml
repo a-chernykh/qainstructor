@@ -31,6 +31,7 @@ nginx:
     - faye
   ports:
     - "80:80"
+    - "443:443"
 
 engine:
   build: engine
