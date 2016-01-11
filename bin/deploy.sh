@@ -22,5 +22,8 @@ echo 'Precompiling assets, hold on'
 docker run --rm --env-file=env/common.env --env-file=env/production.env -it -v bundle:/bundle -v production-assets:/app/public $DOCKER_RUN_ARGS qainstructor_engine bundle exec rake assets:precompile
 docker run --rm -v production-assets:/assets $DOCKER_RUN_ARGS qainstructor_engine /bin/bash -c 'cp -rf /app/public/* /assets/'
 
+echo 'Running migration and seeding'
+$CONTROL_CMD run --rm $DOCKER_RUN_ARGS rails bundle exec rake db:migrate db:seed
+
 $CONTROL_CMD up -d rails
 $CONTROL_CMD up -d sidekiq
