@@ -25,5 +25,6 @@ docker run --rm -v production-assets:/assets $DOCKER_RUN_ARGS qainstructor_engin
 echo 'Running migration and seeding'
 $CONTROL_CMD run --rm $DOCKER_RUN_ARGS rails bundle exec rake db:migrate db:seed
 
-$CONTROL_CMD up -d rails
-$CONTROL_CMD up -d sidekiq
+$CONTROL_CMD up --no-deps -d rails
+$CONTROL_CMD up --no-deps -d sidekiq
+$CONTROL_CMD up --no-deps -d nginx
