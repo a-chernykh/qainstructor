@@ -14,6 +14,7 @@ git pull
 (cd engine && git pull)
 $CONTROL_CMD build engine
 $CONTROL_CMD build rails
+$CONTROL_CMD build sidekiq
 
 bin/engine-cmd.sh bundle install
 
@@ -22,3 +23,4 @@ docker run --rm --env-file=env/common.env --env-file=env/production.env -it -v b
 docker run --rm -v production-assets:/assets $DOCKER_RUN_ARGS qainstructor_engine /bin/bash -c 'cp -rf /app/public/* /assets/'
 
 $CONTROL_CMD up -d rails
+$CONTROL_CMD up -d sidekiq
