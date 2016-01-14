@@ -31,3 +31,4 @@ rails:
   volumes:
     - ./engine:/app
     - /Users/jobs:/Users/jobs
+    - /var/run/docker.sock:/var/run/docker.sock # We need this to run specs
