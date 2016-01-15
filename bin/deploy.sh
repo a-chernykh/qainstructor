@@ -12,6 +12,9 @@ fi
 
 git pull
 (cd engine && git pull)
+(cd test-runner && git pull)
+
+$CONTROL_CMD build test-runner
 $CONTROL_CMD build engine
 $CONTROL_CMD build rails
 $CONTROL_CMD build sidekiq
