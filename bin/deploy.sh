@@ -22,7 +22,9 @@ $CONTROL_CMD build sidekiq
 bin/engine-cmd.sh bundle install
 
 echo 'Precompiling assets, hold on'
-docker run --rm --env-file=env/common.env --env-file=env/production.env -it -v bundle:/bundle -v production-assets:/app/public $DOCKER_RUN_ARGS qainstructor_engine bundle exec rake assets:precompile
+# assepts:precompile tries to connect to DB, that's why we need to link with PG
+# https://github.com/rails/rails/issues/11853
+docker run --link qainstructor_postgres_1:postgres --rm --env-file=env/common.env --env-file=env/production.env -it -v bundle:/bundle -v production-assets:/app/public $DOCKER_RUN_ARGS qainstructor_engine bundle exec rake assets:precompile
 docker run --rm -v production-assets:/assets $DOCKER_RUN_ARGS qainstructor_engine /bin/bash -c 'cp -rf /app/public/* /assets/'
 
 echo 'Running migration and seeding'
