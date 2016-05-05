@@ -977,7 +977,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .owl-carousel-fullwidth .item, .owl-carousel-fullwidth .fh5co-owl-text-wrap {
-  height: 570px;
+  height: 470px;
   display: table;
   width: 100%;
 }
@@ -1029,10 +1029,7 @@ h1, h2, h3, h4, h5, h6 {
   max-width: 100%;
 }
 .owl-carousel-fullwidth .item .fh5co-owl-text {
-  display: table-cell;
-  vertical-align: middle;
-  z-index: 10;
-  position: relative;
+  margin-top: 100px;
 }
 .owl-carousel-fullwidth .item .fh5co-owl-text a {
   color: white;
@@ -1078,6 +1075,9 @@ h1, h2, h3, h4, h5, h6 {
   .owl-carousel-fullwidth .item .fh5co-owl-text .fh5co-sub-lead {
     font-size: 24px;
     line-height: 34px;
+  }
+  .owl-carousel-fullwidth .item .fh5co-owl-text {
+    margin-top: 10px;
   }
 }
 
@@ -1188,6 +1188,10 @@ p.subtext {
 
 .navbar-brand .logo-2 {
   display: none;
+}
+
+.callout {
+  font-weight: bold !important;
 }
 
 /*# sourceMappingURL=orange.css.map */
