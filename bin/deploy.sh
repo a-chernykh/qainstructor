@@ -33,3 +33,5 @@ $CONTROL_CMD run --rm $DOCKER_RUN_ARGS rails bundle exec rake db:migrate db:seed
 $CONTROL_CMD up --no-deps -d rails
 $CONTROL_CMD up --no-deps -d sidekiq
 $CONTROL_CMD up --no-deps -d nginx
+
+bin/notify-rollbar.sh
