@@ -18,6 +18,7 @@ backup:
     - ./env/common.env
   links:
     - postgres
+  restart: always
 
 redis:
   image: redis
