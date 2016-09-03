@@ -26,7 +26,6 @@ sidekiq:
 
 rails:
   restart: always
-  build: rails-puma
   env_file:
     - ./env/production.env
   volumes:
