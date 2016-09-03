@@ -12,6 +12,13 @@ postgres:
   env_file:
     - ./env/common.env
 
+backup:
+  build: backup
+  env_file:
+    - ./env/common.env
+  links:
+    - postgres
+
 redis:
   image: redis
 
