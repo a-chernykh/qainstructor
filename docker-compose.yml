@@ -41,6 +41,7 @@ engine:
     - bundle:/bundle
 
 rails:
+  build: rails
   env_file:
     - ./env/common.env
   volumes:
