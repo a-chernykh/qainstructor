@@ -1,0 +1,106 @@
+.bomb
+  canvas width=283 height=424
+
+p
+  h2 What should we do?
+
+  a.btn.btn-default Start over
+  |&nbsp;
+  a.btn.btn-default Cut red wire
+  |&nbsp;
+  a.btn.btn-default Cut blue wire
+
+.alert.alert-success.hide
+  p Congratulations! Bomb has been successfully defused.
+
+.alert.alert-danger.hide
+  p Oops! Bomb has exploded.
+
+.alert.alert-info.hide.blue-wire-cut
+  p Blue wire has been cut.
+
+.alert.alert-info.hide.red-wire-cut
+  p Red wire has been cut.
+
+javascript:
+  $(function() {
+    var canvas = $('canvas')[0];
+    var context = canvas.getContext('2d');
+    context.strokeStyle = '#000000';
+    context.lineWidth = 8;
+    context.font = "30px Arial";
+    context.fillStyle = 'red';
+
+    var img = new Image();
+    img.onload = function () {
+      context.drawImage(img, 0, 0);
+    }
+    img.src = "/images/bomb/bomb.jpg";
+
+    var blueWireCut = false,
+        redWireCut = false,
+        end = false;
+
+    var lineLength = 50;
+    var cut = function(x, y) {
+      var diff = lineLength / 2;
+
+      context.beginPath();
+
+      context.moveTo(x - diff, y - diff);
+      context.lineTo(x + diff, y + diff);
+      context.stroke();
+
+      context.moveTo(x - diff, y + diff);
+      context.lineTo(x + diff, y - diff);
+      context.stroke();
+    }
+
+    var blowup = function() {
+      context.fillText('BOOM!', 93, 216);
+      $('.alert-danger').removeClass('hide');
+      end = true;
+    };
+
+    var defuse = function() {
+      $('.alert-success').removeClass('hide');
+      end = true;
+    };
+
+    $('a.btn').eq(0).click(function() {
+      blueWireCut = false;
+      redWireCut = false;
+      end = false;
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.drawImage(img, 0, 0);
+      $('.alert-danger').addClass('hide');
+      $('.alert-success').addClass('hide');
+      $('.blue-wire-cut').addClass('hide');
+      $('.red-wire-cut').addClass('hide');
+    });
+
+    $('a.btn').eq(1).click(function() {
+      $('.red-wire-cut').removeClass('hide');
+      if (!end && !redWireCut) {
+        redWireCut = true;
+        cut(98, 81);
+        if (blueWireCut) {
+          defuse();
+        } else {
+          blowup();
+        }
+      }
+    });
+
+    $('a.btn').eq(2).click(function() {
+      $('.blue-wire-cut').removeClass('hide');
+      if (!end && !blueWireCut) {
+        if (redWireCut) {
+          blowup();
+        } else {
+          blueWireCut = true;
+          cut(175, 351);
+        }
+      }
+    });
+  });

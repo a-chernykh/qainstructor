@@ -1,0 +1,17 @@
+h1 Slow page example
+
+p Content is loading... <span class="seconds">10</span> seconds left.
+
+javascript:
+  $(function() {
+
+    countdown = 10;
+    interval = setInterval(function() {
+      countdown = countdown - 1;
+      $('.seconds').text(countdown);
+      if (countdown == 0) {
+        clearTimeout(interval);
+        $('div.col-lg-12').html('<h1>Loaded!</h1><p>Content is loaded. You can refresh the page to start over.</p><p><a href="/message">Show message</a></p>');
+      }
+    }, 1000);
+  });

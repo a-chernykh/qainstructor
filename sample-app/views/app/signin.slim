@@ -1,0 +1,17 @@
+p
+  a href='/' Go back
+
+h1 Sign in form
+
+p Required fields marked with <strong>*</strong>
+
+form method='post' action='/signin'
+  .form-group
+    label E-mail *
+    input.form-control type='text' name='email'
+
+  .form-group
+    label Password *
+    input.form-control type='password' name='password'
+
+  input.btn.btn-default type='submit' value='Sign in'
