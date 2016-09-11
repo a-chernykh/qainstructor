@@ -15,8 +15,6 @@ fi
 if [ "$LOCAL" = false ]; then
   echo "*** Pulling latest changes"
   git pull > /dev/null
-  (cd engine && git pull > /dev/null)
-  (cd test-runner && git pull > /dev/null)
 fi
 
 echo "*** Building docker images"
