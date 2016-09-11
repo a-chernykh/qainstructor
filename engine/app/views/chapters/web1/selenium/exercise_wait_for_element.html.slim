@@ -1,0 +1,53 @@
+.row.exercise
+  .col-lg-4.fill
+    p We have a failing scenario. Trying to test that when user clicks "Show message" button, he sees "I like explicit waits"
+      message, but Selenium throws Exception saying that text was not found. Looks like our web app is behaving slow and
+      there's 5 seconds delay between the moment when user clicks the button and secret message appears on the screen. Your
+      task is to fix this problem by using explicit wait.
+
+    p Hint: you can wait for text "I like explicit waits" to appear on the screen by checking that tag <code>body</code>
+      includes this text:
+
+    code-example type='ruby'
+      | @browser.find_element(:tag_name, 'body').text.includes?("I like explicit waits")
+
+    p It will return true if page includes this text and this will stop the explict wait. If the text is not here,
+      it will return false and explicit wait will continue waiting.
+
+    steps files='files'
+      step
+        p Create explicit wait in <code>Then /^I should see "(.*)"$/ do |text|</code> step definition
+        step-hint
+          p Add explicit wait to <mark>secret_message_steps.rb</mark>:
+          code-example type='ruby'
+            | wait = Selenium::WebDriver::Wait.new(timeout: 10)
+              wait.until { @browser.find_element(:tag_name, 'body').text.include?(text) }
+        verifier
+          | expect(@browser.find_element(:tag_name, 'body').text).to include "I like explicit waits"
+
+
+  .col-lg-4
+    code-editor files='files'
+      file language='gherkin' name='secret_message.feature' read-only='true'
+        | Feature: Show secret message
+
+          Scenario: User clicks button to see secret message
+              Given I am on the front page
+              When I click "Show message" button
+              Then I should see "I like explicit waits"
+      file language='ruby' name='secret_message_steps.rb'
+        | Given /^I am on the front page$/ do
+            @browser.get('#{sample_app_url('slow')}/button')
+          end
+
+          When /^I click "(.*)" button$/ do |button|
+            @browser.find_element(:id, 'show-message').click
+          end
+
+          Then /^I should see "(.*)"$/ do |text|
+            # put explicit wait here
+            expect(@browser.find_element(:tag_name, 'body').text).to include text
+          end
+
+  .col-lg-4
+    browser url='appUrl' src='#{sample_app_url('slow')}/button'

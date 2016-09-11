@@ -1,0 +1,9 @@
+//= require jquery
+//= require jquery_ujs
+//= require highlightjs
+//= require angular
+//= require js-routes
+//= require ng-rails-csrf
+//= require_tree ./courses
+//= require courses
+//= require common

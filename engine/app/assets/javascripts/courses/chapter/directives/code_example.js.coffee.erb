@@ -1,0 +1,11 @@
+angular.module('chapter').directive 'codeExample', [ '$timeout', ($timeout) ->
+  restrict: 'E'
+  transclude: true
+  scope:
+    type: '@'
+    file: '@'
+  templateUrl: '<%= asset_path('chapter/code_example') %>'
+  link: (scope, element, attr) ->
+    applyHljs = -> hljs.highlightBlock $('code', element)[0]
+    $timeout applyHljs, 0
+]

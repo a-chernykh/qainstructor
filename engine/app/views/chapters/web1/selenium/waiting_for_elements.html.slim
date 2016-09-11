@@ -1,0 +1,134 @@
+p Often, web apps are slow and it takes some time to load the webpage in browser. Let's say we have a webpage which is loading
+  the content dynamically and it takes 10 seconds to load this content. You can click on "Refresh" button in embeded browser to
+  re-start the loading process.
+
+browser url='appUrl' src='#{sample_app_url('slow')}' style='height: 150px;'
+
+p Of course we want to automate it by verifying that when user clicks on "Show message", it will show the secret message to him.
+
+.row
+  .col-lg-6
+    code-example type='gherkin' file='show_message.feature'
+      | Feature: Show secret message
+
+          Scenario: User sees secret message
+            Given I am on the front page
+            When I click "Show message" link
+            Then I should see "Secret message"
+  .col-lg-6
+    code-example type='ruby' file='show_message_steps.rb'
+      | Given /^I am on the front page$/ do
+          @browser.get('#{sample_app_url('slow')}')
+        end
+
+        When /^I click "([^\"]+)" link$/ do |text|
+          link = @browser.find_element(:link_text, text)
+          link.click
+        end
+
+        Then /^I should see "([^\"]+)"$/ do |message|
+          body = @browser.find_element(:tag_name, 'body')
+          expect(body.text).to include message
+        end
+
+p Let's try to run this example:
+
+example type='cucumber' course=@chapter.course.code number='15'
+
+pre
+  code.bash
+    | % bundle exec cucumber
+      Feature: Show secret message
+
+        Scenario: User sees secret message   # features/show_message.feature:3
+          Given I am on the front page       # features/step_definitions/show_message_steps.rb:1
+          When I click "Show message" link   # features/step_definitions/show_message_steps.rb:5
+            Unable to locate element: {"method":"link text","selector":"Show message"} (Selenium::WebDriver::Error::NoSuchElementError)
+            ...
+            ./features/step_definitions/show_message_steps.rb:6:in `/^I click "([^\"]+)" link$/'
+            features/show_message.feature:5:in `When I click "Show message" link'
+          Then I should see "Secret message" # features/step_definitions/show_message_steps.rb:10
+
+      Failing Scenarios:
+      cucumber features/show_message.feature:3 # Scenario: User sees secret message
+
+      1 scenario (1 failed)
+      3 steps (1 failed, 1 skipped, 1 passed)
+      0m2.888s
+
+p You can see that it fails with the following error:
+
+pre Unable to locate element: {"method":"link text","selector":"Show message"} (Selenium::WebDriver::Error::NoSuchElementError)
+
+p That's because at the time when Cucumber tells Selenium WebDriver to find the element with text "Show message", the page is not yet
+  loaded. There are 2 solutions Selenium WebDriver offers to overcome this common problem.
+
+h2 Implicit wait
+
+p Selenium WebDriver has a concept of an implicit wait. It represented by the number of seconds Selenium should wait for an element to appear
+  on the page when you call <code>find_element</code> or <code>find_elements</code>. The default value for an implicit wait is 0.
+  Let's set the implicit wait value to 15 seconds which is 5 seconds more than web page delay. You can set the implicit wait in
+  <code>hooks.rb</code> right after creating browser instance:
+
+code-example type='ruby' file='hooks.rb'
+  | Before do
+      @browser = Selenium::WebDriver.for :firefox
+      # will set implicit wait to 15 seconds
+      @browser.manage.timeouts.implicit_wait = 15
+    end
+
+p Now let's try to re-run it:
+
+pre
+  code.bash
+    | % bundle exec cucumber
+      Feature: Show secret message
+
+        Scenario: User sees secret message   # features/show_message.feature:3
+          Given I am on the front page       # features/step_definitions/show_message_steps.rb:1
+          When I click "Show message" link   # features/step_definitions/show_message_steps.rb:5
+          Then I should see "Secret message" # features/step_definitions/show_message_steps.rb:10
+
+      1 scenario (1 passed)
+      3 steps (3 passed)
+      0m13.688s
+
+p Now you can see that after loading the front page, Selenium wait for "Show message" link to appear and only then tries to click it.
+
+h2 Explicit wait
+
+p If you know that some particular element is always slow to appear and other part of web app is fast then instead of raising implicit
+  wait value, we can wait for element to appear explicitly.
+
+p Let's remove the implicit wait from <mark>hooks.rb</mark> and modify our step definition to wait for "Show message" link to appear:
+
+code-example type='ruby' file='show_message_steps.rb'
+  | When /^I click "([^\"]+)" link$/ do |text|
+      # set timeout to 15 seconds
+      wait = Selenium::WebDriver::Wait.new(timeout: 15)
+      # wait 15 seconds until link will appear
+      wait.until { @browser.find_element(:link_text, text) }
+
+      link = @browser.find_element(:link_text, text)
+      link.click
+    end
+
+p Now we're creating new <code>Selenium::WebDriver::Wait</code> object with timeout set to 15 seconds. We're using this wait object
+  to wait for "Show message" link to appear by calling it's <code>until</code> method and passing a block to it. There can be 2 possible
+  outcomes here:
+
+ul
+  li Page was loaded successfully and code inside the <code>until</code> block found the desired element
+    (i.e. <code>@browser.find_element(:link_text, text)</code> returned non null value and did not raised any errors).
+    Selenium will continue the scenario.
+  li 15 seconds have passed and page was not loaded. Selenium will raise timeout error in this case and your scenario will stop
+
+p It's worth noting that even though we set the timeout to 15 seconds, Selenium WebDriver will wait for any time between 0 and 15 seconds
+  depending on how fast page will be loaded. It's possible because Selenium re-tries to find element every 500ms until the timeout
+  was reached.
+
+h2 Further reading
+
+ul
+  li
+    a href="http://www.seleniumhq.org/docs/04_webdriver_advanced.jsp" target="_blank" WebDriver: Advanced Usage

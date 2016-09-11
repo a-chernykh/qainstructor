@@ -1,0 +1,8 @@
+li.well.clearfix ng-show="steps.currentStep().number == number" ng-class='{hint: hintIsVisible}'
+  ng-transclude
+  p ng-show='steps.currentStep().log'
+    a target='_blank' href='{{ steps.currentStep().log }}' Click here to see why it fails
+  .pull-right.show-hint ng-show='hintAvailable'
+    button.btn.btn-default type='button' ng-click='showHint()'
+      span.glyphicon.glyphicon-question-sign aria-hidden='true'
+      |  How to do it?

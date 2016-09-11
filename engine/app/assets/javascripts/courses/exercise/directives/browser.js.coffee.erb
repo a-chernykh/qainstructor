@@ -1,0 +1,11 @@
+angular.module('exercise').directive 'browser', ->
+  restrict: 'E'
+  scope:
+    url: '='
+    src: '@'
+  templateUrl: '<%= asset_path('exercises/browser') %>'
+  link: (scope, element, attr) ->
+    scope.url = scope.src
+    iframe = $('iframe', element)[0]
+    $(iframe).attr('style', attr.style)
+    scope.reload = -> iframe.src += ''

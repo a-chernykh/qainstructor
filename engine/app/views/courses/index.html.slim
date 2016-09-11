@@ -1,0 +1,7 @@
+.row
+  .col-lg-12
+    h1 Courses
+    p Select a course from the available list below:
+    ul
+      - @courses.each do |course|
+        li= link_to course.name, course_path(course)

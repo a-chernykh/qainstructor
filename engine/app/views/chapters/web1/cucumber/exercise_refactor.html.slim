@@ -1,0 +1,60 @@
+.row.exercise
+  .col-lg-6.fill
+    p Cucumber is not limited by only testing web applications. You can test any systems including some basic business logic like calculations.
+
+    p Refactor the following feature so that it uses <code>Background</code> section for duplicate steps.
+
+    steps files='files'
+      step
+        | Create <code>Background</code> section and move common steps from both scenarios into it.
+        step-hint
+          p Move steps which are setting variables to the <code>Background</code> section:
+          code-example type='cucumber'
+            | Background:
+                Given I set variable a to 2
+                And I set variable b to 3
+        verifier
+          | if scenario.name == 'Sum'
+              expect(@result).to eq 5
+            else
+              expect(@result).to eq 6
+            end
+            file = Dir.glob('./**/calculations.feature')[0]
+            expect(File.read(file)).to include 'Background'
+
+  .col-lg-6
+    code-editor files='files'
+      file language='gherkin' name='calculations.feature'
+        | Feature: Calculations
+
+            Scenario: Sum
+              Given I set variable a to 2
+              And I set variable b to 3
+              When I sum them together
+              Then I should get result of 5
+
+            Scenario: Multiply
+              Given I set variable a to 2
+              And I set variable b to 3
+              When I multiply them together
+              Then I should get result of 6
+      file language='ruby' name='calculations_steps.rb' read-only='true'
+        | Given /^I set variable a to (\d)$/ do |a|
+            @a = a.to_i
+          end
+
+          Given /^I set variable b to (\d)$/ do |b|
+            @b = b.to_i
+          end
+
+          When /^I sum them together$/ do
+            @result = @a + @b
+          end
+
+          When /^I multiply them together$/ do
+            @result = @a * @b
+          end
+
+          Then /^I should get result of (\d)$/ do |result|
+            expect(@result).to eq result.to_i
+          end

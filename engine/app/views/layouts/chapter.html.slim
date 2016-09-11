@@ -1,0 +1,38 @@
+doctype html
+html lang="en"
+  head
+    = render 'shared/head'
+    = stylesheet_link_tag "chapter", :media => "all"
+    = javascript_include_tag "chapter"
+    script src="#{ENV['FAYE_URL']}/client.js"
+    title= [@chapter.name, @course.name].join ' - '
+
+  body class="chapter-#{@chapter.content_type}"
+    .navbar.navbar-default.navbar-fixed-top
+      .container-fluid
+        button.navbar-toggle type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse"
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand href=course_path(@course) = @course.name
+        .navbar-collapse.collapse.navbar-responsive-collapse
+          ul.nav.navbar-nav
+            li.tos-menu-link.hidden-xs
+              a href='#' Table of Contents
+            li.visible-xs-block
+              a href=toc_course_path(@course) Table of Contents
+            li= link_to 'Front page', courses_path
+            li= link_to 'Forums', ENV['DISCOURSE_URL'], target: '_blank'
+            li= link_to 'Sign out', destroy_user_session_path, method: :delete
+
+    nav.chapter-contents.navmenu.navmenu-default.navmenu-fixed-left role='navigation'
+      div.clearfix.header
+        span.pull-left
+          a.navmenu-brand href='#' Table of Contents
+        span.pull-right
+          a.navmenu-brand.hide-link href='#' hide
+      = render 'courses/toc', toc: @toc, current_chapter: @chapter
+
+    .container-fluid.content
+      = flash_messages
+      = yield

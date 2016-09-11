@@ -1,0 +1,66 @@
+@import "bootstrap";
+@import "jasny-bootstrap";
+@import "highlightjs";
+@import "animate-css";
+
+// https://github.com/videojs/video.js/issues/3587
+$ie8screen: "\\0screen";
+@import "videojs";
+
+@import "all/*";
+
+body {
+  nav.chapter-contents {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    &.toc-visible {
+      padding-left: 300px;
+
+      .navbar-fixed-top {
+        padding-left: 300px;
+      }
+      div.navigation {
+        padding-right: 320px;
+      }
+      nav.chapter-contents {
+        display: block;
+      }
+    }
+  }
+}
+
+.navigation {
+  .btn + .btn {
+    margin-right: 10px;
+  }
+
+  .buttons {
+    .btn {
+      margin-left: 10px;
+    }
+  }
+
+  .center {
+    margin-left: 10px;
+    width: 200px;
+  }
+}
+
+@media (max-width: 340px) {
+  .navbar-brand {
+    margin-top: -10px;
+  }
+}
+
+@media (min-width: 650px) {
+  div.navigation {
+    .btn {
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.3333333;
+    border-radius: 6px;
+    }
+  }
+}

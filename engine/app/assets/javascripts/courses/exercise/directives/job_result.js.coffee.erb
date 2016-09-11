@@ -1,0 +1,15 @@
+angular.module('exercise').directive 'jobResult', ['jobPoller', '$http', (jobPoller, $http) ->
+  restrict: 'E'
+  transclude: true
+  scope:
+    token: '='
+    job: '='
+    continueUrl: '@'
+  templateUrl: '<%= asset_path('exercises/job_result') %>'
+  link: (scope, element, attr) ->
+    scope.$watch 'job.assets', ->
+      if scope.job.assets
+        for asset in scope.job.assets
+          if asset.name == 'output.html'
+            scope.resultAsset = asset
+]

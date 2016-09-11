@@ -1,0 +1,93 @@
+.row.exercise
+  .col-lg-6.fill
+    p In this exercise you will need to simplify the <mark>addition.feature</mark> by creating a higher level step. You need
+      to create new step definition to set variables <code>A</code>, <code>B</code>, do the calculation and verify that result is correct. You can do
+      it in one step by calling other 4 steps using <code>steps</code> method provided by cucumber.
+
+    steps files='files'
+      step
+        p Call <code>Given I set variable A to \#{a}</code> step
+        step-hint
+          p Add the following step to <mark>addition_steps.rb</mark> scenario:
+          code-example type='ruby'
+            | Then(/^result of (\d+) \+ (\d+) should be (\d+)$/) do |a, b, result|
+                steps %Q{
+                  Given I set variable A to \#{a}
+                }
+              end
+        verifier
+          | expect(@a).to eq 7
+            expect_steps_to_include('steps')
+      step
+        p Call <code>Given I set variable B to \#{b}</code> step
+        step-hint
+          p Add the following step to <mark>addition_steps.rb</mark> scenario:
+          code-example type='ruby'
+            | Then(/^result of (\d+) \+ (\d+) should be (\d+)$/) do |a, b, result|
+                steps %Q{
+                  Given I set variable A to \#{a}
+                  And I set variable B to \#{b}
+                }
+              end
+        verifier
+          | expect(@b).to eq 5
+            expect_steps_to_include('steps')
+      step
+        p Call <code>When I calculate A + B</code> step
+        step-hint
+          p Add the following step to <mark>addition_steps.rb</mark> scenario:
+          code-example type='ruby'
+            | Then(/^result of (\d+) \+ (\d+) should be (\d+)$/) do |a, b, result|
+                steps %Q{
+                  Given I set variable A to \#{a}
+                  And I set variable B to \#{b}
+                  When I calculate A + B
+                }
+              end
+        verifier
+          | expect(@result).to eq 12
+            expect_steps_to_include('steps')
+      step
+        p Call <code>Then I should get result of \#{result}</code> step
+        step-hint
+          p Add the following step to <mark>addition_steps.rb</mark> scenario:
+          code-example type='ruby'
+            | Then(/^result of (\d+) \+ (\d+) should be (\d+)$/) do |a, b, result|
+                steps %Q{
+                  Given I set variable A to \#{a}
+                  And I set variable B to \#{b}
+                  When I calculate A + B
+                  Then I should get result of \#{result}
+                }
+              end
+        verifier
+          | expect(@result).to eq 12
+            expect_steps_to_include('steps')
+
+  .col-lg-6
+    code-editor files='files'
+      file language='gherkin' name='addition.feature' read-only='true'
+        | Feature: Addition
+
+            Scenario: Adding 7 and 5 yields 12
+              Then result of 7 + 5 should be 12
+      file language='ruby' name='addition_steps.rb'
+        | Given(/^I set variable A to (\d+)$/) do |a|
+            @a = a.to_i
+          end
+
+          Given(/^I set variable B to (\d+)$/) do |b|
+            @b = b.to_i
+          end
+
+          When(/^I calculate A \+ B$/) do
+            @result = @a + @b
+          end
+
+          Then(/^I should get result of (\d+)$/) do |expected_result|
+            expect(@result).to eq expected_result.to_i
+          end
+
+          Then(/^result of (\d+) \+ (\d+) should be (\d+)$/) do |a, b, result|
+            # put your code here
+          end

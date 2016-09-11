@@ -1,0 +1,11 @@
+.browser.panel.panel-default
+  .panel-heading
+    .row
+      .col-lg-12
+        .location
+          .url {{ src }}
+        .refresh
+          .button.btn.btn-default type='button' aria-lable='Refresh' ng-click='reload()' title='Refresh'
+            span.glyphicon.glyphicon-refresh aria-hidden=true
+  .panel-body
+    iframe ng-src='{{ src | trusted }}' frameborder='0'

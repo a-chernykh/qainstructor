@@ -1,0 +1,16 @@
+.modal.fade
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        button.close type='button' data-dismiss='modal' aria-label='Close'
+          span aria-hidden='true' &times;
+        h4.modal-title cucumber output
+
+      .modal-body
+        .row.result
+          .col-lg-12
+            iframe ng-src='{{ resultAsset.url | trusted }}' frameborder='0' style='height: 500px;'
+
+      .modal-footer
+        button.btn.btn-default type='button' data-dismiss='modal' Close
+        a.btn.btn-primary ng-show='job.result == "success"' data-method='post' type='button' href='{{ continueUrl }}' Continue

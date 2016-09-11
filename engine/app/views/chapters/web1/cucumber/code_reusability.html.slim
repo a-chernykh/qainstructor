@@ -1,0 +1,83 @@
+p If you want to use some of your steps inside another step, you can use <code>step</code> and <code>steps</code> commands provided by cucumber.
+
+h2 Calling one step
+
+p You can call only 1 step using <code>step</code> function. Example how to call <code>Given I am registered</code> step from <code>Given I am signed in</code> step:
+
+code-example type='ruby'
+  | Given /^I am registered$/ do
+      # ...
+    end
+
+    Given /^I am signed in$/ do
+      step 'I am registered' # this will call step above
+      # ...
+    end
+
+p If you want to pass params to the step, you should use ruby string interpolation:
+
+code-example type='ruby'
+  | Given /^I am registered with e-mail "(.*)"$/ do |email|
+      # ...
+    end
+
+    Given /^I am signed in with e-mail "(.*)"$/ do |email|
+      step %Q{I am registered with e-mail "\#{email}"} # this will call step above and pass email to it
+      # ...
+    end
+
+h2 Calling multiple steps
+
+p If you want to call multiple steps in a bulk, <code>steps</code> command is available:
+
+code-example type='ruby'
+  | Given /^I am registered with e-mail "(.*)"$/ do |email|
+      steps %Q{
+        When I go to registration step
+        And I fill in e-mail with "\#{email}"
+        And I fill password with "password"
+        And I click on "Create account"
+      }
+    end
+
+p Notice that when calling one step with <code>step</code> command, you don't need to specify predicate word (<code>Given</code>, <code>When</code>, or <code>Then</code>). But when you're
+  calling multiple steps with <code>steps</code> command, you need to use a predicate in front of every step.
+
+h2 Creating reusable methods
+
+p Let's say we have 2 step definitions which share the same code:
+
+code-example type='ruby'
+  | Given /^I add "(.*)" to the shoppong cart$/ do |product|
+      @shopping_cart = []
+      @shopping_cart << product
+    end
+
+    Given /^I purchase "(.*)"$/ do |product|
+      @shopping_cart = []
+      @shopping_cart << product
+      # some code for checkout
+    end
+
+p You can refactor it by calling <code>I add "\#{product}" to the shopping cart</code> step, but it's also possible to extract common code
+  into a module method and call this method from both steps:
+
+code-example type='ruby'
+  | module ShoppingCartHelpers
+      def add_product_to_cart(product)
+        @shopping_cart = []
+        @shopping_cart << product
+      end
+    end
+    World(ShoppingCartHelpers)
+
+    Given /^I add "(.*)" to the shoppong cart$/ do |product|
+      add_product_to_cart(product)
+    end
+
+    Given /^I purchase "(.*)"$/ do |product|
+      add_product_to_cart(product)
+      # some code for checkout
+    end
+
+p Special method <code>World</code> makes all method defines in <code>ShoppingCartHelpers</code> module available to cucumber step definitions.

@@ -1,0 +1,14 @@
+angular.module('chapter').directive 'example', ->
+  restrict: 'E'
+  scope:
+    type: '@'
+    course: '@'
+    number: '@'
+    expandInstructions: '@'
+    hideInstructions: '@'
+  templateUrl: '<%= asset_path('chapter/example') %>'
+  link: (scope, element, attr) ->
+    scope.file =  "#{scope.course}-example#{scope.number}.zip"
+    scope.directory = "#{scope.course}-example#{scope.number}"
+    scope.url = "/downloads/<%= Rails.env %>/#{scope.course}/#{scope.file}"
+    scope.instructionsElementId = "example-instructions-#{scope.type}-#{scope.number}"

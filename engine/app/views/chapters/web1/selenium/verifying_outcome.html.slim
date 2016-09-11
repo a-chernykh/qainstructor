@@ -1,0 +1,56 @@
+p Every cucumber scenario should have at least one <code>Then</code> step which will verify the outcome. Usually, when you need to verify the outcome,
+  you can check that some text is present on the current page. For example, if you want to verify that you have been successfully registered, you can
+  check if the page has "Account has been created" text. Or, when you want to verify that you've signed in correctly, you may want to check that page has
+  "Sign Out" link.
+
+h2 Check if page includes given text
+
+p Consider the following scenario which checks that user has been registered.
+
+code-example type='gherkin' name='register.feature'
+  | Feature: Register
+
+      Scenario: User registers successfully
+        Given I am on registration page
+        When I fill in registration form correctly
+        Then I should be registered
+
+p The step which checks that user is registered is defined as follows:
+
+code-example type='ruby' name='register_steps.rb'
+  | Then /^I should be registered$/ do
+      body = @browser.find_element(:name, 'body')
+      page_text = body.text
+      expect(page_text).to include 'Account has been created'
+    end
+
+p First, we're locating <code>body</code> HTML element using <code>@browser.find_element</code> method. We're using <code>body</code> because it is the root
+  element of the visible part of the page. We're not interested in invisible parts when we're verifying outcome. Then we're getting text contents of <code>body</code>
+  element by calling <code>body.text</code> and saving it inside the <code>page_text</code> variable. Then using RSpec <code>include</code> matcher we are verifying
+  that it includes 'Account has been created' text. If the page does not include this string, <code>expect</code> method will raise an error and step will fail.
+
+h2 Check if page has link
+
+p When we want to test the presence of some HTML element (like 'Sign Out' link), we need to try to find this element and test if it was found.
+
+code-example type='gherkin' name='sign_in.feature'
+  | Feature: Sign in
+
+      Scenario: User signs in
+        Given I am on sign in page
+        When I fill in sign in form with existing user data
+        Then I should be signed in
+
+code-example type='ruby' name='sign_in_steps.rb'
+  | Then /^I should be signed in$/ do
+      sign_out_links = @browser.find_elements(:link_text, 'Sign Out')
+      expect(sign_out_links.length).to be 1
+    end
+
+p The example above will try to find the following HTML element:
+
+code-example type='html'
+  = "<a href='/signout'>Sign Out</a>"
+
+p Note that now we're using <code>@browser.find_elements</code> method (plural version) to find sign out link because <code>@browser.find_element</code> (singular version) will raise an exception if element was not found.
+  <code>@browser.find_elements</code> will return empty array in this case. To verify if element was found we're just verifying that array length equals 1.

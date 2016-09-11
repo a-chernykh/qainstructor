@@ -1,0 +1,78 @@
+angular.module('exercise').directive 'steps', [ '$log', 'jobResult', 'appConfig', 'jobManager', 'notifier', 'codeJustifier', ($log, jobResult, appConfig, jobManager, notifier, codeJustifier) ->
+  restrict: 'E'
+  transclude: true
+  templateUrl: '<%= asset_path('exercises/steps') %>'
+  scope:
+    files: '='
+  controller: [ '$scope', ($scope) ->
+    $scope.setStep = (step) ->
+      $scope.setCurrentStep(step) if appConfig.debug
+
+    $scope.setCurrentStep = (step) ->
+      $log.debug 'Advancing to step:'
+      $log.debug step
+
+      step.status = 'current'
+      $scope.currentStep = step
+
+    $scope.steps = []
+    @currentStep = -> $scope.currentStep
+    @addStep = (step) ->
+      if step.number == 1
+        $scope.setCurrentStep(step)
+      else
+        step.status = 'not_started'
+      $scope.steps.push(step)
+    this # step directive is using this controller
+  ]
+  link: (scope, element, attr) ->
+    verify = ->
+      step = scope.currentStep
+
+      $log.debug 'Verifying step:'
+      $log.debug step
+
+      getNextStep = ->
+        (step for step in scope.steps when step.number == scope.currentStep.number + 1)[0]
+
+      success = (job) ->
+        scope.currentStep.status = 'success'
+        notifier.stepSuccess(scope.currentStep)
+        nextStep = getNextStep()
+        if nextStep
+          scope.setCurrentStep(nextStep)
+        else
+          scope.$emit('exerciseCompleted')
+
+      failure = (job) ->
+        scope.currentStep.status = 'failed'
+        nextStep = getNextStep()
+        scope.currentStep.log = job.log
+        notifier.stepFailed(scope.currentStep)
+
+      formattedVerifier = codeJustifier.justify(step.verifier.text, '    ')
+      if step.verifier.type == 'failing-scenario'
+        verifier =
+          name: 'failing_scenario.feature'
+          editor:
+            getValue: -> """
+                         @expected-to-fail
+                         #{formattedVerifier}
+                         """
+      else
+        verifier =
+          name: 'step_verifier.rb'
+          editor:
+            getValue: -> """
+                          After do |scenario|
+                            unless scenario.failed?
+                              #{formattedVerifier}
+                            end
+                          end
+                         """
+
+      scope.currentStep.status = 'running'
+
+      jobResult({}, scope.files.concat(verifier)).then(success, failure)
+    jobManager.whenStartRequested(verify)
+]

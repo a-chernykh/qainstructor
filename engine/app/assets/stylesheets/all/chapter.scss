@@ -1,0 +1,57 @@
+.chapter-contents {
+  li {
+    &.section {
+      a[href='#'] {
+        color: #333;
+        font-size: 1.1em;
+      }
+    }
+    &.chapter {
+      margin-left: 16px;
+    }
+    // locked chapters
+    a[href='#'] {
+      color: #aaa;
+    }
+  }
+
+  .navmenu-brand.hide-link {
+    font-size: 0.9em;
+  }
+}
+
+.navigation {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #f8f8f8;
+  border-top: 2px solid #e7e7e7;
+  margin-left: -15px; // TODO
+  padding: 8px 15px; // TODO
+  z-index: 100;
+
+  .progress {
+    margin-bottom: 0px;
+    margin-right: 10px;
+    margin-top: 15px;
+  }
+}
+
+.content {
+  margin-bottom: 40px;
+}
+
+.chapter-brief {
+  margin-bottom: 15px;
+
+  &.not_started {
+    a {
+      color: #ccc;
+    }
+  }
+
+  &.started {
+  }
+  &.completed {
+  }
+}

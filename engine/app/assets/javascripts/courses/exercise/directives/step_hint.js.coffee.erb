@@ -1,0 +1,6 @@
+angular.module('exercise').directive 'stepHint', ->
+  transclude: true
+  scope: true
+  templateUrl: '<%= asset_path('exercises/step_hint') %>'
+  restrict: 'E'
+  link: (scope, element, attr) ->

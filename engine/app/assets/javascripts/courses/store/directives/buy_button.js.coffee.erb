@@ -1,0 +1,38 @@
+angular.module('store').directive 'buyButton', ['$log', '$http', 'notifier', '$window', ($log, $http, notifier, $window) ->
+  restrict: 'A'
+  link: (scope, element, attrs) ->
+    handler = StripeCheckout.configure({
+      key: '<%= ENV['STRIPE_KEY'] %>',
+      image: '<%= image_url('square-logo.jpg') %>',
+      locale: 'auto',
+      token: (token) ->
+        data =
+          email: token.email
+          token: token.id
+          course_id: scope.courseId
+        purchaseSuccess = (response) ->
+          $window.location.href = Routes.purchased_course_path(scope.courseId)
+        purchaseFail = (response) ->
+          if response.data.errors
+            notifier.purchaseFailed(response.data.errors.join(', '))
+          else
+            notifier.purchaseFailed('Error authorizing payment, please contact technical support')
+        $http.post(Routes.api_v1_purchases_path(), data).then(purchaseSuccess, purchaseFail)
+    })
+
+    $(element).on 'click', (e) ->
+      handler.open({
+        name: 'QA Instructor',
+        description: scope.description,
+        amount: scope.price
+      })
+      e.preventDefault()
+
+    $(window).on 'popstate', -> handler.close()
+  scope:
+    description: '@'
+    price: '@'
+    courseId: '@'
+  controller: [ '$scope', '$http', ($scope, $http) ->
+  ]
+]

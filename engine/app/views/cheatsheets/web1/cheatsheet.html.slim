@@ -1,0 +1,224 @@
+.cheatsheet ng-app='chapter'
+  .row
+    .col-lg-6
+      h1 Cucumber and RSpec
+
+      h2 Cucumber
+      table.table.table-striped
+        tr
+          td Feature
+          td
+            code-example type='gherkin'
+              | Feature: Create new account
+
+                  Scenario: User successfully register
+                    Given I am on the registration page
+                    When I fill in e-mail with "user@example.com"
+                    And I fill in password with "mycoolpass"
+                    And I fill in password confirmation with "mycoolpass"
+                    When I click "Register" button
+                    Then I should be registered
+        tr
+          td Step definition
+          td
+            code-example type='ruby'
+              | Given /^I define step with number (\d+)$/ do |num_str|
+                  num = num_str.to_i
+                  # put your code here
+                end
+
+                Given /^I define step with text "([^\"]+)"$/ do |text|
+                  # put your code here
+                end
+        tr
+          td Call other step
+          td
+            code-example type='ruby'
+              | Given /^I am registered$/ do
+                 # ...
+                end
+
+                Given /^I am signed in$/ do
+                  step 'I am registered' # this will call step above
+                  # ...
+                end
+        tr
+          td Call other steps
+          td
+            code-example type='ruby'
+              | Given /^I am registered with e-mail "(.*)"$/ do |email|
+                  steps %Q{
+                    When I go to registration step
+                    And I fill in e-mail with "\#{email}"
+                    And I fill password with "password"
+                    And I click on "Create account"
+                  }
+                end
+
+      h2 RSpec
+      table.table.table-striped
+        tr
+          td Verify equality
+          td
+            code-example type='ruby'
+              | expect(number).to eq 42
+        tr
+          td Verify text includes string
+          td
+            code-example type='ruby'
+              | expect(text).to include 'substring'
+        tr
+          td Verify text does not include string
+          td
+            code-example type='ruby'
+              | expect(text).not_to include 'substring'
+        tr
+          td Verify array includes element
+          td
+            code-example type='ruby'
+              | expect(products).to include 'Apple'
+
+    .col-lg-6
+      h1 Selenium WebDriver
+      h2 Browser
+      table.table.table-striped
+        tr
+          td Open browser
+          td
+            code-example type='ruby'
+              | @browser = Selenium::WebDriver.for(:firefox)
+        tr
+          td Close browser
+          td
+            code-example type='ruby'
+              | @browser.quit
+        tr
+          td Go to the website
+          td
+            code-example type='ruby'
+              | @browser.get('http://google.com')
+      h2 Locate elements
+      table.table.table-striped
+        tr
+          td Find element / elements
+          td
+            code-example type='ruby'
+              | # returns one element, raises exception if not found
+                element = @browser.find_element(...)
+                # returns an array of elements or empty array
+                elements = @browser.find_elements(...)
+        tr
+          td By ID
+          td
+            code-example type='ruby'
+              | # &lt;button id="my-button"&gt;Click me&lt;/button&gt;
+                element = @browser.find_element(:id, "my-button")
+        tr
+          td By class name
+          td
+            code-example type='ruby'
+              | # &lt;button class="my-button"&gt;Click me&lt;/button&gt;
+                element = @browser.find_element(:class, "my-button")
+                elements = @browser.find_elements(:class, "my-button")
+        tr
+          td By tag name
+          td
+            code-example type='ruby'
+              | # &lt;button&gt;Click me&lt;/button&gt;
+                element = @browser.find_element(:tag_name, "button")
+                elements = @browser.find_elements(:tag_name, "button")
+        tr
+          td By link text
+          td
+            code-example type='ruby'
+              | # &lt;a href="http://google.com"&gt;Google&lt;/a&gt;
+                element = @browser.find_element(:link_text, "Google")
+                elements = @browser.find_elements(:link_text, "Google")
+        tr
+          td By partial link text
+          td
+            code-example type='ruby'
+              | # &lt;a href="http://google.com"&gt;Visit Google&lt;/a&gt;
+                element = @browser.find_element(:partial_link_text, "Google")
+                elements = @browser.find_elements(:partial_link_text, "Google")
+        tr
+          td By CSS selector
+          td
+            code-example type='ruby'
+              | # &lt;a name="google" href="http://google.com"&gt;Go&lt;/a&gt;
+                element = @browser.find_element(:css, "a[name='google']")
+                elements = @browser.find_elements(:css, "a[name='google']")
+        tr
+          td By XPATH selector
+          td
+            code-example type='ruby'
+              | # &lt;button&gt;Btn&lt;button&gt;
+                @browser.find_element(:xpath, "//button[contains(text(), 'Btn')]")
+                @browser.find_elements(:xpath, "//button[contains(text(), 'Btn')]")
+      h2 Element operations
+      table.table.table-striped
+        tr
+          td Get element text
+          td
+            code-example type='ruby'
+              | page_text = @browser.find_element(:tag_name, 'body').text
+        tr
+          td Get element attribute
+          td
+            code-example type='ruby'
+              | url = @browser.find_element(:link_text, 'Google').attribute('href')
+        tr
+          td Check if element is visible
+          td
+            code-example type='ruby'
+              | @browser.find_element(:link_text, 'Google').displayed?
+        tr
+          td Click link / button / image
+          td
+            code-example type='ruby'
+              | @browser.find_element(:id, 'link-id').click
+        tr
+          td Fill in text field
+          td
+            code-example type='ruby'
+              | @browser.find_element(:id, 'input-id').send_keys "Some text"
+        tr
+          td Check radio / checkbox
+          td
+            code-example type='ruby'
+              | # returns true if already checked, false otherwise
+                @browser.find_element(:id, 'checkbox-id').selected?
+                # checks the checkbox / radio
+                @browser.find_element(:id, 'checkbox-id').click
+        tr
+          td Select from the dropdown
+          td
+            code-example type='ruby'
+              | country = @browser.find_element(:name, 'country')
+                select_list = Selenium::WebDriver::Support::Select.new(country)
+                select_list.select_by(:text, 'United States')
+      h2 Driver
+      table.table.table-striped
+        tr
+          td Set implicit wait
+          td
+            code-example type='ruby'
+              | # set default timeout to 15 seconds
+                @browser.manage.timeouts.implicit_wait = 15
+                @browser.get('http://myapp.com')
+                # will wait 15 seconds until element will appear
+                @browser.find_element(:id, 'my-link')
+        tr
+          td Wait for element to appear
+          td
+            code-example type='ruby'
+              | # set timeout to 15 seconds
+                wait = Selenium::WebDriver::Wait.new(timeout: 15)
+                # wait 15 seconds until link will appear
+                wait.until { driver.find_element(:id, 'my-link') }
+        tr
+          td Execute Javascript
+          td
+            code-example type='ruby'
+              | height = @browser.execute_script("return window.innerHeight;")
+

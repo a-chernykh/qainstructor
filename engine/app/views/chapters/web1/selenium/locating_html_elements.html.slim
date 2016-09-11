@@ -1,0 +1,126 @@
+p <strong>selenium-webdriver</strong> provides several ways of finding HTML elements using <code>@browser.find_element</code> method. If
+  an element can not be found, <code>find_element</code> will raise an exception. If you want to find multiple elements, you can use
+  <code>@browser.find_elements</code>. If there are no elements matching criteria, <code>find_elements</code> returns an empty list.
+
+h3 By ID
+
+p When element has unique identifier, you can use it as a locator. Let's say we have <code>div</code> with id attribute set to <code>test-element</code>. You
+  can use the following code to find it and get contents:
+
+code-example type='html' file='example.html'
+  = "<div id='test-element'>Test</div>"
+
+code-example type='ruby' file='steps.rb'
+  | test_element = @browser.find_element(:id, 'test-element')
+    puts test_element.text # => 'Test'
+
+h3 By class name
+
+p Usually, multiple HTML elements can have the same <code>class</code> attribute value. Example of how to use class selector to find all elements with
+  class <code>item</code>:
+
+code-example type='html' file='example.html'
+  = "<div class='item'>Item 1</div>\n"
+  = "<div class='item'>Item 2</div>"
+
+code-example type='ruby' file='steps.rb'
+  | items = @browser.find_elements(:class_name, 'item')
+    items.each do |item|
+      puts item.text
+    end
+    # => 'Item 1'
+    # => 'Item 2'
+
+h3 By tag name
+
+p If for some reason you need to use the actual tag name to find element, you can use <code>:tag_name</code> selector. Example how to find
+  header tag:
+
+code-example type='html' file='example.html'
+  = "<header>Example header</header>"
+
+code-example type='ruby' file='steps.rb'
+  | header = @browser.find_element(:tag_name, 'header')
+    puts header.text # => 'Example header'
+
+h3 By name
+
+p You can also use HTML <code>name</code> attribute to locate elements.
+
+code-example type='html' file='example.html'
+  = "<a name='section-1'>Section 1</a>"
+
+code-example type='ruby' file='steps.rb'
+  | anchor = @browser.find_element(:name, 'section-1')
+    puts anchor.text # => 'Section 1'
+
+h3 By link text
+
+p Finding elements by the actual text which is visible to end user is usually the less brittle way because it does not depend on internal HTML structure which is
+  a subject to change. Whenever it's possible to find element using different options, you should prefer this option over others:
+
+code-example type='html' file='example.html'
+  = "<a class='signin-link' name='signin'>Sign In</a>"
+
+code-example type='ruby' file='steps.rb'
+  | signin_link = @browser.find_element(:link_text, 'Sign In')
+    signin_link.click
+
+h3 By partial link text
+
+p Previous method will find element if it matches given text exactly. You can use partial matcher to find element by part of the text:
+
+code-example type='html' file='example.html'
+  = "<a class='register'>Create new account</a>"
+
+code-example type='ruby' file='steps.rb'
+  | register_link = @browser.find_element(:partial_link_text, 'account')
+    register_link.click
+
+h3 By CSS
+
+p selenium-webdriver uses native browser CSS support. You can use CSS selectors to find elements. Example of how to find first element in the list:
+
+code-example type='html' file='example.html'
+  = "<div class='parent'>\n"
+  = " <ul>\n"
+  = "   <li>First</li>\n"
+  = "   <li>Second</li>\n"
+  = " </ul>\n"
+  = "</div>\n"
+
+code-example type='ruby' file='steps.rb'
+  | item = @browser.find_element(:css, 'div.parent ul li:first-child')
+    puts item.text # => 'First'
+
+h4 Finding buttons by value
+
+p If you have a button on the page which does not have a distinctive name, class or ID then you can use CSS selector to locate it.
+
+code-example type='html' file='example.html'
+  = "<input type='button' value='Button 1' />"
+
+code-example type='ruby' file='steps.rb'
+  | button1 = @browser.find_element(:css, 'input[value="Button 1"]')
+
+h3 By XPATH
+
+p You can use XPATH to find first list item from previous example:
+
+code-example type='ruby' file='steps.rb'
+  | item = @browser.find_element(:xpath, '//div/ul/li[1]')
+    puts item.text # => 'First'
+
+h4 Finding buttons by text
+
+p If you have a button with some text inside it, you can use <code>contains</code> XPATH selector to find it.
+
+code-example type='html' file='example.html'
+  = "<button>Button 1</button>"
+
+code-example type='ruby' file='steps.rb'
+  | button1 = @browser.find_element(:xpath, "//button[contains(text(), 'Button 1')]")
+
+h2 Example
+
+example type='cucumber' course=@chapter.course.code number='5'

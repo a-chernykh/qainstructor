@@ -1,0 +1,22 @@
+.panel-body {
+  .progress {
+    margin-bottom: 10px;
+  }
+}
+
+.curriculum {
+  .chapter-brief {
+    &.not_started {
+      a {
+        color: #337ab7;
+      }
+
+      a[href='#'] {
+        color: #ccc;
+      }
+
+      a:hover {
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+default: &default
+  host: postgres
+  database: engine
+  username: engine
+  password: <%= ENV['ENGINE_POSTGRES_PASSWORD'] %>
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+
+production:
+  <<: *default
+
+test:
+  <<: *default
+  database: engine_test

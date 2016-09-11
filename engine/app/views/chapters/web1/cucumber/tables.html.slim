@@ -1,0 +1,95 @@
+p In the previous chapter, we have reviewed scenario outlines. You probably have noticed that <code>Examples:</code> section contains table data:
+
+code-example type='gherkin'
+  | Examples:
+      | account1 | account2 | transfer | account1 result | account2 result |
+      | 100      | 0        | 50       | 50              | 50              |
+      | 100      | 0        | 100      | 0               | 100             |
+      | 35       | 0        | 50       | 35              | 0               |
+
+h2 Tables without headers
+
+p It turns out that table can be passed to any cucumber step as a param. Let's say we have a simple feature which describes
+  how can you add multiple numbers together:
+
+code-example type='gherkin' file='addition.feature'
+  | Feature: Addition
+
+      Scenario: Add numbers together
+        When I add these numbers:
+          | 1 |
+          | 5 |
+          | 8 |
+          | 3 |
+        Then I should get result of 17
+
+p Let's see how step definition is implemented:
+
+code-example type='ruby' file='addition_steps.rb'
+  | When /^I add these numbers:$/ do |numbers_table|
+      numbers = numbers_table.raw    # [["1"], ["5"], ["8"], ["3"]]
+      numbers = numbers.flatten      # ["1", "5", "8", "3"]
+      numbers = numbers.map(&:to_i)  # [1, 5, 8, 3]
+      @result = numbers.inject(:+)   # 17
+    end
+
+    Then /^I should get result of (\d+)$/ do |expected_result|
+      expect(@result).to eq expected_result.to_i
+    end
+
+p The table of numbers is passed to the cucumber step definition as <code>numbers_table</code>. It is an instance of <code>Cucumber::MultilineArgument::DataTable</code> class.
+  It has the <code>raw</code> method which will convert this table to an array of rows. We apply a set of subsequent operation to convert this array to a flat number of integers and add
+  them together to get the result.
+
+example type='cucumber' course=@chapter.course.code number='6'
+
+h2 Tables with headers
+
+p If you have more sophisticated table data and want to give every column a name then you can use  a table with headers. Let's say you're uploading products to the e-commerce website.
+
+code-example type='gherkin' file='upload_products.feature'
+  | Feature: Upload products
+
+      Scenario: Administrator uploads products
+        Given I am website administrator
+        When I upload the following products:
+          | name     | price | quantity |
+          | apple    | 0.99  | 100      |
+          | bananas  | 1.99  | 200      |
+          | pears    | 1.49  | 150      |
+        Then I should have 450 products in stock
+
+p You can use <code>hashes</code> method defined on table to convert cucumber table to array of hashes and iterate over them to create actual products:
+
+code-example type='ruby' file='upload_products_steps.rb'
+  | require 'singleton'
+
+    class Store
+      include Singleton
+
+      def products
+        @products ||= []
+      end
+
+      def stock
+        products.map { |p| p['quantity'].to_i }.inject(:+)
+      end
+    end
+
+    Given(/^I am website administrator$/) do
+    end
+
+    When(/^I upload the following products:$/) do |products_table|
+      products = products_table.hashes # [{"name"=>"apple", "price"=>"0.99", "quantity"=>"100"},
+                                       #  {"name"=>"bananas", "price"=>"1.99", "quantity"=>"200"},
+                                       #  {"name"=>"pears", "price"=>"1.49", "quantity"=>"150"}]
+      products.each do |product|
+        Store.instance.products << product
+      end
+    end
+
+    Then(/^I should have (\d+) products in stock$/) do |expected_stock|
+      expect(Store.instance.stock).to eq expected_stock.to_i
+    end
+
+example type='cucumber' course=@chapter.course.code number='7'

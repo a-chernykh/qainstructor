@@ -1,0 +1,64 @@
+$currentStepColor: gray;
+$notStartedStepColor: #f5f5f5;
+$runningStepColor: yellow;
+$successStepColor: green;
+$failedStepColor: red;
+
+ul.steps-status {
+  list-style: none;
+  padding-left: 0;
+
+  li {
+    width: 15px;
+    height: 15px;
+    background-color: $notStartedStepColor;
+    border-radius: 3px;
+    float: left;
+    margin-right: 5px;
+
+    &.current {
+      background-color: $currentStepColor;
+    }
+
+    &.running {
+      background-color: $runningStepColor;
+    }
+
+    &.success {
+      background-color: $successStepColor;
+    }
+
+    &.failed {
+      background-color: $failedStepColor;
+    }
+  }
+}
+
+ul.steps {
+  list-style: none;
+  padding-left: 0;
+
+  verifier {
+    display: none;
+  }
+
+  li {
+    .hints {
+      margin-top: 4px;
+    }
+
+    step-hint {
+      display: none;
+    }
+
+    &.hint {
+      .show-hint {
+        display: none;
+      }
+
+      step-hint {
+        display: block;
+      }
+    }
+  }
+}

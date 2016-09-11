@@ -1,0 +1,58 @@
+p When cucumber runs a feature, it reads feature file and finds matching steps in step definitions. When it finds matching step definition, it runs it.
+  Step definitios are Ruby files (with <mark>.rb</mark> extension). Usually, they reside in <mark>features/step_definitions/</mark> directory so that
+  <kbd>cucumber</kbd> command reads them automatically. Step definition files contain a list of step definitions.
+
+p Let's say we have the following feature which tests that when user adds new product to his shopping cart, this product is being added:
+
+code-example type='gherkin' file='features/add_to_cart.feature'
+  | Feature: Shopping cart
+
+      Scenario: Add cucumbers to the shopping cart
+        Given my shopping cart is empty
+        When I add "Cucumbers" to the shopping cart
+        Then I should have "Cucumbers" inside my shopping cart
+
+p We also have the appropriate step definitions:
+
+code-example type='ruby' file='features/step_definitions/add_to_cart_steps.rb'
+  | Given(/^my shopping cart is empty$/) do
+      @shopping_cart = []
+    end
+
+    When(/^I add "([^"]*)" to the shopping cart$/) do |product|
+      @shopping_cart << product
+    end
+
+p One step definition is intentionally missing in the above file. Your next exercise will be to create it.
+
+p Step definitions are the same as method definitions. When you're defining a step, think of it as you've defined a ruby method which will be called when cucumber
+  runs scenario and finds matching step. Every single step definition starts with <code>Given</code>, <code>When</code> and <code>Then</code> keyword which essentially defines the step.
+  This defining keyword is followed by regular expression <code>/^ ... $/</code> which is used to match scenario steps. After regular expression we define Ruby block which is the actual body of step definition
+  (i.e. the code which will be executed by cucumber):
+
+code-example type='ruby'
+  | When /^ ... $/ do
+      # some ruby code
+    end
+
+h2 Download and run this example
+
+example type='cucumber' course=@chapter.course.code number='9'
+
+p Output:
+
+iframe src=example_output_path(chapter: @chapter, example: 9) frameborder=0 style='height: 300px;'
+
+p When you will try to run it, cucumber will read it line by line. It will ignore first 3 lines because they are not defining any steps and will start looking for
+  step definitions starting from line 4.
+
+p It will find step definition for <code>Given my shopping cart is empty</code> step because it matches first step definition from <mark>add_to_cart_steps.rb</mark>.
+  It will run the matching code <code>@shopping_cart = []</code> which will initialize shopping cart with an empty array.
+
+p Then it will search for a matching step definition for the next step - <code>When I add "Cucumbers" to the shopping cart</code>. Again, it will find step definition from <mark>add_to_cart_steps.rb</mark>
+  and will run its code. The actual product name specified in step will be passed to this code. It will add "Cucumbers" product to the shopping cart.
+
+p cucumber will color 2 first steps as green in the terminal output because those steps did not raise an exception which means they have passed.
+
+p Finally, cucumber tries to search for a third step definition - <code>Then I should have "Cucumbers" inside my shopping cart</code>. There is no such step inside <mark>add_to_cart_steps.rb</mark> which means
+  that cucumber stops scenario execution and it will mark missing step as yellow. Yellow means that step is not defined. cucumber will be very helpful by providing a snippet for defining all missing steps.

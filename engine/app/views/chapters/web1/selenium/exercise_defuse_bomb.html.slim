@@ -1,0 +1,66 @@
+.row.exercise
+  .col-lg-4.fill
+    p Some evil mastermind setup the bomb on the webpage and it's going to blow up soon. You will need to
+      find out experimentally in what sequence wires should be cut. Use links and buttons on the webpage to
+      find this out. Once done, create step definition to do the same programmatically using Selenium WebDriver
+      selectors.
+
+    steps files='files'
+      step
+        p Find out which wire should be cut first and create step definition for cutting first wire.
+        step-hint
+          p Create cucumber step to cut the blue wire:
+          code-example type='ruby' file='defuse_steps.rb'
+            | When /^I cut the first wire$/ do
+                @browser.find_element(:partial_link_text, 'blue').click
+              end
+        verifier
+          | expect(@browser.find_element(:tag_name, 'body').text).to include 'Blue wire has been cut'
+      step
+        p Create step definition to cut the second wire.
+        step-hint
+          p Create cucumber step to cut the red wire:
+          code-example type='ruby' file='defuse_steps.rb'
+            | When /^I cut the second wire$/ do
+                @browser.find_element(:partial_link_text, 'red').click
+              end
+        verifier
+          | expect(@browser.find_element(:tag_name, 'body').text).to include 'Red wire has been cut'
+      step
+        p Verify that bomb has been defused.
+        step-hint
+          p Create step definition to check that body has text 'defused':
+          code-example type='ruby' file='defuse_steps.rb'
+            | Then /^bomb should be defused$/ do
+                expect(@browser.find_element(:tag_name, 'body').text).to include 'defused'
+              end
+        verifier
+          | expect(@browser.find_element(:tag_name, 'body').text).to include 'defused'
+
+  .col-lg-4
+    code-editor files='files'
+      file language='gherkin' name='defuse.feature' read-only='true'
+        | Feature: Defuse the bomb
+
+            Scenario: User defuses the bomb
+              Given I am on the front page
+              When I cut the first wire
+              And I cut the second wire
+              Then bomb should be defused
+
+      file language='ruby' name='defuse_steps.rb'
+        | Given /^I am on the front page$/ do
+            @browser.get '#{sample_app_url('bomb')}'
+          end
+
+          When /^I cut the first wire$/ do
+          end
+
+          When /^I cut the second wire$/ do
+          end
+
+          Then /^bomb should be defused$/ do
+          end
+
+  .col-lg-4
+    browser url='appUrl' src='#{sample_app_url('bomb')}'

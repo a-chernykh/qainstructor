@@ -1,0 +1,10 @@
+ul.nav.navmenu-nav
+  - toc.sections.each do |section|
+    li.section= link_to section.name, '#'
+    - section.chapters.each do |chapter|
+      li.chapter class=('active' if chapter == current_chapter)
+        a href=chapter.tos_link
+          = chapter.name
+          - if !engine.purchased? && chapter.is_demo
+            | &nbsp;
+            span.label.label-primary demo

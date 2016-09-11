@@ -1,0 +1,11 @@
+angular.module('exercise').directive 'hints', ->
+  restrict: 'E'
+  transclude: true
+  templateUrl: '<%= asset_path('exercises/hints') %>'
+  controller: ['$scope', '$transclude', ($scope, $transclude) ->
+    $transclude (html, scope) ->
+      $scope.totalHints = html.length
+  ]
+  link: (scope, element, attr) ->
+    scope.showHints = ->
+      scope.currentHint = 1

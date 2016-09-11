@@ -1,0 +1,10 @@
+a.btn.btn-default ng-click='showHints()' ng-hide='currentHint' Show hints
+
+.hints ng-show='currentHint'
+  ng-transclude
+
+  .hints-nav
+    .pull-left ng-hide='currentHint == 1'
+      a.btn.btn-default ng-click='currentHint = currentHint - 1' Previous hint
+    .pull-right ng-hide='currentHint == totalHints'
+      a.btn.btn-default ng-click='currentHint = currentHint + 1' Next hint

@@ -1,0 +1,55 @@
+.row.exercise
+  .col-lg-6
+    p Create 1 step definition for the following scenario steps:
+
+    code-example type='gherkin'
+      | Then I should have "Cucumbers" inside my shopping cart
+        Then I should have "Apples" inside my shopping cart
+
+    p In order to check if given product is present inside the cart, you can use the following code:
+
+    code-example type='ruby'
+      | expect(@shopping_cart).to include product_name # product_name is "Cucumbers" or "Apples"
+
+    p Please note that your step definition should accept any product name (not only "Cucumber"), so it should take a product name param.
+
+    steps files='files'
+      step
+        p Add step definition to check that given product is present in the cart.
+        step-hint
+          p Add the following code to the <mark>add_to_cart_steps.rb</mark> file:
+          code-example type='ruby' file='add_to_cart_steps.rb'
+            | Then(/^I should have "([^"]*)" inside my shopping cart$/) do |product|
+                expect(@shopping_cart).to include(product)
+              end
+        verifier type='failing-scenario'
+          | Feature: This feature should fail
+
+              Scenario: Add bananas to the shopping cart
+                Given my shopping cart is empty
+                When I add "Bananas" to the shopping cart
+                Then I should have "Apples" inside my shopping cart
+
+  .col-lg-6
+    code-editor files='files'
+      file language='gherkin' name='add_to_cart.feature' read-only='true'
+        | Feature: Shopping cart
+
+            Scenario: Add cucumbers to the shopping cart
+              Given my shopping cart is empty
+              When I add "Cucumbers" to the shopping cart
+              Then I should have "Cucumbers" inside my shopping cart
+
+            Scenario: Add apples to the shopping cart
+              Given my shopping cart is empty
+              When I add "Apples" to the shopping cart
+              Then I should have "Apples" inside my shopping cart
+
+      file language='ruby' name='add_to_cart_steps.rb'
+        | Given(/^my shopping cart is empty$/) do
+            @shopping_cart = []
+          end
+
+          When(/^I add "([^"]*)" to the shopping cart$/) do |product|
+            @shopping_cart << product
+          end

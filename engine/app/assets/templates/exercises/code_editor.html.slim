@@ -1,0 +1,9 @@
+ul.nav.nav-tabs role='tablist'
+  li ng-class='{active: $first}' role='presentation' ng-repeat='file in files'
+    a href='\#{{ file.id }}' aria-controls='{{ file.id }}' role='tab' data-toggle='tab'
+      span.glyphicon.glyphicon-eye-open aria-hidden=true ng-show='file.readOnly'
+      | {{ file.name }}
+
+div.tab-content
+  div.tab-pane ng-class='{active: $first}' ng-repeat='file in files' id='{{ file.id }}'
+    file-editor file='file'

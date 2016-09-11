@@ -1,0 +1,63 @@
+.row.exercise
+  .col-lg-6.fill
+    p Our task is to test that when you add <code>7</code> and <code>5</code> together, the operation of addition
+      yields <code>12</code> as a result. We have all step definitions in place (see <mark>addition_steps.rb</mark>),
+      but we do miss the actual scenario to test. Please add scenario steps in <mark>addition.feature</mark> file to
+      test that <code>7 + 5</code> equals <code>12</code>.
+
+    steps files='files'
+      step
+        p Set variable <code>A</code> to <code>7</code>
+        step-hint
+          p Add the following step to <mark>addition.feature</mark> scenario:
+          code-example type='gherkin'
+            | Given I set variable A to 7
+        verifier
+          | expect(@a).to eq 7
+      step
+        p Set variable <code>B</code> to <code>5</code>
+        step-hint
+          p Add the following step to <mark>addition.feature</mark> scenario:
+          code-example type='gherkin'
+            | Given I set variable B to 5
+        verifier
+          | expect(@b).to eq 5
+      step
+        p Calculate the sum of <code>A</code> and <code>B</code>
+        step-hint
+          p Add the following step to <mark>addition.feature</mark> scenario:
+          code-example type='gherkin'
+            | When I calculate A + B
+        verifier
+          | expect(@result).to eq 12
+      step
+        p Verify that sum of <code>A</code> and <code>B</code> equals <code>12</code>
+        step-hint
+          p Add the following step to <mark>addition.feature</mark> scenario:
+          code-example type='gherkin'
+            | Then I should get result of 12
+        verifier
+          | expect_feature_to_include('result of 12')
+
+  .col-lg-6
+    code-editor files='files'
+      file language='gherkin' name='addition.feature'
+        | Feature: Addition
+
+            Scenario: Adding 7 and 5 yields 12
+      file language='ruby' name='addition_steps.rb' read-only='true'
+        | Given(/^I set variable A to (\d+)$/) do |a|
+            @a = a.to_i
+          end
+
+          Given(/^I set variable B to (\d+)$/) do |b|
+            @b = b.to_i
+          end
+
+          When(/^I calculate A \+ B$/) do
+            @result = @a + @b
+          end
+
+          Then(/^I should get result of (\d+)$/) do |expected_result|
+            expect(@result).to eq expected_result.to_i
+          end

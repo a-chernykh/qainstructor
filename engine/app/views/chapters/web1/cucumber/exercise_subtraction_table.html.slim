@@ -1,0 +1,52 @@
+.row.exercise
+  .col-lg-6.fill
+    p <mark>subtraction.feature</mark> file is testing that operation of subtraction is giving correct results. For every row in the table you need to print the subtraction
+      arguments, result and if the result is correct or not to the screen. Remember that you need to call <code>to_i</code> method on values from the table because they are all strings by default.
+
+    p Program output should look like this:
+
+    pre
+      | 10 - 2 = 8 correct
+        13 - 4 = 9 correct
+        8 - 7 = 2 incorrect
+
+    p You can use <code>puts</code> method to print something on the screen. You can put some Ruby variable into the string using interpolation operator <code>puts "value: \#{value}"</code>.
+
+    steps files='files'
+      step
+        p Create step definition to iterate over the table and to assert that for every row <code>result</code> equals to <code>a - b</code>.
+        step-hint
+          p Add the following code to <mark>subtraction_steps.rb</mark>:
+          code-example type='ruby'
+            | table.hashes.each do |row|
+                a = row['a'].to_i
+                b = row['b'].to_i
+                result = row['result'].to_i
+                if result == a - b
+                  correctness = 'correct'
+                else
+                  correctness = 'incorrect'
+                end
+                puts "\#{a} - \#{b} = \#{result} \#{correctness}"
+              end
+        verifier
+          | expect($puts_capture.string).to include "10 - 2 = 8 correct"
+            expect($puts_capture.string).to include "13 - 4 = 9 correct"
+            expect($puts_capture.string).to include "8 - 7 = 2 incorrect"
+
+  .col-lg-6
+    code-editor files='files'
+      file language='gherkin' name='subtraction.feature' read-only='true'
+        | Feature: Subtration
+
+            Scenario: Subtract values
+              Then I should get the following results:
+                | a  | b | result |
+                | 10 | 2 | 8      |
+                | 13 | 4 | 9      |
+                | 8  | 7 | 2      |
+
+      file language='ruby' name='subtraction_steps.rb'
+        | Then /^I should get the following results:$/ do |table|
+            # insert your code here
+          end

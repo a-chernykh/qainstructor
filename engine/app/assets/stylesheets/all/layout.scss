@@ -1,0 +1,25 @@
+body > .content {
+  margin-top: 60px;
+  max-width: 100%;
+}
+
+.container-fluid {
+  h1 {
+    margin-top: 0;
+  }
+}
+
+.navbar-brand {
+  margin-left: -15px !important;
+}
+
+.navbar-toggle {
+  margin-right: 0px !important;
+}
+
+@media (max-width: 340px) {
+  .navbar-brand {
+    max-width: 240px;
+  }
+}
+

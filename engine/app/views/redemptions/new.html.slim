@@ -1,0 +1,11 @@
+.row
+  .col-lg-12
+    h1 Redeem coupon
+    = service_error_messages(@errors) if @errors
+    = form_tag(redemptions_path, method: :post) do
+      .form-group
+        = label_tag :coupon
+        = text_field_tag :coupon, '', autofocus: true, class: 'form-control'
+      .actions
+        = submit_tag 'Redeem', class: 'btn btn-primary'
+

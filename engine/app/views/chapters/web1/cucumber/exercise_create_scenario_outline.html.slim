@@ -1,0 +1,63 @@
+.row.exercise
+  .col-lg-6
+    p We have an online bookstore where you can search. We have a feature <mark>book_search.feature</mark>
+      which verifies that various search queries return appropriate amount of results. Please use <code>Scenario Outline:</code>
+      and <code>Examples:</code> keywords to refactor this feature.
+
+    steps files='files'
+      step
+        p Refactor <mark>book_search.feature</mark> by converting scenarios to <code>Scenario Outline:</code> and <code>Examples:</code> sections.
+        step-hint
+          p Add the following code to the <mark>book_search.feature</mark> file:
+          code-example type='gherkin' file='book_search.feature'
+            | Scenario Outline:
+                Given I am on the search page
+                When I search for "&lt;query&gt;"
+                Then I should get &lt;results&gt; results
+
+              Examples:
+                | query   | results |
+                | Tolkien | 2       |
+                | Pushkin | 10      |
+                | Twain   | 5       |
+        verifier
+          | expect_feature_to_include('Examples:')
+            expect_feature_to_include('Scenario Outline:')
+
+  .col-lg-6
+    code-editor files='files'
+      file language='gherkin' name='book_search.feature'
+        | Feature: Book search
+
+            Scenario: Search for "Tolkien"
+              Given I am on the search page
+              When I search for "Tolkien"
+              Then I should get 2 results
+
+            Scenario: Search for "Pushkin"
+              Given I am on the search page
+              When I search for "Pushkin"
+              Then I should get 10 results
+
+            Scenario: Search for "Twain"
+              Given I am on the search page
+              When I search for "Twain"
+              Then I should get 5 results
+
+      file language='ruby' name='book_search_steps.rb' read-only='true'
+        | Given(/^I am on the search page$/) do
+            # do nothing, let's assume we're already on the search page
+          end
+
+          When(/^I search for "([^"]*)"$/) do |search_query|
+            @search_query = search_query
+          end
+
+          Then(/^I should get (\d+) results$/) do |results_count|
+            results = {
+              'Tolkien' => 2,
+              'Pushkin' => 10,
+              'Twain' => 5
+            }
+            expect(results[@search_query]).to eq results_count.to_i
+          end

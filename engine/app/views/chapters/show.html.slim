@@ -1,0 +1,19 @@
+h1= @chapter.name
+div ng-app='courses' ng-controller='ChapterController'
+  job-result token='jobToken' job='job' continue-url=finish_course_chapter_path(@course, @chapter)
+  .content== render file: File.join('chapters', @chapter.content_path)
+  .navigation.container-fluid
+    .row
+      .col-lg-12.clearfix
+        ul.list-unstyled
+          li.pull-left.hidden-xs
+            - if @chapter.previous
+              a.btn.btn-default href=course_chapter_path(@course, @chapter.previous) Go back
+          li.pull-left.center.hidden-xs.hidden-sm
+            = render 'courses/progress_bar'
+          li.pull-right.buttons
+            - if @course.cheatsheet
+              a.btn.btn-default href=course_cheatsheet_path(@course, @course.cheatsheet) target='_blank' Cheatsheet
+            - if @chapter.exercise?
+              a.btn.btn-default data-method='post' href=finish_course_chapter_path(@course, @chapter) Skip
+            continue-button url=finish_course_chapter_path(@course, @chapter)

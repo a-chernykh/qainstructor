@@ -1,0 +1,2 @@
+angular.module('exercise').factory 'faye', ->
+  new Faye.Client('<%= ENV['FAYE_URL'] %>')

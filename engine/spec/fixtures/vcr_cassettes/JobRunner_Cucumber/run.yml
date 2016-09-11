@@ -1,0 +1,112 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://unix/v1.16/containers/qainstructor_test-runner_user_1/json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.24.1
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/json
+      Server:
+      - Docker/1.9.1 (linux)
+      Date:
+      - Fri, 15 Jan 2016 15:59:06 GMT
+    body:
+      encoding: UTF-8
+      string: |
+        {"Id":"d318b9908eaaa72bb59e0a097fde6306e48706354896a848ee886319e955e040","Created":"2016-01-14T05:42:06.138943389Z","Path":"bin/loop.sh","Args":[],"State":{"Status":"running","Running":true,"Paused":false,"Restarting":false,"OOMKilled":false,"Dead":false,"Pid":27121,"ExitCode":0,"Error":"","StartedAt":"2016-01-14T05:42:06.289943311Z","FinishedAt":"0001-01-01T00:00:00Z"},"Image":"c02333239b6599beb10bd97c655bc0f87ac891037b7596e20bf1a83750d8d473","ResolvConfPath":"/mnt/sda1/var/lib/docker/containers/d318b9908eaaa72bb59e0a097fde6306e48706354896a848ee886319e955e040/resolv.conf","HostnamePath":"/mnt/sda1/var/lib/docker/containers/d318b9908eaaa72bb59e0a097fde6306e48706354896a848ee886319e955e040/hostname","HostsPath":"/mnt/sda1/var/lib/docker/containers/d318b9908eaaa72bb59e0a097fde6306e48706354896a848ee886319e955e040/hosts","LogPath":"/mnt/sda1/var/lib/docker/containers/d318b9908eaaa72bb59e0a097fde6306e48706354896a848ee886319e955e040/d318b9908eaaa72bb59e0a097fde6306e48706354896a848ee886319e955e040-json.log","Name":"/qainstructor_test-runner_user_1","RestartCount":0,"Driver":"aufs","ExecDriver":"native-0.2","MountLabel":"","ProcessLabel":"","AppArmorProfile":"","ExecIDs":null,"HostConfig":{"Binds":["/Users/jobs/development/1:/jobs"],"ContainerIDFile":"","LxcConf":null,"Memory":0,"MemoryReservation":0,"MemorySwap":0,"KernelMemory":0,"CpuShares":0,"CpuPeriod":0,"CpusetCpus":"","CpusetMems":"","CpuQuota":0,"BlkioWeight":0,"OomKillDisable":false,"MemorySwappiness":null,"Privileged":false,"PortBindings":null,"Links":["/qainstructor_selenium-server_1:/qainstructor_test-runner_user_1/selenium-server"],"PublishAllPorts":false,"Dns":null,"DnsOptions":null,"DnsSearch":null,"ExtraHosts":null,"VolumesFrom":null,"Devices":null,"NetworkMode":"default","IpcMode":"","PidMode":"","UTSMode":"","CapAdd":null,"CapDrop":null,"GroupAdd":null,"RestartPolicy":{"Name":"","MaximumRetryCount":0},"SecurityOpt":null,"ReadonlyRootfs":false,"Ulimits":null,"LogConfig":{"Type":"json-file","Config":{}},"CgroupParent":"","ConsoleSize":[0,0],"VolumeDriver":""},"GraphDriver":{"Name":"aufs","Data":null},"Volumes":{"/jobs":"/Users/jobs/development/1"},"VolumesRW":{"/jobs":true},"Config":{"Hostname":"d318b9908eaa","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","dir=/suite"],"Cmd":["bin/loop.sh"],"Image":"qainstructor_test-runner","Volumes":null,"WorkingDir":"/suite","Entrypoint":null,"OnBuild":null,"Labels":{},"MacAddress":"","NetworkDisabled":false,"ExposedPorts":null,"VolumeDriver":"","Memory":0,"MemorySwap":0,"CpuShares":0,"Cpuset":""},"NetworkSettings":{"Bridge":"","SandboxID":"5f75da275644561081812bc0b8a5d84f48529015854059c1704107426d6c29b0","HairpinMode":false,"LinkLocalIPv6Address":"","LinkLocalIPv6PrefixLen":0,"Ports":{},"SandboxKey":"/var/run/docker/netns/5f75da275644","SecondaryIPAddresses":null,"SecondaryIPv6Addresses":null,"EndpointID":"09d44dcf893ce41a4b5f3b72f39d2784b5b194ef82c00c9c485b0e5937ee653b","Gateway":"172.17.0.1","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"IPAddress":"172.17.0.11","IPPrefixLen":16,"IPv6Gateway":"","MacAddress":"02:42:ac:11:00:0b"}}
+    http_version: 
+  recorded_at: Fri, 15 Jan 2016 15:59:06 GMT
+- request:
+    method: post
+    uri: http://unix/v1.16/containers/d318b9908eaaa72bb59e0a097fde6306e48706354896a848ee886319e955e040/exec
+    body:
+      encoding: UTF-8
+      string: '{"User":null,"AttachStdin":false,"AttachStdout":true,"AttachStderr":true,"Tty":false,"Cmd":["bin/verify.sh","Rp4e6rAonc8eDzGME46hcYsj"]}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.24.1
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      Content-Type:
+      - application/json
+      Server:
+      - Docker/1.9.1 (linux)
+      Date:
+      - Fri, 15 Jan 2016 15:59:06 GMT
+      Content-Length:
+      - '74'
+    body:
+      encoding: UTF-8
+      string: |
+        {"Id":"7df437858cdab77fc0c3c55da5e57a02f4b605ddc6812c70494f266368c05070"}
+    http_version: 
+  recorded_at: Fri, 15 Jan 2016 15:59:06 GMT
+- request:
+    method: post
+    uri: http://unix/v1.16/exec/7df437858cdab77fc0c3c55da5e57a02f4b605ddc6812c70494f266368c05070/start
+    body:
+      encoding: UTF-8
+      string: '{"Tty":false,"Detach":false}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.24.1
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/vnd.docker.raw-stream
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Fri, 15 Jan 2016 15:59:07 GMT
+- request:
+    method: get
+    uri: http://unix/v1.16/exec/7df437858cdab77fc0c3c55da5e57a02f4b605ddc6812c70494f266368c05070/json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.24.1
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/json
+      Server:
+      - Docker/1.9.1 (linux)
+      Date:
+      - Fri, 15 Jan 2016 15:59:07 GMT
+    body:
+      encoding: UTF-8
+      string: |
+        {"ID":"7df437858cdab77fc0c3c55da5e57a02f4b605ddc6812c70494f266368c05070","Running":false,"ExitCode":0,"ProcessConfig":{"privileged":false,"user":"","tty":false,"entrypoint":"bin/verify.sh","arguments":["Rp4e6rAonc8eDzGME46hcYsj"]},"OpenStdin":false,"OpenStderr":true,"OpenStdout":true,"Container":{"State":{"Running":true,"Paused":false,"Restarting":false,"OOMKilled":false,"Dead":false,"Pid":27121,"ExitCode":0,"Error":"","StartedAt":"2016-01-14T05:42:06.289943311Z","FinishedAt":"0001-01-01T00:00:00Z"},"ID":"d318b9908eaaa72bb59e0a097fde6306e48706354896a848ee886319e955e040","Created":"2016-01-14T05:42:06.138943389Z","Path":"bin/loop.sh","Args":[],"Config":{"Hostname":"d318b9908eaa","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","dir=/suite"],"Cmd":["bin/loop.sh"],"Image":"qainstructor_test-runner","Volumes":null,"WorkingDir":"/suite","Entrypoint":null,"OnBuild":null,"Labels":{}},"Image":"c02333239b6599beb10bd97c655bc0f87ac891037b7596e20bf1a83750d8d473","NetworkSettings":{"Bridge":"","SandboxID":"5f75da275644561081812bc0b8a5d84f48529015854059c1704107426d6c29b0","HairpinMode":false,"LinkLocalIPv6Address":"","LinkLocalIPv6PrefixLen":0,"Networks":{"bridge":{"EndpointID":"09d44dcf893ce41a4b5f3b72f39d2784b5b194ef82c00c9c485b0e5937ee653b","Gateway":"172.17.0.1","IPAddress":"172.17.0.11","IPPrefixLen":16,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"MacAddress":"02:42:ac:11:00:0b"}},"Ports":{},"SandboxKey":"/var/run/docker/netns/5f75da275644","SecondaryIPAddresses":null,"SecondaryIPv6Addresses":null,"IsAnonymousEndpoint":false},"LogPath":"/mnt/sda1/var/lib/docker/containers/d318b9908eaaa72bb59e0a097fde6306e48706354896a848ee886319e955e040/d318b9908eaaa72bb59e0a097fde6306e48706354896a848ee886319e955e040-json.log","Name":"/qainstructor_test-runner_user_1","Driver":"aufs","ExecDriver":"native-0.2","MountLabel":"","ProcessLabel":"","RestartCount":0,"HasBeenStartedBefore":false,"HasBeenManuallyStopped":false,"AppArmorProfile":"","HostnamePath":"/mnt/sda1/var/lib/docker/containers/d318b9908eaaa72bb59e0a097fde6306e48706354896a848ee886319e955e040/hostname","HostsPath":"/mnt/sda1/var/lib/docker/containers/d318b9908eaaa72bb59e0a097fde6306e48706354896a848ee886319e955e040/hosts","ShmPath":"/mnt/sda1/var/lib/docker/containers/d318b9908eaaa72bb59e0a097fde6306e48706354896a848ee886319e955e040/shm","MqueuePath":"/mnt/sda1/var/lib/docker/containers/d318b9908eaaa72bb59e0a097fde6306e48706354896a848ee886319e955e040/mqueue","MountPoints":{"/jobs":{"Name":"","Destination":"/jobs","Driver":"","RW":true,"Source":"/Users/jobs/development/1","Relabel":""}},"ResolvConfPath":"/mnt/sda1/var/lib/docker/containers/d318b9908eaaa72bb59e0a097fde6306e48706354896a848ee886319e955e040/resolv.conf","Volumes":{"/jobs":"/Users/jobs/development/1"},"VolumesRW":{"/jobs":true}}}
+    http_version: 
+  recorded_at: Fri, 15 Jan 2016 15:59:07 GMT
+recorded_with: VCR 3.0.0

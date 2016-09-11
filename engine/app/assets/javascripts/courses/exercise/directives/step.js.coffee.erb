@@ -1,0 +1,19 @@
+angular.module('exercise').directive 'step', ->
+  transclude: true
+  scope: true
+  templateUrl: '<%= asset_path('exercises/step') %>'
+  restrict: 'E'
+  replace: true
+  require: '^steps'
+  link: (scope, element, attr, stepsCtrl) ->
+    scope.steps = stepsCtrl
+    scope.number = $(element).index() + 1
+    step =
+      number: scope.number
+      verifier:
+        type: $('verifier', element).attr('type')
+        text: $('verifier', element).html()
+    scope.steps.addStep step
+    scope.hintAvailable = $('step-hint', element).size() > 0
+    scope.showHint = -> scope.hintIsVisible = true
+

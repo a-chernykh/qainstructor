@@ -1,0 +1,150 @@
+.panel.panel-default
+  .panel-heading Download example
+  .panel-body
+    p You can either follow instructions in this chapter to create this project by yourself (recommended) or you can download the working code by clicking button below.
+    example type='cucumber' course=@chapter.course.code number='14'
+
+p Let's create a simple project which will use Cucumber and Selenium WebDriver to open Google frontpage in Firefox browser.
+
+h2 Install Firefox
+
+p We will be using Firefox as a browser to run our cucumber scenarios. Please follow link below to download it:
+
+p
+  a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank" https://www.mozilla.org/en-US/firefox/new/
+
+h2 Create project directory
+
+p Create a new directory for this project in any location which is convenient to you. We will make it in the user home directory.
+
+pre
+  code.bash
+    | % cd ~
+      % mkdir example
+      % cd example
+
+
+h2 Install gem bundler
+
+p bundler is a Ruby package manager. We'll be using it to install all required libraries such as <code>selenium-webdriver</code> and <code>cucumber</code>.
+
+pre
+  code.bash
+    | ~/example % gem install bundler
+      Fetching: bundler-1.11.2.gem (100%)
+      Successfully installed bundler-1.11.2
+      1 gem installed
+
+
+h2 Create Gemfile
+
+p In the project directory, create file with the name <mark>Gemfile</mark> and following contents:
+
+code-example type='ruby' file='~/example/Gemfile'
+  | source 'https://rubygems.org'
+
+    gem 'cucumber'
+    gem 'selenium-webdriver'
+
+p And run <kbd>bundle install</kbd> command.
+
+pre
+  code.bash
+    | ~/example % bundle install
+      Fetching gem metadata from https://rubygems.org/.........
+      Fetching version metadata from https://rubygems.org/..
+      Resolving dependencies...
+      Using builder 3.2.2
+      Using ffi 1.9.10
+      Using diff-lcs 1.2.5
+      Using multi_json 1.11.2
+      Using multi_test 0.1.2
+      Using rubyzip 1.1.7
+      Using websocket 1.2.2
+      Using bundler 1.11.2
+      Using childprocess 0.5.8
+      Installing gherkin3 3.1.2
+      Installing selenium-webdriver 2.48.1
+      Installing cucumber-core 1.3.1
+      Using cucumber 2.1.0
+      Bundle complete! 2 Gemfile dependencies, 13 gems now installed.
+      Use `bundle show [gemname]` to see where a bundled gem is installed.
+
+p You can see that bundler have installed <mark>cucumber</mark>, <mark>selenium-webdriver</mark> and all dependencies.
+
+h2 Create hooks for opening and closing Firefox
+
+p Go ahead and create <code>features/support/</code> directory in your project directory:
+
+pre
+  code.bash
+    | ~/example % mkdir -p features/support
+
+p Then create new file <mark>features/support/hooks.rb</mark> with the following contents:
+
+code-example type='ruby' file='features/support/hooks.rb'
+  | # 3 lines below are needed to actually include cucumber and selenium-webdriver libraries from Gemfile
+    # to make them available to Ruby program
+    require 'rubygems'
+    require 'bundler/setup'
+    Bundler.require(:default)
+
+    Before do
+      @browser = Selenium::WebDriver.for(:firefox)
+    end
+
+p This hook will ensure that new Firefox browser instance will be created before every scenario
+
+h2 Create feature file
+
+p Now it's about time to create the actual Cucumber feature file. Create new file in your project directory with the name
+  <mark>features/google_front_page.feature</mark> and put the following contents into it:
+
+code-example type='gherkin' file='~/example/features/google_front_page.feature'
+  | Feature: Visit Google front page
+
+      Scenario: Visit google.com
+        Given I go to the google.com
+
+p We only have 1 step here - to go to the google.com. Usually, scenarios will have more than one step, but it's fine to do
+  this for demonstration purposes.
+
+h2 Create step definition
+
+p Now, when we have our scenario, let's create step definition for <code>Given I go to the google.com</code> step which will
+  point the browser to <mark>http://google.com</mark>.
+
+p Create <mark>features/steps</mark> directory:
+
+pre
+  code.bash
+    | ~/example % mkdir features/steps
+
+p And then create new file <mark>google_front_page_steps.rb</mark> in this directory:
+
+code-example type='ruby' file='~/example/features/steps/google_front_page_steps.rb'
+  | Given(/^I go to the google\.com$/) do
+      @browser.get('http://google.com')
+    end
+
+p This will force the browser to open <mark>http://google.com</mark>.
+
+h2 Run
+
+p Run the scenario using <kbd>bundle exec cucumber</kbd> command:
+
+pre
+  code.bash
+    | ~/example % bundle exec cucumber
+      Feature: Visit Google front page
+
+        Scenario: Visit google.com     # features/google_front_page.feature:3
+          Given I go to the google.com # features/steps/google_front_page_steps.rb:1
+
+      1 scenario (1 passed)
+      1 step (1 passed)
+      0m3.482s
+
+p If everything was done correctly, you should see how Firefox browser is being opened and how it navigates to
+  http://google.com.
+

@@ -1,0 +1,45 @@
+.row.exercise
+  .col-lg-4
+    p You need to implement <code>Given I am on the front page</code> step definition by pointing a browser to
+      <code>#{sample_app_url('app')}</code> url. You can use <code>@browser.get(...)</code> method described
+      in previous chapter.
+
+    steps files='files'
+      step
+        p Go to the front page by pointing a browser to <code>#{sample_app_url('app')}</code>.
+        step-hint
+          p Create cucumber step in <mark>sign_in_steps.rb</mark> to go to the frontpage:
+          code-example type='ruby' file='sign_in_steps.rb'
+            | Given /^I am on the front page$/ do
+                @browser.get('#{sample_app_url('app')}')
+              end
+        verifier
+          |
+
+  .col-lg-4
+    code-editor files='files'
+      file language='gherkin' name='sign_in.feature' read-only='true'
+        | Feature: Sign in
+
+            Scenario: User signs in
+              Given I am on the front page
+              When I click "Sign in" button
+              Then I should be on the sign in page
+
+      file language='ruby' name='sign_in_steps.rb'
+        | Given /^I am on the front page$/ do
+            # add your code here
+          end
+
+          When /^I click "(.*)" button$/ do |button_name|
+            button = @browser.find_element(:css, "input[value='\#{button_name}']")
+            button.click
+          end
+
+          Then /^I should be on the sign in page$/ do
+            body = @browser.find_element(:tag_name, 'body')
+            expect(body.text).to include 'Sign in form'
+          end
+
+  .col-lg-4
+    browser url='appUrl' src='#{sample_app_url('app')}'

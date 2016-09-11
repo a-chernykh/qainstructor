@@ -1,0 +1,14 @@
+angular.module('runner').directive 'runsCode', ->
+  restrict: 'A'
+  templateUrl: '<%= asset_path('courses/runs_code') %>'
+  scope: {}
+  link: (scope, element, attrs) ->
+    scope.job = { language: 'cucumber', files: [] }
+    scope.job.files.push { name: 'scenario.feature', contents: jQuery("#{attrs.fileFeature}").data('original') }
+    scope.job.files.push { name: 'scenario.rb', contents: jQuery("#{attrs.fileStepDefinitions}").data('original') }
+  controller: [ '$scope', '$http', ($scope, $http) ->
+    $scope.run = ->
+      success = -> console.log 'success'
+      fail = -> console.log 'fail'
+      $http.post(Routes.api_v1_jobs_path(), { job: $scope.job }).then(success, fail)
+  ]

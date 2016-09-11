@@ -1,0 +1,74 @@
+p Almost every website has forms which user should submit. When testing such features you would need to fill them in programmatically
+  using API provided by Selenium WebDriver.
+
+p Check out the following registration form which allows a user to create a new account on the website.
+
+.row
+  .col-lg-6
+    browser url='appUrl' src='#{sample_app_url('app')}/register' style='height: 650px;'
+  .col-lg-6
+    code-example type='html' file='register.html'
+      = File.read('app/views/chapters/web1/code/register.html')
+
+h2 Text fields
+
+p It's pretty easy to put some text into the input field which accepts text value. All you need to do is to find appropriate input using
+  one of <a href=''>Selenium WebDriver selectors</a> and use <code>send_keys</code> method on this field. Example below will fill in e-mail
+  field from above form with the <code>john@example.com</code> value:
+
+code-example type='ruby'
+  | email = @browser.find_element(:name, 'email')
+    email.send_keys 'john@example.com'
+
+p The same method is applicable for filling in password fields and text areas.
+
+h2 Dropdowns
+
+p Selecting option from the dropdown is a little bit trickier. First, you will need to find <code>select</code> element. Then you will need
+  to iterate through all child <code>option</code> element to find the one you want to click.
+
+code-example type='ruby'
+  | country = @browser.find_element(:name, 'country')
+    options = country.find_elements(:tag_name, 'option')
+    options.each { |option| option.click if option.text == 'United States' }
+
+p If the above looks like too much effort then you can use <code>Select</code> helper which is a part of Selenium WebDriver:
+
+code-example type='ruby'
+  | country = @browser.find_element(:name, 'country')
+    select_list = Selenium::WebDriver::Support::Select.new(country)
+    select_list.select_by(:text, 'United States')
+
+h2 Checkboxes and radio buttons
+
+p Selecting checkboxes and radiobuttons is really simple. Just call <code>click</code> method on the element:
+
+code-example type='ruby'
+  | # Click on "Subscribe to weekly newsletter" checkbox
+    subscribe = @browser.find_element(:name, 'subscribe')
+    subscribe.click
+
+    # Click on "Female" radio button
+    female = @browser.find_elements(:name, 'gender')[1]
+    female.click
+
+p Sometimes you may need to check the current status of the checkbox - if it's checked or not.
+
+code-example type='ruby'
+  | subscribe = @browser.find_element(:name, 'subscribe')
+    if subscribe.selected?
+      puts 'Subscribe checkbox is checked'
+    else
+      puts 'Subscribe checkbox is not checked'
+    end
+
+h2 Upload file
+
+p A browser will pop up native OS file selection dialog if you will click on Browse button. Selenium WebDriver can not
+  interact with it, that's why you don't need to click it. To upload the file, simply use <code>send_keys</code> method
+  to set the value to the absolute path of the file you're trying to upload. Example below will upload the
+  <mark>/Users/name/Desktop/profile.jpg</mark> file from your computer:
+
+code-example type='ruby'
+  | profile_photo = @browser.find_element(:name, 'photo')
+    profile_photo.send_keys('/Users/name/Desktop/profile.jpg')

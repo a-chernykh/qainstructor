@@ -1,0 +1,45 @@
+.row.exercise
+  .col-lg-4
+    p You have <mark>registration.feature</mark> from the previous chapter. You need to create new step definition for <code>When I click "Register" button</code> step.
+      This step definition should click on "Register" button. You can do it by locating appropriate HTML element and running <code>click</code> method on it:
+
+    code-example type='ruby'
+      | button = @browser.find_element(:css, "input[value='Register']")
+        button.click
+
+    steps files='files'
+      step
+        p Add step definition to click "Register" button:
+        step-hint
+          p Add the following code to the <mark>registration_steps.rb</mark> file:
+          code-example type='ruby' file='registration_steps.rb'
+            | When /^I click "(.*)" button$/ do |button_name|
+                button = @browser.find_element(:css, "input[value='\#{button_name}']")
+                button.click
+              end
+        verifier
+          | body = @browser.find_element(:tag_name, 'body')
+            expect(body.text).to include('Registration form')
+
+  .col-lg-4
+    code-editor files='files'
+      file language='gherkin' name='registration.feature' read-only='true'
+        | Feature: Registration
+
+            Scenario: User creates new account
+              Given I am on the front page
+              When I click "Register" button
+              Then I should be on the registration page
+
+      file language='ruby' name='registration_steps.rb'
+        | Given /^I am on the front page$/ do
+            @browser.get '#{sample_app_url('app')}'
+          end
+
+          Then /^I should be on the registration page$/ do
+            body = @browser.find_element(:tag_name, 'body')
+            expect(body.text).to include('Registration form')
+          end
+
+  .col-lg-4
+    browser url='appUrl' src='#{sample_app_url('app')}'

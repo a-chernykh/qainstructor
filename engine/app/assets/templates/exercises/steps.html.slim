@@ -1,0 +1,6 @@
+h2 Step by step
+
+ul.steps-status.clearfix
+  li ng-repeat='step in steps' ng-class='step.status' ng-click='setStep(step)'
+ul.steps
+  ng-transclude

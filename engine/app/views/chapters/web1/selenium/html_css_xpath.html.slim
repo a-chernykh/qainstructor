@@ -1,0 +1,137 @@
+h2 HTML
+
+p All web pages are created using HTML (Hyper Text Markup Language). When you see a webpage inside the web browser, you
+  actually see the compiled version of it. Browser converts HTML code to the actual webpage which is visible to the user.
+
+p HTML is basically a set of markup tags which web developer can use to create some visual representation of data he wants
+  to show (webpage).
+
+p Let's look at reall small example of HTML page:
+
+.row
+  .col-lg-6
+    code-example type='html' file='index.html'
+      = File.read('app/views/chapters/web1/code/index.html')
+  .col-lg-6
+    browser url='appUrl' src='#{sample_app_url('html')}' style='height: 200px;'
+
+p On the left you can see the source code of the page which is HTML markup. On the right you see how web browser renders this source code. Let's
+  explain the meaning of HTML tags from this example:
+
+dl
+  dt &lt;!DOCTYPE html&gt;
+  dd Defines the type of document - html
+dl
+  dt &lt;html&gt; ... &lt;/html&gt;
+  dd Defines HTML document content. Everything between &lt;html&gt; and &lt;/html&gt; is a part of HTML document
+dl
+  dt &lt;head&gt; ... &lt;/head&gt;
+  dd Defines the header section of HTML document. It may contain page title and some meta data.
+dl
+  dt &lt;title&gt;Example page&lt;/title&gt;
+  dd Defines the title of the webpage.
+dl
+  dt &lt;body&gt; ... &lt;/body&gt;
+  dd Defines the body of the webpage - the part which is visible to the user
+dl
+  dt &lt;h1&gt;Page title&lt;/h1&gt;
+  dd h1 tag defines level 1 heading
+dl
+  dt &lt;p&gt;Paragraph of text&lt;/p&gt;
+  dd Defines paragraph of text
+
+h2 CSS
+
+p CSS stands for Cascading Style Sheets and they allow to customize appereance of HTML elements. Using CSS you can
+  set width, heigh, color and other attributes. Let's add some styling to our example page:
+
+.row
+  .col-lg-6
+    code-example type='html' file='css.html'
+      = File.read('app/views/chapters/web1/code/css.html')
+  .col-lg-6
+    browser url='appUrl' src='#{sample_app_url('html')}/css' style='height: 320px;'
+
+p Now we see that our title has become red and paragraph font is now bold.
+
+p CSS is using a concept of selectors to find elements for which browser needs to apply styles. In previous example
+  we've used the following selectors:
+
+ul
+  li <code>h1</code> - which matches all <code>h1</code> elements (headings)
+  li <code>p</code> - matches all <code>p</code> elements (paragraphs)
+
+p CSS rules are defined as following:
+
+code-example type='css'
+  | selector {
+      property1: value1;
+      property2: value2;
+      ...
+    }
+
+p Let's review some of the common selectors which we'll be using later:
+
+table.table
+  thead
+    tr
+      th Selector
+      th Meaning
+  tbody
+    tr
+      td <code>a.register</code>
+      td Will match all hyperlinks with class "register" <code>&lt;a href="" class="register"&gt;Register</a></code>
+    tr
+      td <code>input[value="Register"]</code>
+      td Will match all inputs with value "Register" <code>&lt;input value="Register" /&gt;</code>
+    tr
+      td <code>input#register</code>
+      td Will match input tag with id "register" <code>&lt;input id="register" /&gt;</code>
+
+p When you need to find out what CSS selector you need to use in Cucumber to locate an element, it's really
+  handy to use browser developer tools.
+
+h3 Google Chrome
+
+ol
+  li Click on "View" / "Developer" / "Developer Tools" menu item
+  li Switch to "Elements" tab in the "Developer Tools" window in the bottom of the webpage
+  li Click on "Select an element" icon in the top left of Developer Tools
+  li Click on the desired element which CSS selector you want to obtain. Now this element should be selected.
+  li Right click on the selected element and click on "Copy" / "Copy Selector" menu item. It will copy the selector the clipboard.
+
+h3 Firefox
+
+ol
+  li Click on "Tools" / "Web Developer" / "Inspector" menu item
+  li Click on "Select an element" icon in the top left of Developer Tools
+  li Click on the desired element which CSS selector you want to obtain. Now this element should be selected.
+  li Right click on the selected element and click on "Copy Unique Selector" menu item. It will copy the selector the clipboard.
+
+h2 XPATH
+
+p XPATH is an expression engine which allows selecting HTML elements. Think of it as the advanced version of CSS. Usually, when you
+  don't need to make really complex queries, it's better to stick with CSS selectors because it's syntax is easier to read. One
+  particular case where XPATH might be useful is to find HTML element with given text content:
+
+table.table
+  thead
+    tr
+      th Selector
+      th Meaning
+  tbody
+    tr
+      td <code>//button[contains(text(), 'Button 1')]</code>
+      td Will find the button which text content equals to "Button 1" <code>&lt;button&gt;Button 1&lt;/button&gt;</code>
+
+h2 Further reading
+
+p Links to other resources which are helpful to reinforce material:
+
+ul
+  li
+    a href="http://www.w3schools.com/html/html_intro.asp" target="_blank" Introduction to HTML
+  li
+    a href="http://www.tutorialspoint.com/css/index.htm" target="_blank" CSS Tutorial
+  li
+    a href="http://www.w3schools.com/xsl/xpath_intro.asp" XPATH Tutorial

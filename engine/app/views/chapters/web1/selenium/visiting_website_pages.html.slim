@@ -1,0 +1,30 @@
+p There are 2 ways to force browser to visit webpage:
+
+ul
+  li Going to this webpage directly using <code>@browser.get</code> method
+  li Going to this webpage by interacting with HTML elements (clicking links, submitting forms etc)
+
+h3 Going to the webpage directly
+
+p You may want to go to the webpage directly at the beginning of your test when you need to point a browser to the front
+  page of your app.
+
+code-example type='ruby'
+  | @browser.get('http://google.com')
+
+
+h3 Going to the webpage by interacting with elements
+
+p Once you have the front page of your app loaded in the browser, it's a good practice to navigate through a website
+  by interacting with it's controls. For, example you can sign in into your Google Account by clicking "Sign in"
+  button:
+
+code-example type='ruby'
+  | @browser.find_element(:link_text, 'Sign in').click
+
+p The above code will find the link on the webpage with "Sign in" text and will click it. The browser will follow this link navigating
+  user to the sign in page.
+
+h2 Example
+
+example type='cucumber' course=@chapter.course.code number='4'

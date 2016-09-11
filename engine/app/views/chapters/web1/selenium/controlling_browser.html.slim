@@ -1,0 +1,29 @@
+p For automating web applications, you will need a way to interact with browser and web pages. cucumber interacts with a web page using a <strong>driver</strong>. The most popular and functional
+  driver is <strong>selenium-webdriver</strong>. It allows performing various web page interactions - such as locating HTML elements using their CSS or XPATH selectors, filling in input
+  with some values, clicking buttons and links, inspecting contents of HTML elements.
+
+h2 Opening and closing browser
+
+p You can create new instance of selenium-webdriver using <code>Selenium::WebDriver.for</code> method:
+
+code-example type='ruby'
+  | @browser = Selenium::WebDriver.for(:firefox)
+
+p This will effectively open Firefox. After your tests successfully finished you can close browser using <code>quit</code> method:
+
+code-example type='ruby'
+  | @browser.quit
+
+p Usually, you will need to open browser before every scenario and close the browser after scenario has been successfully completed. This can be achieved by creating
+  <mark>features/support/hooks.rb</mark> file with <code>Before</code> and <code>After</code> hooks. cucumber includes all files inside <mark>features/support/</mark>
+  by default. It will run code inside <code>Before</code> hook before the first step of every scenario. It will run code inside <code>After</code> after the last step
+  of every scenario.
+
+code-example type='ruby' file='features/support/hooks.rb'
+  | Before do
+      @browser = Selenium::WebDriver.for(:firefox)
+    end
+
+    After do |scenario|
+      @browser.quit unless scenario.failed?
+    end

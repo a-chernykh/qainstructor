@@ -1,0 +1,180 @@
+.row.exercise
+  .col-lg-4.fill
+    p Now you know how to find HTML elements and how to fill in forms. Using this knowledge
+      please create account on the website for <a target="_blank" href="https://en.wikipedia.org/wiki/Ada_Lovelace">Ada Lovelace</a>
+      who was technically the first woman in programming:
+
+    dl
+      dt E-mail
+      dd ada@lovelace.com
+
+      dt Country
+      dd United Kingdom
+
+      dt Password
+      dd l0v3lace
+
+      dt Profile Photo
+      dd Located at <mark>/Users/ada/Desktop/profile.jpg</mark>
+
+      dt Gender
+      dd Female
+
+    steps files='files'
+      step
+        | Go to the front page and click "Register" button
+        step-hint
+          ol
+            li
+              p Add new step to <mark>create_account.feature</mark>:
+              code-example type='cucumber'
+                | Given I am on the registration page
+            li
+              p Create new step definition to go to the Registration page:
+              code-example type='ruby'
+                | Given /^I am on the registration page$/ do
+                    @browser.get('#{sample_app_url('app')}')
+                    @browser.find_element(:css, "input[value='Register']").click
+                  end
+        verifier
+          | body = @browser.find_element(:tag_name, 'body')
+            expect(body.text).to include 'Registration form'
+      step
+        | Fill in E-mail field with "ada@lovelace.com"
+        step-hint
+          ol
+            li
+              p Add new step to <mark>create_account.feature</mark>:
+              code-example type='cucumber'
+                | When I fill in e-mail with "ada@lovelace.com"
+            li
+              p Create step definition in <mark>create_account_steps.rb</mark>:
+              code-example type='ruby'
+                | When /^I fill in e-mail with "(.*)"$/ do |email_value|
+                    email_field = @browser.find_element(:name, 'email')
+                    email_field.send_keys(email_value)
+                  end
+        verifier
+          | email_field = @browser.find_element(:name, 'email')
+            expect(email_field.attribute('value')).to eq 'ada@lovelace.com'
+      step
+        p Select "United Kingdom" from Country dropdown
+        step-hint
+          ol
+            li
+              p Add new step to <mark>create_account.feature</mark>:
+              code-example type='cucumber'
+                | When I select "United Kingdom" from Country dropdown
+            li
+              p Create step definition in <mark>create_account_steps.rb</mark>:
+              code-example type='ruby'
+                | When /^I select "(.*)" from Country dropdown$/ do |country_name|
+                    country = @browser.find_element(:name, 'country')
+                    select_list = Selenium::WebDriver::Support::Select.new(country)
+                    select_list.select_by(:text, country_name)
+                  end
+        verifier
+          | country_field = @browser.find_element(:name, 'country')
+            expect(country_field.attribute('value')).to eq 'GB'
+      step
+        p Fill in Password and Password confirmation with the password
+        step-hint
+          ol
+            li
+              p Add 2 steps to <mark>create_account.feature</mark>:
+              code-example type='cucumber'
+                | When I fill in password with "l0v3lace"
+                  And I fill in password confirmation with "l0v3lace"
+            li
+              p Create step definition in <mark>create_account_steps.rb</mark>:
+              code-example type='ruby'
+                | When /^I fill in password with "(.*)"$/ do |password|
+                    password_field = @browser.find_element(:name, 'password')
+                    password_field.send_keys(password)
+                  end
+
+                  When /^I fill in password confirmation with "(.*)"$/ do |password|
+                    password_confirmation_field = @browser.find_element(:name, 'password_confirmation')
+                    password_confirmation_field.send_keys(password)
+                  end
+        verifier
+          | password_field = @browser.find_element(:name, 'password')
+            expect(password_field.attribute('value')).to eq 'l0v3lace'
+            password_confirmation_field = @browser.find_element(:name, 'password_confirmation')
+            expect(password_confirmation_field.attribute('value')).to eq 'l0v3lace'
+      step
+        p Set Profile photo path to "/Users/ada/Desktop/profile.jpg"
+        step-hint
+          ol
+            li
+              p Add step to <mark>create_account.feature</mark>:
+              code-example type='cucumber'
+                | When I choose "/Users/ada/Desktop/profile.jpg" as profile photo
+            li
+              p Create step definition in <mark>create_account_steps.rb</mark>:
+              code-example type='ruby'
+                | When /^I choose "(.*)" as profile photo$/ do |profile_photo_path|
+                    photo_field = @browser.find_element(:name, 'photo')
+                    photo_field.send_keys(profile_photo_path)
+                  end
+        verifier
+          | photo_field = @browser.find_element(:name, 'photo')
+            expect(photo_field.attribute('value')).to eq 'profile.jpg'
+      step
+        p Select "Female" as Gender
+        step-hint
+          ol
+            li
+              p Add step to <mark>create_account.feature</mark>:
+              code-example type='cucumber'
+                | When I select female gender
+            li
+              p Create step definition in <mark>create_account_steps.rb</mark>:
+              code-example type='ruby'
+                | When /^I select female gender$/ do
+                    female = @browser.find_elements(:name, 'gender')[1]
+                    female.click
+                  end
+        verifier
+          | female = @browser.find_elements(:name, 'gender')[1]
+            expect(female).to be_selected
+      step
+        p Click "Create account" button
+        step-hint
+          ol
+            li
+              p Add step to <mark>create_account.feature</mark>:
+              code-example type='cucumber'
+                | When I click "Create account"
+            li
+              p Create step definition in <mark>create_account_steps.rb</mark>:
+              code-example type='ruby'
+                | When /^I click "(.*)"$/ do |button_name|
+                    button = @browser.find_element(:css, "input[value='\#{button_name}']")
+                    button.click
+                  end
+            li
+              p Add step to <mark>create_account.feture</mark>:
+              code-example type='cucumber'
+                | Then I should be registered
+            li
+              p Create step definition in <mark>create_account_steps.rb</mark>:
+              code-example type='ruby'
+                | Then /^I should be registered$/ do
+                    body = @browser.find_element(:tag_name, 'body')
+                    expect(body.text).to include 'Account has been created'
+                  end
+        verifier
+          | body = @browser.find_element(:tag_name, 'body')
+            expect(body.text).to include 'Account has been created'
+
+  .col-lg-4
+    code-editor files='files'
+      file language='gherkin' name='create_account.feature'
+        | Feature: Create new account
+
+            Scenario: User registers
+      file language='ruby' name='create_account_steps.rb'
+
+  .col-lg-4
+    browser url='appUrl' src='#{sample_app_url('app')}'

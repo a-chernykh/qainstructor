@@ -1,0 +1,88 @@
+p cucumber feature files are using Gherkin language. It allows describing features using human readable English sentences. All feature files
+  should have <mark>.feature</mark> file extension. It's also a good convention when feature file describes only one feature. Good example of features:
+
+ul
+  li User registration (<strong>registration.feature</strong>)
+  li Login (<strong>login.feature</strong>)
+  li Password recovery (<strong>password_recovery.feature</strong>)
+  li Money transfer (<strong>money_transfer.feature</strong>)
+
+p Every feature file begins with a short feature description which outlines what is actually tested inside this particular file. Short feature description
+  may be followed by a more detailed description. Below is an example of cucumber feature file - <mark>registration.feature</mark>. It describes registration
+  process when users can create new accounts on a website.
+
+code-example type='gherkin' file='features/registration.feature'
+  | Feature: Registration
+
+    Users should be able to create new accounts by entering
+    e-mail and password.
+
+    Scenario: User creates new account
+      Given I am on the front page
+      When I click "Register" button
+      Then I should be on the registration page
+      When I fill in "E-mail" with "john@example.com"
+      And I fill in "Password" with "secretpassword"
+      And I click "Register"
+      Then I should see "Account has been created"
+
+    Scenario: User fails to create new account because he forgot to type e-mail
+      ...
+
+p Above file starts with <code>Feature: Registration</code>. A <strong>Feature</strong> is a Gherkin keyword which denotes beginning of feature file. The text
+  which follows this keyword is a feature name. Then goes feature description which ignored by Gherkin parser. It improves file readability so that it's easier
+  to understand feature for someone who reads it.
+
+p A Feature consists of one or more test scenarios. Keyword <strong>Scenario</strong> marks the beginning of each. It is followed by scenario description. Every scenario
+  consists of one or more steps which are indented (shifted right) using spaces or tabs. Step begins with either <strong>Given</strong>, <strong>When</strong>, <strong>Then</strong>,
+  or <strong>And</strong> keyword.
+
+p Did you know that it's possible to create scenarios in various languages? Yes, it is! Cucumber supports over 60 spoken languages. But we'll be using English in this course.
+
+h2 Given
+
+p Keyword <strong>Given</strong> starts step which represents some pre-condition. It should be used to put a system in a known state. Usually, all pre-conditions are coming
+  in the beginning of a scenario. Example of <strong>Given</strong> steps:
+
+code-example type='gherkin'
+  |   Given I am logged in
+      Given I am on the checkout page
+      Given I have $300 account balance
+
+h2 When
+
+p Keyword <strong>When</strong> is used to describe some key action which performed by a user. Good examples would be:
+
+code-example type='gherkin'
+  |   When I click "Register" button
+      When I submit the checkout form
+      When I transfer $150 to another user
+
+h2 Then
+
+p The purpose of <strong>Then</strong> is to check some outcome. Usually, it's a key part of scenario - when you're actually checking that
+  system behaves as desired. Examples:
+
+code-example type='gherkin'
+  |   Then I should see "Account has been created"
+      Then I should receive order confirmation e-mail
+      Then I should have $150 account balance
+
+h2 And, But
+
+p It's worth noting that if you have multiple steps which are using the same keyword, this keyword can be replaced with <strong>And</strong> and <strong>But</strong>.
+  For example, imagine you have the following scenario:
+
+code-example type='gherkin'
+  |   Given I am logged in
+      Given I am on the checkout page
+      Given I have $300 account balance
+
+p It can be replaced with:
+
+code-example type='gherkin'
+  |   Given I am logged in
+      And I am on the checkout page
+      And I have $300 account balance
+
+p It's a good practice to do so because it makes scenarios more readable.

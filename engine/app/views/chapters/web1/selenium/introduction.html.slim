@@ -1,0 +1,64 @@
+p Selenium is a browser automation library which allows you to perform user actions in the web browser. It is intended to simplify a life
+  of Quality Assurance engineer because it allows creating automated tests for actions which are performed manually.
+
+p Take a look at the example below. It is a cucumber scenario which tests web application which shows "It works!" message when a user clicks "Click me" button.
+  You can see the web app itself on the right.
+
+.row
+  .col-lg-6
+    code-example type='gherkin' file='features/show_message.feature'
+      | Feature: Show message
+
+        Scenario: User clicks the button
+          Given I am on the front page
+          When I click on "Click me" button
+          Then I should see "It works!" message
+
+    code-example type='ruby' file='features/step_definitions/show_message_steps.rb'
+      | Given(/^I am on the front page$/) do
+          @browser.get('#{sample_app_url('message')}')
+        end
+
+        When(/^I click on "([^"]*)" button$/) do |button_name|
+          button = @browser.find_element(:css, "input[value='\#{button_name}']")
+          button.click
+        end
+
+        Then(/^I should see "([^"]*)" message$/) do |message|
+          body = @browser.find_element(:tag_name, 'body')
+          expect(body.text).to include(message)
+        end
+  .col-lg-6
+    browser url='appUrl' src='#{sample_app_url('message')}' style='height: 400px;'
+
+p Note that <code>@browser</code> variable is an instance of Selenium WebDriver browser. It will be covered in next chapters.
+
+h2 Architecture
+
+p Cucumber test scenario uses <mark>selenium-webdriver</mark> Ruby library to connect to <mark>Selenium WebDriver</mark> which in turn connects to a browser and
+  using it's native API for automation, performs all requested actions (like locating HTML elements, clicking buttons, etc).
+
+h1 Exercise: run above example
+
+h3 Download and install Firefox
+
+p cucumber uses <a href="http://www.seleniumhq.org/projects/webdriver/">selenium-webdriver</a> gem to interact with the browser. The best supported browser is Firefox.
+  You will need to <a href="https://www.mozilla.org/en-US/firefox/new/">download and install it</a>.
+
+h3 Download example
+
+example type='cucumber' course=@chapter.course.code number='1' expand-instructions='true'
+
+p If everything was downloaded and installed properly, you should see the Firefox pops up briefly and cucumber gives you the following output indicating that feature scenario has passed:
+
+pre
+  | Feature: Show message
+
+      Scenario: User clicks the button        # features/show_message.feature:3
+        Given I am on the front page          # features/step_definitions/show_message_steps.rb:1
+        When I click on "Click me" button     # features/step_definitions/show_message_steps.rb:5
+        Then I should see "It works!" message # features/step_definitions/show_message_steps.rb:10
+
+    1 scenario (1 passed)
+    3 steps (3 passed)
+    0m4.374s

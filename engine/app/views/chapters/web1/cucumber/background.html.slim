@@ -1,0 +1,124 @@
+p Let's say we have 2 test scenarios which are testing 2 cases. The first case when a user fills in registration form correctly and successfully registered.
+  The second case when a user fails to type correct password confirmation and system shows an error.
+
+code-example type='cucumber' file='create_account.feature'
+  | Feature: Create new account
+
+      Scenario: User registers
+        Given I am on the registration page
+        When I fill in e-mail with "ada@lovelace.com"
+        And I select "United Kingdom" from Country dropdown
+        And I fill in password with "l0v3lace"
+        And I fill in password confirmation with "l0v3lace"
+        And I choose "/Users/ada/Desktop/profile.jpg" as profile photo
+        And I select female gender
+        And I click "Create account"
+        Then I should be registered
+
+      Scenario: User types incorrect password confirmation
+        Given I am on the registration page
+        When I fill in e-mail with "ada@lovelace.com"
+        And I fill in password confirmation with "password"
+        And I fill in password with "l0v3lace"
+        And I click "Create account"
+        Then I should see "Incorrect password confirmation" message
+
+p Did you notice that both test scenarios start with 2 equal steps?
+
+code-example type='cucumber'
+  | Given I am on the registration page
+    When I fill in e-mail with "ada@lovelace.com"
+
+p In software development world this is called code duplication. It's always better to avoid it because otherwise, your code becomes less maintainable. What if you would
+  need to use different e-mail to create an account? Then you have to change it in 2 places instead of 1. Thankfully, Gherkin language allows to <abrr title="Don't Repeat Yourself">DRY</abbr>
+  your scenarios by creating common <code>Background</code> section in your feature file. Take a look how our feature can be improved:
+
+code-example type='cucumber' file='create_account.feature'
+  | Feature: Create new account
+
+      Background:
+        Given I am on the registration page
+        And I fill in e-mail with "ada@lovelace.com"
+
+      Scenario: User registers
+        When I select "United Kingdom" from Country dropdown
+        And I fill in password with "l0v3lace"
+        And I fill in password confirmation with "l0v3lace"
+        And I choose "/Users/ada/Desktop/profile.jpg" as profile photo
+        And I select female gender
+        And I click "Create account"
+        Then I should be registered
+
+      Scenario: User types incorrect password confirmation
+        When I fill in password confirmation with "password"
+        And I fill in password with "l0v3lace"
+        And I click "Create account"
+        Then I should see "Incorrect password confirmation" message
+
+p Notice that now common part of scenarios resides in <code>Background</code> section. cucumber runs this section before every scenario in a feature file.
+
+p General best practice is to keep your <code>Background</code> section small. If you need to setup some complex state and reader does not need to know about the details,
+  you may need to create high-level step and add it to the <code>Background</code>. Remember, that your scenarios are supposed to be read by other people and they have to
+  memorize the Background steps in order to mentally interpret the scenario.
+
+p Imagine you have the following feature:
+
+code-example type='cucumber' file='sign_in.feature'
+  | Feature: Sign in
+
+      Background:
+        Given I am on the registration page
+        And I fill in e-mail with "ada@lovelace.com"
+        And I fill in password with "l0v3lace"
+        And I fill in password confirmation with "l0v3lace"
+        And I click "Create account"
+
+      Scenario: User signs in
+        Given I am on the sign in page
+        When I fill in e-mail with "ada@lovelace.com"
+        And I fill in password with "l0v3lace"
+        Then I should be signed in
+
+      Scenario: User types incorrect password
+        Given I am on the sign in page
+        When I fill in e-mail with "ada@lovelace.com"
+        And I fill in password with "password"
+        Then I should see "invalid password" message
+
+p Notice that <code>Background</code> section in this feature is really big. It's walking through the whole registration process just to create a state so that we can
+  test what we want to test - how user signs in into the system. There's really no reason to keep all these background steps. What feature reader is really interested in
+  is that user with e-mail <mark>ada@lovelace.com</mark> and password <mark>l0v3lace</mark> exists.  It's better to extract these steps into 1 higher level step:
+
+code-example type='cucumber' file='sign_in.feature'
+  | Feature: Sign in
+
+      Background:
+        Given I have an account with e-mail "ada@lovelace.com" and password "l0v3lace"
+
+      Scenario: User signs in
+        Given I am on the sign in page
+        When I fill in e-mail with "ada@lovelace.com"
+        And I fill in password with "l0v3lace"
+        Then I should be signed in
+
+      Scenario: User types incorrect password
+        Given I am on the sign in page
+        When I fill in e-mail with "ada@lovelace.com"
+        And I fill in password with "password"
+        Then I should see "invalid password" message
+
+p This can be easily achieved by creating higher level step which calls other steps:
+
+code-example type='ruby' file='sign_in_stes.rb'
+  | Given /^I have an account with e-mail "(.*)" and password "(.*)"$/ do |email, password|
+      steps %Q{
+        Given I am on the registration page
+        And I fill in e-mail with "\#{email}"
+        And I fill in password with "\#{password}"
+        And I fill in password confirmation with "\#{password}"
+        And I click "Create account"
+      }
+    end
+
+p Also, it's worth noting that if you see that some of your scenarios do not fit into the feature <code>Background</code> then it probably means that you should
+  create a separate feature and move these scenarios into it.

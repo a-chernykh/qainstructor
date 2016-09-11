@@ -1,0 +1,48 @@
+a.btn.btn-default title='Download example' href='{{ url }}' Download
+p
+p ng-hide='hideInstructions'
+  | Click the button above to download example.&nbsp;
+  span ng-hide='expandInstructions' Need help running it? <a href='\#{{ instructionsElementId }}' data-toggle='collapse' data-target='\#{{ instructionsElementId }}'>Show instructions</a>.
+
+.collapse id='{{ instructionsElementId }}' ng-class='{in: expandInstructions}'
+  .well
+    h3 Unzip downloaded example
+
+    p Double click downloaded file or run the following command to unzip the archive:
+
+    pre
+      code.bash
+        | $ unzip {{ file }} -d {{ directory }}
+
+    h3 Install bundle
+
+    p Change directory to where you have extracted the file and install gem bundle by running <kbd>bundle install</kbd> command. It will install all gems which are listed in <mark>Gemfile</mark> including <mark>cucumber</mark> gem.
+
+    pre
+      code.bash
+        | $ cd ~/Downloads/{{ directory }}
+          $ bundle install
+          ...
+          Bundle complete! 5 Gemfile dependencies, 27 gems now installed.
+          Use `bundle show [gemname]` to see where a bundled gem is installed.
+
+    h3 Run tests
+
+    p You can now run the above example using <kbd>bundle exec cucumber</kbd> command:
+
+    pre
+      code.bash
+        | $ bundle exec cucumber
+
+    p If you have multiple feature files in this directory and you only want to run particular feature, use
+      the following command:
+
+    pre
+      code.bash
+        | $ bundle exec cucumber features/[feature_file]
+
+    p Where [feature_file] is the name of feature file. Example:
+
+    pre
+      code.bash
+        | $ bundle exec cucumber features/show_message.feature

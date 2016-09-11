@@ -1,0 +1,89 @@
+.row.exercise
+  .col-lg-4.fill
+    p We've successfully tested positive test case - when a user enters all data correctly. We should not rely on this, in the real world users make mistakes.
+      Let's prepare a negative test case which tests app behavior when a user submits incorrect password confirmation. Try to type non-matching passwords in the
+      registration form and see what it shows.
+
+    steps files='files'
+      step
+        p Fill in "E-mail" field with <code>ada@lovelace.com</code>
+        step-hint
+          p Add step to fill in e-mail field to <mark>create_account_steps.rb</mark>:
+          code-example type='cucumber'
+            | When I fill in e-mail with "ada@lovelace.com"
+        verifier
+          | expect(@browser.find_element(:name, 'email').attribute('value')).to eq 'ada@lovelace.com'
+      step
+        p Fill in "Password" field with <code>l0v3lace</code>
+        step-hint
+          p Add step to fill in password field to <mark>create_account_steps.rb</mark>:
+          code-example type='cucumber'
+            | When I fill in password with "l0v3lace"
+        verifier
+          | expect(@browser.find_element(:name, 'password').attribute('value')).to eq 'l0v3lace'
+      step
+        p Fill in "Password confirmation" field with non-matching password "password"
+        step-hint
+          p Add step to fill in password confirmation field to <mark>create_account_steps.rb</mark>:
+          code-example type='cucumber'
+            | When I fill in password confirmation with "password"
+        verifier
+          | expect(@browser.find_element(:name, 'password_confirmation').attribute('value')).to eq 'password'
+      step
+        p Click "Create account" button
+        step-hint
+          p Add step to click "Create account" button:
+          code-example type='cucumber'
+            | When I click "Create account"
+        verifier
+          | expect(@browser.find_element(:tag_name, 'body').text).to include 'Incorrect password confirmation'
+      step
+        p Verify that application shows error message about incorrect password confirmation.
+        step-hint
+          p Add step to check that 'Incorrect password confirmation' message has been shown:
+          code-example type='cucumber'
+            | Then I should see "Incorrect password confirmation" message
+        verifier
+          | expect(@browser.find_element(:tag_name, 'body').text).to include 'Incorrect password confirmation'
+
+
+  .col-lg-4
+    code-editor files='files'
+      file language='gherkin' name='create_account.feature'
+        | Feature: Create new account
+
+            Scenario: User types incorrect password confirmation
+              Given I am on the registration page
+      file language='ruby' name='create_account_steps.rb' read-only='true'
+        | Given /^I am on the registration page$/ do
+            @browser.get('#{sample_app_url('app')}')
+            @browser.find_element(:css, "input[value='Register']").click
+          end
+
+          When /^I fill in e-mail with "(.*)"$/ do |email_value|
+            email_field = @browser.find_element(:name, 'email')
+            email_field.send_keys(email_value)
+          end
+
+          When /^I fill in password with "(.*)"$/ do |password|
+            password_field = @browser.find_element(:name, 'password')
+            password_field.send_keys(password)
+          end
+
+          When /^I fill in password confirmation with "(.*)"$/ do |password|
+            password_confirmation_field = @browser.find_element(:name, 'password_confirmation')
+            password_confirmation_field.send_keys(password)
+          end
+
+          When /^I click "(.*)"$/ do |button_name|
+            button = @browser.find_element(:css, "input[value='\#{button_name}']")
+            button.click
+          end
+
+          Then /^I should see "(.*)" message$/ do |message|
+            body = @browser.find_element(:tag_name, 'body')
+            expect(body.text).to include message
+          end
+
+  .col-lg-4
+    browser url='appUrl' src='#{sample_app_url('app')}'

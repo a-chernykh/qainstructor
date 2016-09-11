@@ -1,0 +1,56 @@
+p If you have some complex business logic and outcome depends on various inputs, you can use a technique called scenario outlines
+  in order to test all possible input / result combinations in a concise way.
+
+p Let's take an abstract example of financial application where it's possible to transfer money from one account to another:
+
+code-example type='gherkin' file='balance_transfer.feature'
+  | Feature: Balance transfer
+
+      Scenario: Enough funds
+        Given I have $100 in account 1
+        And I have $0 in account 2
+        When I transfer $50 from account 1 to account 2
+        Then I should have $50 in account 1
+        And I should have $50 in account 2
+
+      Scenario: Full balance transfer
+        Given I have $100 in account 1
+        And I have $0 in account 2
+        When I transfer $100 from account 1 to account 2
+        Then I should have $0 in account 1
+        And I should have $100 in account 2
+
+      Scenario: Not enough funds
+        Given I have $35 in account 1
+        And I have $0 in account 2
+        When I transfer $50 from account 1 to account 2
+        Then I should have $35 in account 1
+        And I should have $0 in account 2
+
+p You might have noticed the repetitive nature of steps in this feature. In fact, all scenarios consist of the same steps, but with different params. Let's
+  re-write this feature file using <code>Scenario Outline:</code>:
+
+code-example type='gherkin' file='balance_transfer.feature'
+  | Feature: Balance transfer
+
+      Scenario Outline: transferring balance
+        Given I have $&lt;account1&gt; in account 1
+        And I have $&lt;account2&gt; in account 2
+        When I transfer $&lt;transfer&gt; from account 1 to account 2
+        Then I should have $&lt;account1 result&gt; in account 1
+        And I should have $&lt;account2 result&gt; in account 2
+
+      Examples:
+        | account1 | account2 | transfer | account1 result | account2 result |
+        | 100      | 0        | 50       | 50              | 50              |
+        | 100      | 0        | 100      | 0               | 100             |
+        | 35       | 0        | 50       | 35              | 0               |
+
+p Both feature files are equivalent - they are executing the same set of scenarios.
+
+p <code>Scenario Outline</code> block defines a template for a scenario. It will be executed for every row in <code>Examples:</code> table. Notice special variables within angle brackets
+  in <code>Scenario Outline</code> steps. They are substituted with the values from correspondent columns in <code>Example:</code> section.
+
+p It's worth noting that Scenario Outline is not recommended to be used when testing Web Applications using UI. Every line in <code>Examples:</code>
+  section yields to a new test scenario to be executed and it may take a significant amount of time to do this using browser. It's recommended to connect
+  cucumber to your application business logic directly when testing such cases.

@@ -1,0 +1,18 @@
+angular.module('exercise').directive 'codeEditor', ->
+  restrict: 'E'
+  templateUrl: '<%= asset_path('exercises/code_editor') %>'
+  scope:
+    files: '='
+  transclude: true
+  controller: [ '$scope', '$transclude', ($scope, $transclude) ->
+    $scope.files = []
+    $transclude (html, scope) ->
+      html.each ->
+        file =
+               id: $(this).attr('name').replace /[._]/g, ''
+               language: $(this).attr('language')
+               name: $(this).attr('name')
+               content: $(this).text()
+               readOnly: $(this).attr('read-only')
+        $scope.files.push file
+  ]

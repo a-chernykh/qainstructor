@@ -1,0 +1,165 @@
+video.video-js.vjs-default-skin.vjs-big-play-centered controls=true poster="#{Content::LinkGenerator.instance.asset_url(path: 'WEB1/4-cucumber-frame.png')}" preload="none" width=636 height=400 data-setup="{}"
+  source src="#{Content::LinkGenerator.instance.asset_url(path: 'WEB1/4-cucumber.mp4')}" type='video/mp4'
+  p To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+
+br
+
+p Cucumber is a tool which can be used to describe your web application functionality using plain English text.
+  It allows creating automated tests which are based on this description. It's used by many QA automation engineers and software developers
+  to test Web-based and mobile applications as a black box. Cucumber test suite includes feature files with various test scenarios. Feature files
+  describe application business logic (grouped by particular features - one feature per file).
+
+p Cucumber uses Gherkin syntax which reads more like a specification document rather than a computer program. It must include feature
+  definition (<code>Feature: Addition</code>) and one or many scenarios which can contain steps starting with <code>Given</code>,
+  <code>When</code> or <code>Then</code>.
+
+p Below is the structure of Cucumber feature file:
+
+code-example type='gherkin'
+  | Feature: &lt;short feature description&gt;
+      &lt;optional long feature description&gt;
+
+      &lt;scenario 1&gt;
+      &lt;scenario 2&gt;
+      ...
+      &lt;scenario N&gt;
+
+p Typical <code>Scenario</code> in Cucumber consists of the name and one or more steps:
+
+code-example type='gherkin'
+  | Scenario: &lt;scenario name&gt;
+      &lt;step 1&gt;
+      &lt;step 2&gt;
+      ...
+      &lt;step N&gt;
+
+p Consider the following example of basic Cucumber test where we're testing arithmetic operation of addition:
+
+code-example type='gherkin' file='features/addition.feature'
+  | Feature: Addition
+
+      Scenario: Calculate sum of 5 and 4
+        Given I set variable A to 5
+        And I set variable B to 4
+        When I calculate A + B
+        Then I should get result of 9
+
+      Scenario: Calculate sum of 7 and 3
+        Given I set variable A to 7
+        And I set variable B to 3
+        When I calculate A + B
+        Then I should get result of 10
+
+p It looks like program behavior definition or acceptance test, but Cucumber can use it to set variables A and B to desired values, calculate the result and verify that calculated result is correct.
+  The magic happens when cucumber interprets this scenario - reads this feature file and parses it line by line. It finds and runs correspondent step definition for every line. Step
+  definitions for our scenario:
+
+code-example type='ruby' file='features/step_definitions/addition_steps.rb'
+  | Given(/^I set variable A to (\d+)$/) do |a|
+      @a = a.to_i
+    end
+
+    Given(/^I set variable B to (\d+)$/) do |b|
+      @b = b.to_i
+    end
+
+    When(/^I calculate A \+ B$/) do
+      @result = @a + @b
+    end
+
+    Then(/^I should get result of (\d+)$/) do |expected_result|
+      expect(@result).to eq expected_result.to_i
+    end
+
+p Cucumber reads <mark>addition.feature</mark> line by line and for every line in <code>Scenario:</code> section it looks appropriate step definition inside <mark>addition_steps.rb</mark>
+  file. It uses regular expressions to find matching step definition. When cucumber locates matching step definition, it runs it. If part of the regular expression is enclosed within brackets,
+  cucumber will capture the matching value and pass it to the step definition block as param. For example, when cucumber parses the following line in our scenario:
+
+code-example type='gherkin' file='features/addition.feature'
+  | Given I set variable A to 5
+
+p It finds matching step definition from <mark>addition_steps.rb</mark> because this line matches regular expression:
+
+code-example type='ruby' file='features/step_definitions/addition_steps.rb'
+  | Given(/^I set variable A to (\d+)$/) do |a|
+      @a = a.to_i
+    end
+
+p And cucumber captures <code>5</code> and sets it to the block param <code>a</code>.
+
+p You should see the following output when you will try to run above example using <kbd>cucumber</kbd> command:
+
+pre
+  | Feature: Addition
+
+      Scenario: Calculate sum of 2 variables # features/addition.feature:3
+        Given I set variable A to 5          # features/step_definitions/addition_steps.rb:1
+        And I set variable B to 4            # features/step_definitions/addition_steps.rb:5
+        When I calculate A + B               # features/step_definitions/addition_steps.rb:9
+        Then I should get result of 9        # features/step_definitions/addition_steps.rb:13
+
+    1 scenario (1 passed)
+    4 steps (4 passed)
+    0m0.032s
+
+p Notice that for every scenario step cucumber shows the file name and line number where it finds matching step definition. Our scenario has passed successfully, but let's try to change
+  the expected result to <code>10</code> to see how cucumber tells us if the test has failed. Let's update <mark>addition.feature</mark>:
+
+code-example type='gherkin' file='features/addition.feature'
+  | Feature: Addition
+
+      Scenario: Calculate sum of 2 variables
+        Given I set variable A to 5
+        And I set variable B to 4
+        When I calculate A + B
+        Then I should get result of 10
+
+p And try to re-run cucumber using <kbd>cucumber</kbd> command. We should see the following output indicating that our test has failed:
+
+pre
+  | Feature: Addition
+
+      Scenario: Calculate sum of 2 variables # features/addition.feature:3
+        Given I set variable A to 5          # features/step_definitions/addition_steps.rb:1
+        And I set variable B to 4            # features/step_definitions/addition_steps.rb:5
+        When I calculate A + B               # features/step_definitions/addition_steps.rb:9
+        Then I should get result of 10       # features/step_definitions/addition_steps.rb:13
+
+          expected: 10
+               got: 9
+
+          (compared using ==)
+           (RSpec::Expectations::ExpectationNotMetError)
+          ./features/step_definitions/addition_steps.rb:14:in `/^I should get result of (\d+)$/'
+          features/addition.feature:7:in `Then I should get result of 10'
+
+    Failing Scenarios:
+    cucumber features/addition.feature:3 # Scenario: Calculate sum of 2 variables
+
+    1 scenario (1 failed)
+    4 steps (1 failed, 3 passed)
+    0m0.074s
+
+p Now it shows that our scenario has failed and that expected result of <code>10</code> does not match the actual value of <code>9</code>.
+
+h1 Exercise: run above example
+
+p Your first exercise will be to download and run the above example. It's about time to install Ruby language if you don't have it installed already.
+
+h3 Install ruby
+
+p cucumber is implemented in various languages. We'll be using ruby as one of the most popular and easy to learn languages used by QA automation engineers. You should have ruby installed
+  in your system in order to be able to use cucumber. Please check <a target='_blank' href='https://www.ruby-lang.org/en/documentation/installation/'>Ruby installation instructions</a>
+  if you don't have it installed. To check if ruby is installed in your system you can run <kbd>ruby -v</kbd> in Terminal and see the output. It will show you the ruby version you
+  have:
+
+pre
+  code.bash
+    | $ ruby -v
+      ruby 2.2.3p173 (2015-08-18 revision 51636) [x86_64-darwin14]
+
+p You should have at least <mark>ruby 1.9.7</mark> installed in order to be able to run examples from this course.
+
+h3 Download example
+
+example type='cucumber' course=@chapter.course.code number='8' expand-instructions='true'

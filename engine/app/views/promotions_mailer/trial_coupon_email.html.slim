@@ -1,0 +1,13 @@
+p Thanks for registering for free trial!
+
+p You can use the following coupon to get 50% off:
+
+p= @coupon.code
+
+h3 How to redeem
+
+ol
+  li Go to the course page <a href="#{course_url(@course)}">#{course_url(@course)}</a>
+  li Click on 'Have coupon code? Click here to redeem.' link
+  li Enter '#{@coupon.code}' into 'Coupon' text field
+  li Click 'Redeem' button
