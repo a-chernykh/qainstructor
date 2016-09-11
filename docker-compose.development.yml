@@ -1,32 +1,31 @@
-engine:
-  env_file:
-    - ./env/development.env
+version: '2'
+services:
+  postgres:
+    env_file:
+      - ./env/development.env
 
-postgres:
-  env_file:
-    - ./env/development.env
-  volumes:
-    - postgres-development:/var/lib/postgresql/data
+  nginx:
+    env_file:
+      - ./env/development.env
+    networks:
+      default:
+        aliases:
+          - app.sample.lvh.me
+          - bomb.sample.lvh.me
+          - secret.sample.lvh.me
+          - slow.sample.lvh.me
 
-nginx:
-  env_file:
-    - ./env/development.env
+  sidekiq:
+    env_file:
+      - ./env/development.env
+    volumes:
+      - ./engine:/app
+      - /Users/jobs:/Users/jobs
 
-sidekiq:
-  dns: ["192.168.1.238"]
-  env_file:
-    - ./env/development.env
-  volumes:
-    - ./engine:/app
-    - /Users/jobs:/Users/jobs
-
-selenium-server:
-  dns: ["192.168.1.238"]
-
-rails:
-  env_file:
-    - ./env/development.env
-  volumes:
-    - ./engine:/app
-    - /Users/jobs:/Users/jobs
-    - /var/run/docker.sock:/var/run/docker.sock # We need this to run specs
+  rails:
+    env_file:
+      - ./env/development.env
+    volumes:
+      - ./engine:/app
+      - /Users/jobs:/Users/jobs
+      - /var/run/docker.sock:/var/run/docker.sock # We need this to run specs

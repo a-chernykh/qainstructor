@@ -1,76 +1,96 @@
-ruby:
-  build: ruby
+version: '2'
+services:
+  faye:
+    extends:
+      file: docker-compose.common.yml
+      service: service
+    build: faye
 
-test-runner:
-  build: test-runner
+  postgres:
+    extends:
+      file: docker-compose.common.yml
+      service: service
+    build: postgres
+    volumes:
+      - qainstructor-db:/var/lib/postgresql/data
 
-faye:
-  build: faye
+  backup:
+    extends:
+      file: docker-compose.common.yml
+      service: service
+    build: backup
+    links:
+      - postgres
 
-postgres:
-  build: postgres
-  env_file:
-    - ./env/common.env
+  redis:
+    extends:
+      file: docker-compose.common.yml
+      service: service
+    image: redis
 
-backup:
-  build: backup
-  env_file:
-    - ./env/common.env
-  links:
-    - postgres
-  restart: always
+  selenium-server:
+    extends:
+      file: docker-compose.common.yml
+      service: service
+    image: selenium/standalone-firefox
+    links:
+      - nginx
 
-redis:
-  image: redis
+  sample-app:
+    extends:
+      file: docker-compose.common.yml
+      service: service
+    build: sample-app
+    volumes:
+      - qainstructor-sample-app-assets:/assets-volume
 
-selenium-server:
-  image: selenium/standalone-firefox
+  nginx:
+    extends:
+      file: docker-compose.common.yml
+      service: service
+    build: nginx
+    links:
+      - rails
+      - sample-app
+      - faye
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - qainstructor-engine-assets:/app/public
+      - qainstructor-sample-app-assets:/sample-app/public
 
-sample-app:
-  build: sample-app
+  rails:
+    extends:
+      file: docker-compose.common.yml
+      service: service
+    build: rails
+    links:
+      - postgres
+      - redis
+    volumes:
+      - qainstructor-engine-assets:/assets-volume
 
-nginx:
-  build: nginx
-  env_file:
-    - ./env/common.env
-  links:
-    - rails
-    - sample-app
-    - faye
-  ports:
-    - "80:80"
-    - "443:443"
+  sidekiq:
+    extends:
+      file: docker-compose.common.yml
+      service: service
+    build: sidekiq
+    links:
+      - faye
+      - postgres
+      - redis
+      - selenium-server
+    # sidekiq container should be able to start docker containers using host docker.sock file
+    # also, it's important that job files inside container should share the host dir, otherwise
+    # volumes won't work
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
-engine:
-  build: engine
-  env_file:
-    - ./env/common.env
-  volumes:
-    - bundle:/bundle
-
-rails:
-  build: rails
-  env_file:
-    - ./env/common.env
-  volumes:
-    - bundle:/bundle
-  links:
-    - postgres
-    - redis
-
-sidekiq:
-  build: sidekiq
-  env_file:
-    - ./env/common.env
-  links:
-    - faye
-    - postgres
-    - redis
-    - selenium-server
-  # sidekiq container should be able to start docker containers using host docker.sock file
-  # also, it's important that job files inside container should share the host dir, otherwise
-  # volumes won't work
-  volumes:
-    - bundle:/bundle
-    - /var/run/docker.sock:/var/run/docker.sock
-    - /usr/local/bin/docker:/usr/local/bin/docker
+volumes:
+  qainstructor-db:
+    external: true
+  qainstructor-engine-assets:
+    external: true
+  qainstructor-sample-app-assets:
+    external: true

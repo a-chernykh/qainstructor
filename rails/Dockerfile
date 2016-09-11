@@ -1,11 +1,6 @@
-FROM qainstructor_engine:latest
+FROM qainstructor/engine:latest
 MAINTAINER Andrey Chernih <andrey.chernih@gmail.com>
-
-USER app
-ENV HOME /home/app
-
-ADD bin/start.sh /usr/local/bin
 
 EXPOSE 8080
 
-CMD ["/usr/local/bin/start.sh"]
+CMD ["bundle", "exec", "puma", "-b", "tcp://0.0.0.0", "-p", "8080", "--pidfile", "/tmp/puma.pid", "-t", "8", "-w", "2"]

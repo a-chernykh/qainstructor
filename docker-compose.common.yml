@@ -1,44 +1,6 @@
-engine:
-  env_file:
-    - ./env/production.env
-
-postgres:
-  restart: always
-  env_file:
-    - ./env/production.env
-  volumes:
-    - postgres-production:/var/lib/postgresql/data
-
-nginx:
-  restart: always
-  env_file:
-    - ./env/production.env
-  volumes:
-    - production-assets:/app/public
-    - sample-app-assets:/sample-app/public
-
-sidekiq:
-  restart: always
-  env_file:
-    - ./env/production.env
-  volumes:
-    - /jobs:/jobs
-
-rails:
-  restart: always
-  env_file:
-    - ./env/production.env
-  volumes:
-    - production-assets:/app/public
-
-faye:
-  restart: always
-
-redis:
-  restart: always
-
-selenium-server:
-  restart: always
-
-sample-app:
-  restart: always
+version: '2'
+services:
+  service:
+    restart: always
+    env_file:
+      - ./env/common.env

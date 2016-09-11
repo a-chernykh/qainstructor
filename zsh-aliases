@@ -1,4 +1,6 @@
-alias rake="`pwd`/bin/rails-cmd.sh bin/rake"
-alias rails="`pwd`/bin/rails-cmd.sh bin/rails"
-alias bundle="`pwd`/bin/rails-cmd.sh bundle"
-alias rspec="`pwd`/bin/rails-cmd.sh bin/rspec"
+RAILS_CMD="`pwd`/bin/development.sh exec rails"
+
+alias rake="$RAILS_CMD bin/rake"
+alias rails="$RAILS_CMD bin/rails"
+alias bundle="$RAILS_CMD bundle"
+alias rspec="$RAILS_CMD bin/rspec"
