@@ -1,0 +1,95 @@
+p Regular expressions are a powerful feature which allows searching text for given patterns. Let's say we have a text
+  file which has some text inside:
+
+code-example type='text' file='file.txt'
+  | Hello, my phone number
+    is (650) 564 1234. And
+    here's another
+    phone number: (123) 456 7890
+
+p You have a task to find all phone numbers in this file. Regular expressions to the rescue!
+
+h2 Download example
+
+p You can download example with phone numbers by clicking button below. Feel free to try to run examples from this chapter by
+  yourself.
+
+example type='cucumber' course=@chapter.course.code number='10' hide-instructions='true'
+
+h2 Show lines with phone numbers
+
+p First of all, we would need to open this file and iterate over it line by line. Let's open the file and print its contents to the screen first:
+
+code-example type='ruby' file='phones-1.rb'
+  | file = File.open('file.txt')
+
+    file.each_line do |line|
+      puts line
+    end
+
+p This will print file contents to the screen when you'll try to run it with <kbd>ruby</kbd> command:
+
+pre
+  | % ruby phones-1.rb
+    Hello, my phone number
+    is (650) 564 1234. And
+    here's another
+    phone number: (123) 456 7890
+
+p You may have noticed that all phone numbers are in the format of <code>(XXX) XXX XXXX</code> where X is a digit.
+  Let's apply regular expression to every line so that we only print lines which include phone numbers:
+
+code-example type='ruby' file='phones-2.rb'
+  | file = File.open('file.txt')
+
+    file.each_line do |line|
+      if line =~ /\(\d{3}\) \d{3} \d{4}/
+        puts line
+      end
+    end
+
+p The expression between <code>/</code> and <code>/</code> is called regular expression. The operator <code>=~</code> is a match
+  operator which returns true if string <code>line</code> matches regular expression <code>\(\d{3}\) \d{3} \d{4}</code>. Let's try to run it:
+
+pre
+  | % ruby phones-2.rb
+    is (650) 564 1234. And
+    phone number: (123) 456 7890
+
+p Now we see that it only prints lines which contain a phone number. Let's explain in details how this magic is working.
+
+p A Regular expression is a pattern which Ruby applies to a <code>line</code>. If a <code>line</code> matches this pattern,
+  operator <code>=~</code> returns <code>true</code> and the <code>line</code> gets printed. Let's review this pattern:
+
+table.table.table-bordered
+  thead
+    tr
+      th Expression
+      th Meaning
+  tbody
+    tr
+      td
+        code \(
+      td This is just a bracket <code>(</code>. Bracket has a special meaning in Regular expressions, that's why we need to escape it using slash <code>\</code>.
+    tr
+      td
+        code \d{3}
+      td Means group of 3 digits. <code>\d</code> means exactly one digit - from <code>0</code> to <code>9</code>. <code>{3}</code> means that <code>\d</code> should go 3 times in a row.
+    tr
+      td
+        code \)
+      td Closing bracket <code>)</code>. We need to escape it with <code>\</code> because it has special meaning
+    tr
+      td <code> </code>
+      td Space
+    tr
+      td
+        code \d{3}
+      td Group of 3 digits
+    tr
+      td <code> </code>
+      td Space
+    tr
+      td
+        code \d{4}
+      td Group of 4 digits

@@ -1,0 +1,105 @@
+p You can click the button below to download all code examples from this chapter. You can try to run them manually on your system to get familiar with <kbd>ruby</kbd> command.
+
+example type='cucumber' course=@chapter.course.code number='11' hide-instructions='true'
+
+h2 if
+
+p Let's say you want to print some text on the screen only if the product is "Apples". We can use <code>if</code>
+  conditional operator to do this. It is the most basic case of branching - <code>if</code> checks the condition
+  and runs block of code in case if a condition evaluates to <code>true</code>.
+
+code-example type='ruby' file='example-1.rb'
+  | product = "Apples"
+    if product == "Apples"
+      puts "red"
+    end
+
+p The code above will print "red" on the screen. Note that end of <code>if</code> a code block is marked by <code>end</code> keyword.
+
+h2 else
+
+p Now we want to print something else in case when the product is
+  not "Apples". Simple <code>else</code> operator allows us to do some alternate action in case when <code>if</code>
+  condition evaluates to <code>false</code>:
+
+code-example type='ruby' file='example-2.rb'
+  | product = "Bananas"
+    if product == "Apples"
+      puts "red"
+    else
+      puts "Not Apples"
+    end
+
+p It will print "Not Apples" on the screen because expression <code>product == "Apples"</code> evaluates to <code>false</code>.
+
+h2 elsif
+
+p What if we want to handle both cases - when product is "Apples", we want to print "red", when product is "Bananas" we want ot print
+  "yellow", in all other cases we want to print "unknown". <code>elsif</code> allows to apply alternate conditions to the <code>if</code>
+  statement:
+
+code-example type='ruby' file='example-3.rb'
+  | product = "Bananas"
+    if product == "Apples"
+      puts "red"
+    elsif product == "Bananas"
+      puts "yellow"
+    else
+      puts "unknown"
+    end
+
+p It will print "yellow". If we will set the product to "Oranges" then it will print "unknown". You can put as many <code>elsif</code> statements
+  as you like:
+
+code-example type='ruby' file='example-4.rb'
+  | product = "Oranges"
+    if product == "Apples"
+      puts "red"
+    elsif product == "Bananas"
+      puts "yellow"
+    elsif product == "Oranges"
+      puts "orange"
+    else
+      puts "unknown"
+    end
+
+p When there are too many conditions to check, <code>if</code> condition can be replaced with <code>case</code>.
+
+h2 case
+
+p We can rewrite previous example using <code>case</code> statement:
+
+code-example type='ruby' file='example-5.rb'
+  | product = "Oranges"
+    case product
+    when "Apples"
+      puts "red"
+    when "Bananas"
+      puts "yellow"
+    when "Oranges"
+      puts "orange"
+    else
+      puts "unknown"
+    end
+
+p Ruby will interpret this code using the same logic as in <mark>example-4.rb</mark>.
+
+h2 unless
+
+p Usually, when we want to do some action only in case if some pre-condition is false, we use the negate
+  operator <code>!</code>:
+
+code-example type='ruby' file='example-6.rb'
+  | product = "Bananas"
+    if product != "Apples"
+      puts "Not Apples, but still tasty"
+    end
+
+p Ruby allows avoiding negate operator by using <code>unless</code> statement. The example above
+  can be rewritten as:
+
+code-example type='ruby' file='example-7.rb'
+  | product = "Bananas"
+    unless product == "Apples"
+      puts "Not Apples, but still tasty"
+    end

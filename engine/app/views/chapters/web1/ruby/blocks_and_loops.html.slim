@@ -1,0 +1,47 @@
+p You can click the button below to download all code examples from this chapter.
+
+example type='cucumber' course=@chapter.course.code number='13' hide-instructions='true'
+
+h2 each iterator
+
+p For iterating over collections of objects, Ruby uses a concept of iterators. An Iterator is an object which calls block passed as a param
+  for every element in the array. Block is a chunk of Ruby commands which may take arguments (it's close to function or method).
+
+p We have our product list from the previous chapter:
+
+code-example type='ruby'
+  | products = ["Apple", "Banana", "Cucumber", "Orange"]
+
+p We want to print all of them on the screen. We can do it by calling <code>each</code> method on <code>products</code>. It will create new iterator
+  and we can pass a new block to it:
+
+code-example type='ruby' file='example-1.rb'
+  | products.each do |product|
+      puts product
+    end
+
+p Block starts with keyword <code>do</code> and ends with keyword <code>end</code>. It takes a <code>product</code> as a param which is a single element of the array.
+  The code between these keywords will be executed for every element in the array. Go ahead and try to run it inside <kbd>irb</kbd>.
+  You should see the following output:
+
+pre
+  | Apple
+    Banana
+    Cucumber
+    Orange
+
+p <code>each</code> iterator sequentially calls passed block for every product in the array passing current product as a param to this block.
+
+h2 while loop
+
+p Ruby also has standard loops. Let's re-write the previous example to use <code>while</code> loop instead of iterator:
+
+code-example type='ruby' file='example-2.rb'
+  | i = 0
+    while i < products.length
+      product = products[i]
+      puts product
+      i = i + 1
+    end
+
+p This will produce exactly the same output as <mark>example-1.rb</mark>.

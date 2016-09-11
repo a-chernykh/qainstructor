@@ -1,0 +1,90 @@
+video.video-js.vjs-default-skin.vjs-big-play-centered controls=true poster="#{Content::LinkGenerator.instance.asset_url(path: 'WEB1/2-environment-frame.png')}" preload="none" width=636 height=400 data-setup="{}"
+  source src="#{Content::LinkGenerator.instance.asset_url(path: 'WEB1/2-environment.mp4')}" type='video/mp4'
+  p To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+
+br
+
+p You need to verify if Ruby is installed in your system. If it's not, you will need to install it. We'll be using Terminal in this course to perform command line
+  operations, so you need to get familiar how to open it in your operating system.
+
+h2 Terminal
+
+h3 Mac OS X
+
+p You can use standard "Terminal" application which is coming with Mac OS X.
+
+ol
+  li Open new "Finder" window
+  li Go to "Applications"
+  li Click on "Utilities"
+  li Double click on "Terminal.app"
+
+p You should see a new Terminal window.
+
+h3 Windows
+
+p You need to launch Windows "Command Prompt" (aka cmd.exe)
+
+ol
+  li Open the Start Menu
+  li Type "command" or "cmd" in search prompt
+  li Click "Command Prompt" in the list of results
+
+h3 Linux
+
+p If you're using Linux then you should know how to open the Terminal. In case you're not, please follow the instructions
+  <a target="_blank"  href="https://help.ubuntu.com/community/UsingTheTerminal">on the official Ubuntu website</a>.
+
+h2 Verify your Ruby version
+
+p Your system might already have Ruby installed. To verify if you have Ruby already try to run the following in Terminal:
+
+pre
+  code.bash
+    | $ ruby -v
+
+p If it returns something like:
+
+pre
+  ruby 2.2.3p173 (2015-08-18 revision 51636) [x86_64-darwin14]
+
+p Then ruby is already installed and you don't need to do anything else. Please note that you should have at least Ruby <code>1.9.7</code>.
+  If your Ruby version is lower than this or <kbd>ruby</kbd> command returns the following error:
+
+pre
+  zsh: command not found: ruby
+
+p Then it means you need to install it.
+
+h2 Installing Ruby
+
+p Ruby can be installed to practically any system including Mac OS X, Linux and Windows. It's better to follow
+  <a href="https://www.ruby-lang.org/en/documentation/installation/#homebrew" target="_blank">official intsructions</a> to install it.
+
+p Please see below for instructions how to do it in your operating system.
+
+h3 Mac OS X
+
+p Install <a href="http://brew.sh/" target="_blank">homebrew</a> first if you don't have it installed already.
+
+p Install Ruby using homebrew with command line:
+
+pre
+  code.bash
+    | $ brew install ruby
+
+h3 Windows
+
+p There are no package managers on Windows, so you need to use RubyInstaller. You can download it from the following link and follow the instructions:
+
+p
+  a href="http://rubyinstaller.org/" target="_blank" http://rubyinstaller.org/
+
+h3 Linux
+
+p Depending on your distribution type, you need to use the appropriate package manager to install Ruby. For Debian or Ubuntu, you can use <kbd>apt</kbd>.
+  Run the following command in Terminal to install Ruby:
+
+pre
+  code.bash
+    | $ sudo apt-get install ruby-full

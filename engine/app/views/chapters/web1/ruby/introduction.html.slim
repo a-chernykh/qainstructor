@@ -1,0 +1,167 @@
+video.video-js.vjs-default-skin.vjs-big-play-centered controls=true poster="#{Content::LinkGenerator.instance.asset_url(path: 'WEB1/3-ruby-frame.png')}" preload="none" width=636 height=400 data-setup="{}"
+  source src="#{Content::LinkGenerator.instance.asset_url(path: 'WEB1/3-ruby.mp4')}" type='video/mp4'
+  p To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+
+br
+
+p Ruby is object-oriented programming language used by many QA engineers. In this course, we will be using Ruby to create automated
+  test scenarios using cucumber and selenium. If you already know how to program in Ruby then you can skip the whole section and proceed
+  to the "Cucumber" section. Otherwise read on.
+
+h2 Interactive Ruby
+
+p Ruby is bundled with <kbd>irb</kbd> which is an interactive Ruby session. It's easy to start using it, you need to run <kbd>irb</kbd> command
+  in the Terminal:
+
+pre
+  code.bash
+    | $ irb
+      >>
+
+p It shows you prompt which means it ready to accept Ruby commands. Go ahead and try to type <code>puts "Hello"</code>:
+
+code-example type='ruby'
+  | >> puts "Hello"
+    Hello
+    => nil
+
+p <code>puts</code> is a method to print something to the screen. You can see that it successfully printed "Hello" string. You also see
+  that it has returned <code>nil</code> which in Ruby means nothing (no value). That's how interactive Ruby session is working - after you
+  type Ruby command, it runs the command and then it shows you the return value.
+
+h2 Variables
+
+video.video-js.vjs-default-skin.vjs-big-play-centered controls=true poster="#{Content::LinkGenerator.instance.asset_url(path: 'WEB1/3.1-ruby-frame.png')}" preload="none" width=636 height=400 data-setup="{}"
+  source src="#{Content::LinkGenerator.instance.asset_url(path: 'WEB1/3.1-ruby.mp4')}" type='video/mp4'
+  p To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+
+br
+
+p Type <code>a = 5</code> in <kbd>irb</kbd>:
+
+code-example type='ruby'
+  | >> a = 5
+    => 5
+
+p You've just created new local variable <code>a</code> and assigned value of <code>5</code> to it. You can see that this operation
+  returned <code>5</code>. That's because in Ruby the result of an assignment operation is also it's return value.
+
+p Go ahead and set <code>b</code> to <code>3</code>:
+
+code-example type='ruby'
+  | >> b = 3
+    => 3
+
+p Now you can use Ruby as calculator to perform basic arithmetic operation:
+
+code-example type='ruby'
+  | >> a + b
+    => 8
+
+h2 Strings and interpolation
+
+p Let's change our first example a little bit and save "Hello" in the variable <code>str1</code>:
+
+code-example type='ruby'
+  | >> str1 = "Hello"
+    => "Hello"
+
+p Now we can simply print it:
+
+code-example type='ruby'
+  | >> puts str1
+    "Hello"
+    => nil
+
+p Now we want to print "Hello, world", but "world" is saved in another variable <code>str2</code>:
+
+code-example type='ruby'
+  | >> str2 = "world"
+    => "world"
+
+p You can simply put variables inside <code>\#{...}</code> when you want to get it's value inside the string:
+
+code-example type='ruby'
+  | >> puts "\#{str1}, \#{str2}"
+    Hello, world
+    => nil
+
+p This technique is called string interpolation. Ruby actually substitutes everything inside <code>\#{...}</code> with the result of evaluating
+  this code. In this case, Ruby evaluates <code>str1</code> to "Hello" and <code>str2</code> to "world".
+
+h2 Arrays
+
+p Imagine you have a list of products: Apple, Banana, Cucumber. There's a special data structure for storing lists which is called Array. Array
+  can be defined inline:
+
+code-example type='ruby'
+  | >> products = ["Apple", "Banana", "Cucumber"]
+    => ["Apple", "Banana", "Cucumber"]
+
+p What if you need to add one more element to the end of this array? It's easy to do, just call <code>push</code> method on array object:
+
+code-example type='ruby'
+  | >> products.push("Oranges")
+    => ["Apple", "Banana", "Cucumber", "Orange"]
+
+p Also, it's often useful to know how many elements in the array. You can use <code>length</code> method to calculate this value:
+
+code-example type='ruby'
+  | >> products.length
+    => 4
+
+p When we want to access particular element of the array, we need to use <code>[]</code> notation:
+
+code-example type='ruby'
+  | >> products[0]
+    => "Apple"
+    >> products[1]
+    => "Banana"
+
+h2 Hashes
+
+p Now you need to store the price together with product name. We can do it easily using Ruby Hashes. Hash is a special data structure which
+  allows storing arbitrary key => value information.
+
+p Let's create new hash for "Apple":
+
+code-example type='ruby'
+  | >> apple = { name: 'Apple', price: '2' }
+    => {:name=>"Apple", :price=>'2'}
+
+p Hash definition starts with <code>{</code> and ends with <code>}</code>. <code>name</code> and <code>price</code> inside curly braces are symbols
+  and they serve as Hash keys. Now, if you want to get apple price, you can get it as follows:
+
+code-example type='ruby'
+  | >> apple[:price]
+    => '2'
+
+p Let's print apple product name together with price:
+
+code-example type='ruby'
+  | >> puts "\#{apple[:name]}, \#{apple[:price]}$"
+    Apple, 2$
+    => nil
+
+h2 Type conversions
+
+p Now we want to calculate how much we should pay if we want to buy 5 apples. We can do it easily by multiplying apple price by 5:
+
+code-example type='ruby'
+  | >> price = apple[:price] * 5
+    => "22222"
+
+p Something went wrong, we've expected to see 10, but instead we see "22222". It happens because we've defined price field as a String object and ruby applies
+  incorrect multiplication operator. We can convert price to integer by calling <code>to_i</code> method on it:
+
+code-example type='ruby'
+  | >> price = apple[:price].to_i * 5
+    => 10
+
+p Vice versa, if we want to convert something to string, we can do it using <code>to_s</code> method:
+
+code-example type='ruby'
+  | >> price = 10
+    => 10
+    >> price_string = price.to_s
+    => "10"

@@ -1,0 +1,128 @@
+p You can click the button below to download all code examples from this chapter:
+
+example type='cucumber' course=@chapter.course.code number='12' hide-instructions='true'
+
+h2 Methods
+
+p In every programming language methods (or functions) allow creating re-usable chunks of code which you
+  can call later. Methods can take arguments and return some value to the calling code. Let's take an example
+  from the previous chapter which prints "red" in case if product is "Apples" and prints "unknown" otherwise:
+
+code-example type='ruby'
+  | if product == "Apples"
+      puts "red"
+    else
+      puts "unknown"
+    end
+
+p What if we want to test multiple products? Do we have to repeat this condition multiple times?
+
+code-example type='ruby'
+  | product = "Apples"
+    if product == "Apples"
+      puts "red"
+    else
+      puts "unknown"
+    end
+
+    product = "Bananas"
+    if product == "Apples"
+      puts "red"
+    else
+      puts "unknown"
+    end
+
+    # ... and so on
+
+p Looks ugly, is not it? Luckily, we can define a new method which will take the product name as a param. In Ruby,
+  method definition starts with <code>def</code> keyword followed by method name and list of arguments in parenthesis:
+
+code-example type='ruby'
+  | def print_color(product)
+      if product == "Apples"
+        puts "red"
+      else
+        puts "unknown"
+      end
+    end
+
+p Now we can simply call this method for all products which we want to test:
+
+code-example type='ruby'
+  | print_color("Apples")  # Prints "red"
+    print_color("Bananas") # Prints "unknown"
+    print_color("Oranges") # Prints "unknown"
+
+p <code>print_color</code> method prints product color on the screen. But what if we don't want to print it, but want to do
+  something else instead? For example, we might need to save it to the local variable. Methods in Ruby can return something to the calling code
+  using <code>return</code> statement:
+
+code-example type='ruby'
+  | def get_color(product)
+      if product == "Apples"
+        return "red"
+      else
+        return "unknown"
+      end
+    end
+
+p Now we can save the product colors in local variables:
+
+code-example type='ruby'
+  | apples_color = get_color("Apples")   # => "red"
+    bananas_color = get_color("Bananas") # => "unknown"
+    oranges_color = get_color("Oranges") # => "unknown"
+
+h2 Classes
+
+p Ruby is Object Oriented programming language. You can define classes and create new objects. A class is
+  a blueprint from which objects are created. Let's define a class called <code>Fruit</code> which will be
+  used to create individual objects - fruits - instances of this class:
+
+code-example type='ruby'
+  | class Fruit
+      def initialize(name)
+        @name = name
+      end
+    end
+
+p A class definition starts with <code>class</code> keyword followed by the class name <code>Fruit</code>. All code
+  till the <code>end</code> keyword is a class definition. Here we've created new class <code>Fruite</code> which
+  has method <code>initialize</code> which takes a <code>name</code> as an argument. Now, let's create some actual
+  fruits - objects of the class:
+
+code-example type='ruby'
+  | apples = Fruit.new("Apples") # creates new instance (object) of class Fruit passing 'Apples' as name to initialize method
+    bananas = Fruit.new("Bananas")
+    oranges = Fruite.new("Oranges")
+
+p You can see that new objects in ruby are created using a <code>new</code> method which is defined on every class. It
+  constructs a new object for us passing all arguments to the special constructor method called <code>initialize</code>.
+
+p <code>@name</code> is an instance variable which is specific for a particular class object. Think of it as a way to
+  save object attributes or state. We're saving the actual product name to the instance variable <code>@name</code> in
+  the class constructor. Let's go ahead and implement method which will print this value:
+
+code-example type='ruby'
+  | class Fruit
+      def initialize(name)
+        @name = name
+      end
+
+      def print_name
+        puts @name
+      end
+    end
+
+p Now when we have this method, we can actually use it to print the name of various fruits:
+
+code-example type='ruby'
+  | apples = Fruit.new("Apples")
+    apples.print_name # prints "Apples"
+
+    bananas = Fruit.new("Bananas")
+    bananas.print_name # prints "Bananas"
+
+    oranges = Fruit.new("Oranges")
+    oranges.print_name # prints "Oranges"
+
