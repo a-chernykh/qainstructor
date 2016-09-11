@@ -1,0 +1,6 @@
+source 'https://rubygems.org'
+
+gem 'syntax' # for cucumber output syntax highlighting
+gem 'cucumber'
+gem 'selenium-webdriver', '2.49.0.dev'
+gem 'rspec'
