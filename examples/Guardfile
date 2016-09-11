@@ -1,0 +1,4 @@
+guard :shell do
+  watch(%r{WEB1/.*}) { `ruby create.rb -c` }
+  watch('create.rb') { `ruby create.rb -c` }
+end

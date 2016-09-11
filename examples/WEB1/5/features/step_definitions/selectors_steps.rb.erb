@@ -1,0 +1,14 @@
+When(/^I go to the front page$/) do
+  @browser.get 'http://example3.<%= ENV['SAMPLE_APP_HOST'] %>'
+end
+
+Then(/^I should find the following elements:$/) do |table|
+  table.hashes.each do |item|
+    method = item['method'].to_sym
+    selector = item['selector']
+    expected_text = item['text']
+
+    elements = @browser.find_elements(method, selector)
+    expect(elements.map(&:text).join(' ')).to eq expected_text
+  end
+end

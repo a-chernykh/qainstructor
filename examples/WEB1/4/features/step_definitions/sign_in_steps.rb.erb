@@ -1,0 +1,12 @@
+Given(/^I am on the Google front page$/) do
+  @browser.get 'http://google.com'
+end
+
+When /^I click "(.*)" link$/ do |link_name|
+  @browser.find_element(:link_text, link_name).click
+end
+
+Then(/^I should be on the sign in page$/) do
+  body = @browser.find_element(:tag_name, 'body')
+  expect(body.text).to include 'Sign in with your Google Account'
+end

@@ -1,0 +1,7 @@
+Given /^I am on the front page$/ do
+  @browser.get 'http://app.<%= ENV['SAMPLE_APP_HOST'] %>'
+end
+
+When /^I click "(.*)" button$/ do |button_name|
+  @browser.find_element(:css, "input[value~=#{button_name}]").click
+end
