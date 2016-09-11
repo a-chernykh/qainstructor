@@ -33,8 +33,6 @@ services:
       file: docker-compose.common.yml
       service: service
     image: selenium/standalone-firefox
-    links:
-      - nginx
 
   sample-app:
     extends:

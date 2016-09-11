@@ -1,10 +1,5 @@
 version: '2'
 services:
-  sidekiq:
-    volumes:
-      - /usr/bin/docker:/usr/local/bin/docker
-      - /usr/lib/x86_64-linux-gnu/libapparmor.so.1:/usr/lib/x86_64-linux-gnu/libapparmor.so.1
-
   engine:
     env_file:
       - ./env/production.env

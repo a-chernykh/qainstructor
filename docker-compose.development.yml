@@ -4,6 +4,10 @@ services:
     env_file:
       - ./env/development.env
 
+  selenium-server:
+    links:
+      - nginx
+
   nginx:
     env_file:
       - ./env/development.env
