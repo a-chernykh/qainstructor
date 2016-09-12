@@ -1,9 +1,5 @@
 version: '2'
 services:
-  engine:
-    env_file:
-      - ./env/production.env
-
   postgres:
     env_file:
       - ./env/production.env
