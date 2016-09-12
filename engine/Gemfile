@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 gem 'rails', '4.2.4'
 gem 'pg'
@@ -18,7 +18,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'js-routes'
 gem 'ng-rails-csrf'
 
-source 'https://rails-assets.org' do
+source 'http://rails-assets.org' do
   gem 'rails-assets-highlightjs'
   gem 'rails-assets-angular'
   gem 'rails-assets-bootstrap'
