@@ -22,7 +22,7 @@ bin/build.sh
 $CONTROL_CMD build > /dev/null
 
 echo '*** Precompiling assets, hold on'
-$CONTROL_CMD run --rm -u root rails /bin/bash -c 'cp -rf /app/public/* /assets-volume/ && chmod -R a+r /assets-volume/'
+$CONTROL_CMD run --rm -u root rails /bin/bash -c 'bundle exec rake assets:precompile && cp -rf /app/public/* /assets-volume/ && chmod -R a+r /assets-volume/'
 $CONTROL_CMD run --rm -u root sample-app /bin/bash -c 'cp -rf /app/public/* /assets-volume/ && chmod -R a+r /assets-volume/'
 
 echo '*** Running migration and seeding'

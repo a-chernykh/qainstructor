@@ -67,7 +67,7 @@ services:
       - postgres
       - redis
     volumes:
-      - qainstructor-engine-assets:/assets-volume
+      - qainstructor-engine-assets:/app/public
 
   sidekiq:
     extends:
