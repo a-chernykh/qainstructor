@@ -9,3 +9,4 @@ RUN apt-get update && \
                        ruby2.2-dev \
                        zlib1g-dev \
                        build-essential \
+                       vim
