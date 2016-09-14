@@ -10,6 +10,9 @@ ActiveAdmin.register User do
     column :email
     column :current_sign_in_at
     column :sign_in_count
+    column :user_completions_count do |u|
+      link_to u.user_completions.count, admin_user_user_completions_path(u)
+    end
     column :stripe_customer_id
     column :created_at
     actions
