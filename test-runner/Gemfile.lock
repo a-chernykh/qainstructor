@@ -1,5 +1,5 @@
 GEM
-  remote: https://rubygems.org/
+  remote: http://rubygems.org/
   specs:
     builder (3.2.2)
     childprocess (0.5.8)
@@ -50,4 +50,4 @@ DEPENDENCIES
   syntax
 
 BUNDLED WITH
-   1.10.6
+   1.12.5

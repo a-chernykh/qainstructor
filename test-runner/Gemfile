@@ -1,4 +1,5 @@
-source 'https://rubygems.org'
+# http is used for a reason - bundle install errors out on Azure when run inside Docker
+source 'http://rubygems.org'
 
 gem 'syntax' # for cucumber output syntax highlighting
 gem 'cucumber'
