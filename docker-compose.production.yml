@@ -17,3 +17,5 @@ services:
   rails:
     env_file:
       - ./env/production.env
+    volumes:
+      - qainstructor-engine-assets:/app/public

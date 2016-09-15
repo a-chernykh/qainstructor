@@ -49,5 +49,5 @@ Rails.application.routes.draw do
   get '/pages/privacy', as: :privacy_page
   get '/pages/:page' => 'pages#show'
 
-  root 'courses#index'
+  root 'landing#show'
 end
