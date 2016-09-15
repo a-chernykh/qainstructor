@@ -36,7 +36,14 @@ module Engine
 
     config.active_job.queue_adapter = :sidekiq
 
-    config.assets.precompile += %w( chapter.css chapter.js cheatsheet.css cheatsheet.js )
+    config.assets.precompile += %w( chapter.css
+                                    chapter.js
+                                    cheatsheet.css
+                                    cheatsheet.js
+                                    landing.css
+                                    landing.js
+                                    landing/modernizr-2.6.2.min.js
+                                    landing/respond.min.js )
 
     config.action_mailer.default_url_options = { host: ENV['ENGINE_HOST'] }
 
