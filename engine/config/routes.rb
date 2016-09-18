@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   authenticate :admin_user do
     mount Sidekiq::Web => '/sidekiq'
+    mount Split::Dashboard, at: 'split'
   end
 
   namespace :api do

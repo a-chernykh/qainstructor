@@ -10,6 +10,11 @@ Installation instructions: https://docs.docker.com/engine/installation/
 
 Installation instructions: https://docs.docker.com/compose/install/
 
+## Install rocker and rocker-compose
+
+https://github.com/grammarly/rocker
+https://github.com/grammarly/rocker-compose
+
 ## Configure environment variables
 
 Copy example environment files:

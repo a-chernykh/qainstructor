@@ -4,3 +4,4 @@
 //= require landing/jquery.waypoints.min
 //= require landing/owl.carousel.min
 //= require landing/main
+//= require videojs

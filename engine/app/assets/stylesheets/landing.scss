@@ -5,3 +5,20 @@
 @import "landing/owl.theme.default.min";
 @import "landing/bootstrap";
 @import "landing/orange";
+
+// https://github.com/videojs/video.js/issues/3587
+$ie8screen: "\\0screen";
+@import "videojs";
+
+.video-js {
+  margin: 0px auto;
+  margin-top: 2em;
+}
+
+.vjs-big-play-button {
+  font-size: 8em !important;
+}
+
+.embed-responsive {
+  overflow: visible;
+}

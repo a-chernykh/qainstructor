@@ -2,4 +2,4 @@
 
 set -e
 
-docker build . -t qainstructor/engine:latest
+rocker build .

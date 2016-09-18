@@ -11,4 +11,8 @@ module ApplicationHelper
   def sample_app_url(name)
     "http://#{name}.#{ENV['SAMPLE_APP_HOST']}"
   end
+
+  def cf_asset_url(asset)
+    ['https://', ENV['CLOUDFRONT_ASSETS_DOMAIN'], asset].join
+  end
 end

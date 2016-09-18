@@ -274,13 +274,19 @@ h1, h2, h3, h4, h5, h6 {
   transition: 0.3s;
 }
 
+#fh5co-features {
+  background: #f4f4f4;
+}
+
+
+
 #fh5co-our-services,
 #fh5co-about-us,
 #fh5co-features,
 #fh5co-testimonials,
 #fh5co-pricing,
 #fh5co-press {
-  padding: 7em 0;
+  padding: 3em 0;
 }
 @media screen and (max-width: 480px) {
   #fh5co-our-services,
@@ -447,14 +453,17 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
 }
 
-#fh5co-our-services,
+#fh5co-our-services {
+  background: #fff;
+}
+
 #fh5co-press {
   background: #f4f4f4;
 }
 
 #fh5co-our-services .box {
   padding: 30px;
-  background: #fff;
+  background: #f4f4f4;
   text-align: center;
   color: #7f7f7f;
   margin-bottom: 70px;
@@ -1130,7 +1139,7 @@ h1, h2, h3, h4, h5, h6 {
 
 
 .curriculum {
-  background-color: #f4f4f4;
+  background-color: #fff;
   padding: 30px;
   padding-left: 0px;
   padding-top: 0px;
@@ -1193,5 +1202,3 @@ p.subtext {
 .callout {
   font-weight: bold !important;
 }
-
-/*# sourceMappingURL=orange.css.map */
