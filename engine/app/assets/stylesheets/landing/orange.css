@@ -827,6 +827,9 @@ h1, h2, h3, h4, h5, h6 {
   background: #ff6600;
   color: #fff;
 }
+.social-circle {
+  margin-top: 2em;
+}
 .social li a.social-circle {
   background: #ff6600;
   color: #fff;
@@ -993,7 +996,11 @@ h1, h2, h3, h4, h5, h6 {
 @media screen and (max-width: 768px) {
   .owl-carousel-fullwidth .item, .owl-carousel-fullwidth .fh5co-owl-text-wrap {
     height: inherit;
-    padding: 5em 0;
+    padding: 3em 0;
+  }
+
+  .blogposts {
+    margin-top: 0px !important;
   }
 }
 .owl-carousel-fullwidth .fh5co-owl-text-wrap {
@@ -1158,7 +1165,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 992px) {
-  .fh5co-owl-text-wrap {
+  .fh5co-owl-text-wrap,
+  .blogposts {
     margin-top: 100px;
   }
 }

@@ -22,3 +22,17 @@ $ie8screen: "\\0screen";
 .embed-responsive {
   overflow: visible;
 }
+
+.blogposts {
+  h2 {
+    font-size: 1.5em;
+    color: white;
+  }
+  a {
+    color: white;
+  }
+  p {
+    line-height: 1.4em;
+    margin-bottom: 0.8em;
+  }
+}
