@@ -6,7 +6,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/sign_up
   def new
-    ab_finished(:landing_design)
     super
   end
 
