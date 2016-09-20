@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  PAGES = %w(terms privacy)
+  PAGES = %w(terms privacy thanks)
 
   def show
     if PAGES.include?(params[:page])

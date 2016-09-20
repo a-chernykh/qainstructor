@@ -1,7 +1,7 @@
 li.chapter-brief class=engine.chapter_status(chapter)
     h5
       a href=chapter.link = chapter.name
-      - if !engine.purchased? && chapter.is_demo
+      - if engine && !engine.purchased? && chapter.is_demo
         | &nbsp;
         span.label.label-primary demo
     p= chapter.description

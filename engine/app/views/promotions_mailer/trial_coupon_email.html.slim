@@ -1,13 +1,34 @@
-p Thanks for registering for free trial!
+p Hello, #{@user.name}
 
-p You can use the following coupon to get 50% off:
+p Thanks for registering for free trial. Please let me know if you have any questions regarding this course. You can contact me by simply replying to this message.
 
-p= @coupon.code
+p Feel free to use the following coupon to get $10 off:
 
-h3 How to redeem
+p
+	strong= @coupon.code
 
+<table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+  <tbody>
+    <tr>
+      <td align="left">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td> <a href="#{course_path(Course.web1)}" target="_blank">Redeem now</a> </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+p How to redeem
 ol
-  li Go to the course page <a href="#{course_url(@course)}">#{course_url(@course)}</a>
-  li Click on 'Have coupon code? Click here to redeem.' link
-  li Enter '#{@coupon.code}' into 'Coupon' text field
-  li Click 'Redeem' button
+	li Go to the course page <a href="#{course_url(@course)}">#{course_url(@course)}</a>
+	li Click on 'Have coupon code? Click here to redeem.' link
+	li Enter '#{@coupon.code}' into 'Coupon' text field
+	li Click 'Redeem' button
+
+p Thanks,<br/>
+	Andrey

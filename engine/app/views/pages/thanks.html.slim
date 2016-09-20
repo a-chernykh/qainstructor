@@ -1,0 +1,18 @@
+.row
+  .col-lg-12
+    h1 Thank you for signing up
+
+    p The following lectures are now available to you:
+
+    ol
+      - Course.first.chapters.demo.each do |chapter|
+        li
+          strong= "#{chapter.section.name} - #{chapter.name}"
+          p= chapter.description
+
+    a.btn.btn-primary.btn-lg href=continue_course_path(Course.web1) Start your trial
+    h2 Your $10 discount
+    p You can use the following coupon code to get $10 off. It was also sent to your e-mail address.
+    p
+      | Coupon code: &nbsp;
+      code TRIAL10

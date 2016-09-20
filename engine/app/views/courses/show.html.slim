@@ -12,8 +12,8 @@
       .jumbotron
         h1= @course.name
         p== @course.description
-        p.text-right
-          a.btn.btn-primary.btn-lg href=continue_course_path(@course) role='button' Try it for free
+        p
+          = link_to 'Try it', continue_course_path(@course)
     .col-lg-4
       .jumbotron.text-right
         - if @order.discounted?
@@ -25,7 +25,7 @@
           h1= number_to_currency(price_in_dollars(@order.full_price))
         ul.features
           li 30+ lectures and interactive exercises
-          li 90 minutes of video lectures
+          li 90 minutes of video
           li Cheatsheet
           li Support forums
           li Certificate of completion
@@ -37,7 +37,7 @@
           - else
             a.btn.btn-primary.btn-lg href=new_user_registration_path Buy
         span
-          a href=new_redemption_path Have coupon code? Click here to redeem.
+          a href=new_redemption_path Have coupon code? Click here to redeem
 
 .row.section.section-3
   .col-lg-8.col-lg-offset-2

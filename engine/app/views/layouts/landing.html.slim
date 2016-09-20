@@ -1,0 +1,28 @@
+html lang="en"
+  head
+    = render 'shared/head'
+    = stylesheet_link_tag "application", :media => "all"
+    = javascript_include_tag "application"
+    = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600,400italic,700"
+    title QA Instructor
+
+  body.landing
+    .container-fluid
+      .row.content
+        .col-lg-12.header
+          a href='/'
+            img src=asset_url('logo-2.png') alt="QA Instructor"
+        .col-lg-12
+          = flash_messages
+          = yield
+
+    footer
+      .container-fluid
+        .row
+          .col-md-12.text-center
+            ul.list-unstyled.list-inline
+              li= link_to 'Home', root_path
+              li= link_to 'Sign In', new_user_session_path
+              li= link_to 'Terms of Service', terms_page_path
+              li= link_to 'Privacy Policy', privacy_page_path
+              li= mail_to 'info@qainstructor.com', 'Contact Us'

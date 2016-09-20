@@ -1,6 +1,7 @@
 RSpec.describe CourseOrder do
   let(:coupon25) { create(:coupon, course: course, discount_percent: 25) }
   let(:coupon80) { create(:coupon, course: course, discount_percent: 80) }
+  let(:coupon5dollars) { create(:coupon, course: course, discount_cents: 500) }
   let(:course) { create(:course, price_cents: 10000) }
   let(:user) { create(:user) }
 
@@ -25,6 +26,11 @@ RSpec.describe CourseOrder do
     it 'returns full price minus applied coupons' do
       create(:redemption, user: user, coupon: coupon25)
       expect(subject.adjusted_price).to eq 7500
+    end
+
+    it 'returns full price minus $5 dollars' do
+      create(:redemption, user: user, coupon: coupon5dollars)
+      expect(subject.adjusted_price).to eq 9500
     end
 
     it 'will not go past 0' do

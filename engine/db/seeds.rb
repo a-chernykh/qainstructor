@@ -6,19 +6,19 @@ AdminUser.first_or_create!(email: 'andrey.chernih@gmail.com', password: '1708756
 user = User.first_or_create!(email: 'andrey.chernih@gmail.com', password: '17087561', password_confirmation: '17087561', first_name: 'Andrey', last_name: 'Chernih')
 
 course1 = Course.find_or_initialize_by code: 'WEB1'
-course1.update_attributes! name: 'Automating Web applications',
+course1.update_attributes! name: 'Automating Web Applications',
                            price_cents: 3900,
-                           level: 'intermediate',
-                           completion_time_hours: 5,
+                           level: 'beginning',
+                           completion_time_hours: 14,
                            description: <<-EOT
-This course will teach you how to create automated end to end scenarios for testing Web applications. We will use <strong>cucumber</strong>
+This course will teach you how to create automated end to end scenarios for testing Web applications. We will use <strong>Cucumber</strong>
 to write feature files describing application business logic and implement code for testing this logic using <strong>Ruby</strong> and
-<strong>selenium</strong>. You will learn how to setup cucumber project and interact with the browser using <strong>CSS</strong>
-and <strong>XPATH</strong> selectors. Course includes various interactive exercises which will help to reinforce material. At the end of this
+<strong>Selenium WebDriver</strong>. You will learn how to configure Cucumber project and interact with the browser using <strong>CSS</strong>
+and <strong>XPATH</strong> selectors. Course includes various interactive exercises which will help to reinforce the material. At the end of this
 course you will be able to automate web-applications by yourself.
 EOT
 course1.update_attributes! requirements: <<-EOT
-This course is for people with basic technical knowledge. You don't need to know Ruby, cucumber or selenium, but basic knowledge of HTML
+This course is for people with basic technical knowledge. You don't need to know Ruby, Cucumber or Selenium, but basic knowledge of HTML
 is recommended. You don't need to have development environment for taking this course because all assignments are running inside browser, but it's highly
 recommended to install Ruby and to try to run code examples on your local computer.
 EOT

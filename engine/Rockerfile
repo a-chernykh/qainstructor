@@ -8,7 +8,7 @@ ENV APP_USER_HOME /home/app
 RUN mkdir $dir
 WORKDIR $dir
 
-RUN apt-get update && apt-get install -y build-essential git libpq-dev nodejs
+RUN apt-get update && apt-get install -y build-essential git libpq-dev nodejs postgresql-client
 
 RUN useradd --uid 1000 --gid 50 -c 'App user' -m -d $APP_USER_HOME -s /bin/bash $APP_USER
 

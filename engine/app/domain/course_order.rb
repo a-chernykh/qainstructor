@@ -9,7 +9,7 @@ class CourseOrder
   end
 
   def adjusted_price
-    (full_price - (discount / 100.to_f) * full_price).to_i
+    (full_price - discount).to_i
   end
 
   def discounted?
@@ -20,9 +20,18 @@ class CourseOrder
 
   def discount
     if @user
-      [@user.coupons.where(course: @course).sum(:discount_percent), 100].min
-    else
-      0
+      coupons = @user.coupons.where(course: @course)
+
+      percent = coupons.sum(:discount_percent)
+      cents = coupons.sum(:discount_cents)
+
+      if cents > 0
+        return [cents, full_price].min
+      elsif percent > 0
+        return [(percent.to_f / 100.to_f) * full_price, full_price].min
+      end
     end
+
+    0
   end
 end

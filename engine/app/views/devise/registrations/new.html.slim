@@ -1,8 +1,30 @@
 .row
-  .col-lg-12
-    h1 Sign Up
+  .col-lg-6
+    h1 Automating Web Applications
 
-    p Your 50% off coupon code will be delivered to you by e-mail.
+    h3 Learn how to test Web applications with Ruby, Cucumber and Selenium by taking this free trial.
+
+    br
+
+    .row
+      .col-lg-10
+        .embed-responsive.embed-responsive-16by9
+          video.embed-responsive-item.video-js.vjs-default-skin.vjs-big-play-centered.video controls="true" poster=cf_asset_url('/videos/promo-video-16x9.png') width=800 height=500 preload="none" data-setup="{}"
+            source src=cf_asset_url('/videos/promo-video-16x9.mp4') type='video/mp4'
+            p To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+
+    br
+
+    p You will get an access to the following content for free:
+
+    ol
+      - Course.first.chapters.demo.each do |chapter|
+        li
+          strong= "#{chapter.section.name} - #{chapter.name}"
+          p= chapter.description
+
+  .col-lg-6
+    h1 Try for free
 
     = render 'new'
 

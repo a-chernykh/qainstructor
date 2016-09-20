@@ -18,3 +18,4 @@
 //= require bootstrap
 //= require remarkable-bootstrap-notify
 //= require course
+//= require videojs

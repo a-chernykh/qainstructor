@@ -4,6 +4,6 @@ class PromotionsMailer < ApplicationMailer
     @coupon = coupon
     @course = coupon.course
 
-    mail(to: @user.email, subject: 'Your 50% discount coupon')
+    mail(to: @user.email, subject: 'Your $10 discount coupon')
   end
 end

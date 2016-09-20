@@ -8,10 +8,10 @@ RSpec.describe UserRegistered do
       described_class.perform_async(user.id)
     end
 
-    context 'when TRIAL50 coupon exists' do
+    context 'when TRIAL10 coupon exists' do
       it 'sends promotional email' do
         course = create(:course)
-        create(:coupon, course: course, code: 'TRIAL50')
+        create(:coupon, course: course, code: 'TRIAL10')
         expect(PromotionsMailer).to receive(:trial_coupon_email).and_call_original
         described_class.perform_async(user.id)
       end

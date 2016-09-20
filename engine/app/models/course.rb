@@ -13,6 +13,10 @@ class Course < ActiveRecord::Base
   validates :description, presence: true
   validates :completion_time_hours, presence: true
 
+  def self.web1
+    @web1 ||= where(code: 'WEB1').first!
+  end
+
   def cheatsheet
     cheatsheets.first
   end

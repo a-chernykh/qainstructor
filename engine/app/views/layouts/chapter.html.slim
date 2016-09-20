@@ -21,7 +21,7 @@ html lang="en"
               a href='#' Table of Contents
             li.visible-xs-block
               a href=toc_course_path(@course) Table of Contents
-            li= link_to 'Front page', courses_path
+            li= link_to 'Course page', course_path(@course)
             li= link_to 'Forums', ENV['DISCOURSE_URL'], target: '_blank'
             li= link_to 'Sign out', destroy_user_session_path, method: :delete
 
