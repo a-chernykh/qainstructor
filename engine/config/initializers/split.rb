@@ -3,4 +3,6 @@ Split.configure do |config|
 
   config.bots['UptimeRobot'] = 'Uptime Robot'
   config.bots['XoviBot'] = 'XoviBot'
+
+  config.allow_multiple_experiments = true
 end

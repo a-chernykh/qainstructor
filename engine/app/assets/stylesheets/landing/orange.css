@@ -1210,3 +1210,7 @@ p.subtext {
 .callout {
   font-weight: bold !important;
 }
+
+.call-to-action-note {
+  margin-left: 10px;
+}
