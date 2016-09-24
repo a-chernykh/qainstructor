@@ -6,6 +6,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/sign_up
   def new
+    ab_finished(:headline)
+    ab_finished(:headline_text)
+    ab_finished(:call_to_action)
     super
   end
 

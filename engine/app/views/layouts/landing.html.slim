@@ -15,7 +15,6 @@ html lang="en"
         .col-lg-12
           = flash_messages
           = yield
-
     footer
       .container-fluid
         .row
@@ -26,3 +25,5 @@ html lang="en"
               li= link_to 'Terms of Service', terms_page_path
               li= link_to 'Privacy Policy', privacy_page_path
               li= mail_to 'info@qainstructor.com', 'Contact Us'
+
+    = render 'shared/js'
