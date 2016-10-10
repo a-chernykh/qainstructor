@@ -1,20 +1,39 @@
 version: '2'
 services:
+  sample-app:
+    restart: always
+
+  selenium-server:
+    restart: always
+
+  redis:
+    restart: always
+
+  backup:
+    restart: always
+
+  faye:
+    restart: always
+
   postgres:
+    restart: always
     env_file:
       - ./env/production.env
 
   nginx:
+    restart: always
     env_file:
       - ./env/production.env
 
   sidekiq:
+    restart: always
     env_file:
       - ./env/production.env
     volumes:
       - /jobs:/jobs
 
   rails:
+    restart: always
     env_file:
       - ./env/production.env
     volumes:

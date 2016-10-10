@@ -4,13 +4,13 @@ services:
     extends:
       file: docker-compose.common.yml
       service: service
-    build: faye
+    image: qainstructor.com:5043/qainstructor/faye:0.0.1
 
   postgres:
     extends:
       file: docker-compose.common.yml
       service: service
-    build: postgres
+    image: qainstructor.com:5043/qainstructor/postgres:0.0.1
     volumes:
       - qainstructor-db:/var/lib/postgresql/data
 
@@ -18,7 +18,7 @@ services:
     extends:
       file: docker-compose.common.yml
       service: service
-    build: backup
+    image: qainstructor.com:5043/qainstructor/backup:0.0.1
     links:
       - postgres
 
@@ -38,7 +38,7 @@ services:
     extends:
       file: docker-compose.common.yml
       service: service
-    build: sample-app
+    image: qainstructor.com:5043/qainstructor/sample-app:latest
     volumes:
       - qainstructor-sample-app-assets:/assets-volume
 
@@ -46,7 +46,7 @@ services:
     extends:
       file: docker-compose.common.yml
       service: service
-    build: nginx
+    image: qainstructor.com:5043/qainstructor/nginx:0.0.1
     links:
       - rails
       - sample-app
@@ -62,7 +62,8 @@ services:
     extends:
       file: docker-compose.common.yml
       service: service
-    build: rails
+    image: qainstructor.com:5043/qainstructor/engine:latest
+    command: ["bundle", "exec", "puma", "-b", "tcp://0.0.0.0", "-p", "8080", "--pidfile", "/tmp/puma.pid", "-t", "8", "-w", "2"]
     links:
       - postgres
       - redis
@@ -71,7 +72,8 @@ services:
     extends:
       file: docker-compose.common.yml
       service: service
-    build: sidekiq
+    image: qainstructor.com:5043/qainstructor/engine:latest
+    command: [bundle, exec, sidekiq]
     links:
       - faye
       - postgres

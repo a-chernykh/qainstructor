@@ -1,4 +1,4 @@
-FROM qainstructor/ruby:latest
+FROM qainstructor.com:5043/qainstructor/ruby:0.0.1
 MAINTAINER Andrey Chernih <andrey.chernih@gmail.com>
 
 ENV dir /suite
@@ -21,3 +21,6 @@ RUN bundle install
 COPY . .
 
 CMD ["bin/loop.sh"]
+
+TAG qainstructor.com:5043/qainstructor/test-runner:0.0.1
+PUSH qainstructor.com:5043/qainstructor/test-runner:0.0.1

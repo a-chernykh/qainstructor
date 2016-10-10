@@ -14,7 +14,7 @@ module JobRunner
         it 'creates it' do
           expect(Docker::Container).to receive(:create)
             .with('name' => container_name,
-                  'Image' => 'qainstructor/test-runner',
+                  'Image' => 'qainstructor.com:5043/qainstructor/test-runner:0.0.1',
                   'HostConfig' => {
                     'Binds' => ["#{directory}:/jobs"],
                     'Links' => ['qainstructor_selenium-server_1:selenium-server'],

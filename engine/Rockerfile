@@ -1,4 +1,4 @@
-FROM qainstructor/ruby:latest
+FROM qainstructor.com:5043/qainstructor/ruby:0.0.1
 MAINTAINER Andrey Chernih <andrey.chernih@gmail.com>
 
 ENV dir /app
@@ -32,4 +32,5 @@ RUN chown -R app $dir
 USER app
 ENV HOME /home/app
 
-TAG qainstructor/engine:latest
+TAG qainstructor.com:5043/qainstructor/engine:latest
+PUSH qainstructor.com:5043/qainstructor/engine:latest

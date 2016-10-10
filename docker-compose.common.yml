@@ -1,6 +1,5 @@
 version: '2'
 services:
   service:
-    restart: always
     env_file:
       - ./env/common.env

@@ -1,16 +1,18 @@
-# Setup environment
+# Development
+
+## Install software
 
 All services should be self-contained, you don't need to install any additional software other than Docker.
 
-## Install Docker
+### Install Docker
 
 Installation instructions: https://docs.docker.com/engine/installation/
 
-## Install docker-compose
+### Install docker-compose
 
 Installation instructions: https://docs.docker.com/compose/install/
 
-## Install rocker and rocker-compose
+### Install rocker and rocker-compose
 
 https://github.com/grammarly/rocker
 https://github.com/grammarly/rocker-compose
@@ -24,19 +26,19 @@ Copy example environment files:
 
 Update them accordingly.
 
-## Build base images
+## Login to Docker Registry
 
-Run the following command to build base images
+Add `qainstructor.com:5043` to the list of insecure registries. And login:
 
-    bin/build.sh
+    docker login https://qainstructor.com:5043
 
-## Build all containers
+## Bootstrap
 
-Run the following command to create required docker volumes and build all containers:
+The following command will create all necessary volumes and database:
 
     bin/bootstrap.sh
 
-## Deploy the app
+# Deploy the app
 
 Run
 

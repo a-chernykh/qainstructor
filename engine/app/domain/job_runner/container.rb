@@ -1,7 +1,7 @@
 module JobRunner
 
   class Container
-    IMAGE_NAME = 'qainstructor/test-runner'
+    IMAGE_NAME = 'qainstructor.com:5043/qainstructor/test-runner:0.0.1'
     LINKS = 'qainstructor_selenium-server_1:selenium-server'
     NETWORK = 'qainstructor_default'
 

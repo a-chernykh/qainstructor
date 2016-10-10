@@ -1,4 +1,4 @@
-FROM qainstructor/ruby:latest
+FROM qainstructor.com:5043/qainstructor/ruby:0.0.1
 MAINTAINER Andrey Chernih <andrey.chernih@gmail.com>
 
 ENV dir /app
@@ -17,3 +17,6 @@ COPY . .
 CMD ["ruby", "app.rb", "-o", "0.0.0.0", "-p", "8080"]
 
 EXPOSE 8080
+
+TAG qainstructor.com:5043/qainstructor/sample-app:latest
+PUSH qainstructor.com:5043/qainstructor/sample-app:latest

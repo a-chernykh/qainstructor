@@ -3,3 +3,4 @@ log/*
 tmp/*
 public/uploads/tmp
 public/uploads/jobs
+Rockerfile
