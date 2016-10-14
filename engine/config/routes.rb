@@ -50,5 +50,12 @@ Rails.application.routes.draw do
   get '/pages/privacy', as: :privacy_page
   get '/pages/:page' => 'pages#show'
 
+  get '/bayarea' => 'offline_registrations#new'
+  resources :offline_registrations, only: %i(new create) do
+    collection do
+      get :thanks
+    end
+  end
+
   root 'landing#show'
 end

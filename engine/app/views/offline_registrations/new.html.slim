@@ -1,0 +1,126 @@
+h1 Web automation training in San Francisco Bay Area
+
+p Instructors lead <strong>Ruby</strong>, <strong>Cucumber</strong> and <strong>Selenium</strong> training with focus on a deep hands-on experience.
+  Learn how to build automation framework for testing Web applications including:
+
+.row
+  .col-lg-6
+    ul
+      li <strong>Ruby</strong> basics (modules, classes, variables, hashes, arrays, conditions, loops, regular expressions, YAML files, I/O)
+      li How to design test automation framework with <strong>Cucumber</strong> - syntax, structure
+      li <strong>RubyMine</strong> IDE (usage, configuration, shortcuts)
+      li Version control system - <strong>git</strong>
+  .col-lg-6
+    ul
+      li How to interact with web applications using <strong>Selenium WebDriver</strong>
+      li How to verify results using <strong>RSpec</strong> assertion library
+      li How to generate test reports
+      li Basic <stong>Linux</strong> terminal commands
+
+p At the end of the course you will be able to create automated tests by yourself utilizing latest state of the art libraries and techniques which will make you
+  a desirable candidate on a job market.
+
+dl.dl-horizontal
+  dt Language
+  dd Russian, all text materials - English
+  dt Duration
+  dd 8 weeks (3 hours / per week)
+  dt Group size
+  dd 15 persons
+  dt Number of instructors
+  dd 2
+  dt When
+  dd January 2017
+  dt Where
+  dd Bay Area
+  dt Tuition
+  dd $50 / per one lesson (3 hours)
+
+a.btn.btn-primary.btn-lg href='#register' Register Now
+
+.row
+  .col-lg-6
+    h2 Curriculum
+    dl
+      dt Day 1
+      dd
+        p We will cover concepts of automated testing and give you introduction into Ruby. You will complete 2 exercises in class and receive one home work assignment.
+        ul
+          li Introduction to the course
+          li Concepts of automated testings
+          li RubyMine IDE basics
+          li Ruby installation
+          li Running Ruby programs
+          li Variables
+          li Exercise #1
+          li Hashes
+          li Logical conditions
+          li Blocks
+          li Loops and iterators
+          li Exercise #2
+      dt Day 2
+      dd
+        p Deeper coverage of Ruby. You will learn more advanced concepts like classes, modules and regular expressions.
+        ul
+          li Modules
+          li Classes and objects
+          li Methods
+          li Instance variables
+          li Type conversions
+          li Regular expressions
+          li Working with files (I/O)
+          li Exercise #1
+
+  .col-lg-6
+    h2 Instructors
+
+    .row.instructor
+      .col-lg-12
+        img.photo src=image_url('andrey.jpg') width=200 align='left'
+        h3 Andrey Chernih
+        h4 Sr Software Engineer and <a href="/">qainstructor.com</a> founder
+        p Andrey has 10 years of experience developing and testing web applications. He is a true believer in test driven development and has an eye on software quality.
+          Throughout his carrer he was designing multiple testing frameworks based on Cucumber, Selenium and RSpec and mentored people how to test software more efficiently.
+          Andrey is also active open-source community member, he made contributions to many popular open-source projects including Ruby on Rails.
+        p.social
+          a href='https://www.linkedin.com/in/andreychernih' target='_blank'
+            img src=image_url('linkedin.png') width=25 height=25
+          a href='https://github.com/andreychernih' target='_blank'
+            img src=image_url('github.png') width=30 height=25
+
+    .row.instructor
+      .col-lg-12
+        img.photo src=image_url('alexey.jpg') width=200 align='left'
+        h3 Alexey Smirnov
+        h4 Sr QA Automation Engineer
+        p Alexey has extensive experience in building test automation frameworks from scratch for Web and Mobile platforms and applications using such tools like
+          Ruby, Cucumber, Selenium, Watir and Appium. He also has a big passion about ensuring software quality by implementing automated testing on all stages of SDLC as early
+          as possible. Areas of expertise - enterprise solutions, financial, educational and healthcare services.
+
+        p.social
+          a href='https://www.linkedin.com/in/alexsmirnov765/en' target='_blank'
+            img src=image_url('linkedin.png') width=25 height=25
+
+.row
+  .col-lg-12
+    a name='register'
+    h2 Register
+
+    p Please fill in all the fields below to reserve a seat in this course. Note that in order to maximize learning efficiency, we're keeping group size small (no more than 15 persons).
+
+    = form_for(@offline_registration, url: offline_registrations_path) do |f|
+
+      .form-group
+        = f.label :name
+        = f.text_field :name, class: 'form-control', required: true
+
+      .form-group
+        = f.label :phone
+        = f.text_field :phone, class: 'form-control', required: true
+
+      .form-group
+        = f.label :email
+        = f.email_field :email, class: 'form-control', required: true
+
+      .actions
+        = f.submit 'Register', class: 'btn btn-primary btn-lg'
