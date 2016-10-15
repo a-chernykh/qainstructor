@@ -46,6 +46,11 @@ body {
 
     .row.content {
       padding: 3em 5em;
+      @media (max-width: 768px) {
+        & {
+          padding: 2em 2em;
+        }
+      }
     }
   }
 }
