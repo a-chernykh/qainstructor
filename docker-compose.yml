@@ -26,13 +26,13 @@ services:
     extends:
       file: docker-compose.common.yml
       service: service
-    image: redis
+    image: redis:3.2.4
 
   selenium-server:
     extends:
       file: docker-compose.common.yml
       service: service
-    image: selenium/standalone-firefox
+    image: selenium/standalone-firefox:2.53.1
 
   sample-app:
     extends:
