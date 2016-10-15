@@ -62,6 +62,12 @@ FactoryGirl.define do
     content '...'
   end
 
+  factory :offline_registration do
+    name 'John Doe'
+    phone '+1 (111) 111-11-11'
+    email 'john.doe@example.com'
+  end
+
   factory :redemption do
     user
     coupon

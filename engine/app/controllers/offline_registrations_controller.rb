@@ -8,6 +8,7 @@ class OfflineRegistrationsController < ApplicationController
   def create
     @offline_registration = OfflineRegistration.new(offline_registration_params)
     if @offline_registration.save
+      NewOfflineRegistration.perform_async(@offline_registration.id)
       redirect_to(thanks_offline_registrations_url)
     else
       render :new
