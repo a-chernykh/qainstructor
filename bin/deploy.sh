@@ -17,6 +17,9 @@ if [ "$LOCAL" = false ]; then
   git pull > /dev/null
 fi
 
+echo '*** Pulling containers'
+$CONTROL_CMD pull
+
 echo '*** Precompiling assets, hold on'
 # First, make sure that qainstructor-engine-assets volume has up to date version of public folder from rails container
 docker run --rm -u root -v qainstructor-engine-assets:/assets-volume qainstructor_rails /bin/bash -c 'cp -rf /app/public/* /assets-volume/'
