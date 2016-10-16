@@ -4,16 +4,14 @@ p Instructors lead <strong>Ruby</strong>, <strong>Cucumber</strong> and <strong>
   Learn how to build automation framework for testing Web applications including:
 
 .row
-  .col-lg-6
+  .col-lg-12
     ul
       li <strong>Ruby</strong> basics (modules, classes, variables, hashes, arrays, conditions, loops, regular expressions, YAML files, I/O)
       li How to design test automation framework with <strong>Cucumber</strong> - syntax, structure
-      li <strong>RubyMine</strong> IDE (usage, configuration, shortcuts)
-      li Version control system - <strong>Git</strong>
-  .col-lg-6
-    ul
       li How to interact with web applications using <strong>Selenium WebDriver</strong>
       li How to verify results using <strong>RSpec</strong> assertion library
+      li <strong>RubyMine</strong> IDE (usage, configuration, shortcuts)
+      li Version control system - <strong>Git</strong>
       li How to generate test reports
       li Basic <stong>Linux</strong> terminal commands
 
@@ -48,7 +46,41 @@ p Instructors lead <strong>Ruby</strong>, <strong>Cucumber</strong> and <strong>
       li Highly desired: familiarity with <a href="http://www.w3schools.com/html/default.asp" target="_blank">HTML</a>
 
 .row
+  .col-lg-12
+    h2 Instructors
+
+.row
   .col-lg-6
+    .row.instructor
+      .col-lg-12
+        img.photo src=image_url('andrey.jpg') width=200 height=200 align='left'
+        h3 Andrey Chernih
+        h4 Sr Software Engineer and <a href="/">qainstructor.com</a> founder
+        p Andrey has 10 years of experience developing and testing web applications. He is a true believer in test driven development and has an eye on software quality.
+          Throughout his carrer he was designing multiple testing frameworks based on Cucumber, Selenium and RSpec and mentored people how to test software more efficiently.
+          Andrey is also active open-source community member, he made contributions to many popular open-source projects including Ruby on Rails.
+        p.social
+          a href='https://www.linkedin.com/in/andreychernih' target='_blank'
+            img src=image_url('linkedin.png') width=25 height=25
+          a href='https://github.com/andreychernih' target='_blank'
+            img src=image_url('github.png') width=30 height=25
+
+  .col-lg-6
+    .row.instructor
+      .col-lg-12
+        img.photo src=image_url('alexey.jpg') width=200 height=200 align='left'
+        h3 Alexey Smirnov
+        h4 Sr QA Automation Engineer
+        p Alexey has extensive experience in building test automation frameworks from scratch for Web and Mobile platforms and applications using such tools like
+          Ruby, Cucumber, Selenium, Watir and Appium. He also has a big passion about ensuring software quality by implementing automated testing on all stages of SDLC as early
+          as possible. Areas of expertise - enterprise solutions, financial, educational and healthcare services.
+
+        p.social
+          a href='https://www.linkedin.com/in/alexsmirnov765/en' target='_blank'
+            img src=image_url('linkedin.png') width=25 height=25
+
+.row
+  .col-lg-12
     h2 Curriculum
     dl
       dt Day 1
@@ -67,9 +99,10 @@ p Instructors lead <strong>Ruby</strong>, <strong>Cucumber</strong> and <strong>
           li Blocks
           li Loops and iterators
           li Exercise #2
+
       dt Day 2
       dd
-        p Deeper coverage of Ruby. You will learn more advanced concepts like classes, modules and regular expressions.
+        p Deeper coverage of Ruby. You will learn more advanced concepts like classes, modules and regular expressions. Introduction to Linux terminal commands and version control with Git.
         ul
           li Modules
           li Classes and objects
@@ -79,43 +112,83 @@ p Instructors lead <strong>Ruby</strong>, <strong>Cucumber</strong> and <strong>
           li Regular expressions
           li Working with files (I/O)
           li Exercise #1
+          li Linux terminal commands
+          li Exercise #2
+          li Introducton to Git
+          li Creating new account and repository on GitHub.com
+          li Installing git
+          li Creating new branch
+          li Commit and push chages
+          li Creating new pull request
 
-  .col-lg-6
-    h2 Instructors
+      dt Day 3
+      dd
+        p Everything about Cucumber. Gherkin language, feature files, step definitions.
+        ul
+          li Introduction to Cucumber
+          li About Ruby gems
+          li Install Cucumber
+          li Create new Cucumber projects in RubyMine
+          li Create new Cucumber feature file
+          li Run this feature file with Cucumber
+          li Create and describe step definitions using RubyMine
+          li Ruby exceptions
+          li Run this feature file with Cucumber
+          li Commit and push the changes
+          li Exercise #1
+          li Introduction to RSpec
+          li How to install RSpec
+          li How to use RSpec
 
-    .row.instructor
-      .col-lg-12
-        img.photo src=image_url('andrey.jpg') width=200 align='left'
-        h3 Andrey Chernih
-        h4 Sr Software Engineer and <a href="/">qainstructor.com</a> founder
-        p Andrey has 10 years of experience developing and testing web applications. He is a true believer in test driven development and has an eye on software quality.
-          Throughout his carrer he was designing multiple testing frameworks based on Cucumber, Selenium and RSpec and mentored people how to test software more efficiently.
-          Andrey is also active open-source community member, he made contributions to many popular open-source projects including Ruby on Rails.
-        p.social
-          a href='https://www.linkedin.com/in/andreychernih' target='_blank'
-            img src=image_url('linkedin.png') width=25 height=25
-          a href='https://github.com/andreychernih' target='_blank'
-            img src=image_url('github.png') width=30 height=25
+      dt Day 4
+      dd
+        p Intruduction to Selenium WebDriver and how to use it to test websites.
+        ul
+          li Introduction to Selenium WebDriver
+          li Install Selenium WebDriver using gem install
+          li Install Cucumber and Selenium using bundler
+          li Create new Selenium project in RubyMine
+          li Creating and destroying browser instance
+          li Installing chromedriver
+          li Create new browser window
+          li Destroy browser window
+          li Before / After in Cucumber
+          li Use Before / After to create / destroy browser instance
+          li Selectors and XPATH
+          li Interacting with elements
+          li How to get page content and assert that it includes something
+          li Exercise #1
+          li Exercise #2
 
-    .row.instructor
-      .col-lg-12
-        img.photo src=image_url('alexey.jpg') width=200 align='left'
-        h3 Alexey Smirnov
-        h4 Sr QA Automation Engineer
-        p Alexey has extensive experience in building test automation frameworks from scratch for Web and Mobile platforms and applications using such tools like
-          Ruby, Cucumber, Selenium, Watir and Appium. He also has a big passion about ensuring software quality by implementing automated testing on all stages of SDLC as early
-          as possible. Areas of expertise - enterprise solutions, financial, educational and healthcare services.
+      dt Day 5
+      dd
+        p Using Selenium WebDriver to test popular websites.
+        ul
+          li Cucumber tables
+          li Multiple exercises
+          li How to interact with radiobuttons and dropdowns and checkboxes
+          li Multiple exercises
+          li Background
+          li Exercise
 
-        p.social
-          a href='https://www.linkedin.com/in/alexsmirnov765/en' target='_blank'
-            img src=image_url('linkedin.png') width=25 height=25
+      dt Day 6
+      dd
+        p Practice day
+
+      dt Day 7
+      dd
+        p Practice day
+
+      dt Day 8
+      dd
+        p Practice day
 
 .row
   .col-lg-12
     a name='register'
     h2 Register
 
-    p Please fill in all the fields below to reserve a seat in this course. Note that in order to maximize learning efficiency, we're keeping group size small (no more than 15 persons).
+    p Please fill in all the fields below to reserve a seat in this course. Note that in order to maximize learning efficiency, we're keeping group size small (no more than 15 students).
 
     = form_for(@offline_registration, url: offline_registrations_path) do |f|
 
