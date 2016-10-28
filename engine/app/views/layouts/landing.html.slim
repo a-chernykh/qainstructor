@@ -4,7 +4,7 @@ html lang="en"
     = stylesheet_link_tag "application", :media => "all"
     = javascript_include_tag "application"
     = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600,400italic,700"
-    title QA Instructor
+    title= yield(:title) || "QA Instructor"
 
   body.landing
     .container-fluid
