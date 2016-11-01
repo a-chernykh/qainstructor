@@ -278,6 +278,7 @@ end
 
 course1.cheatsheets.destroy_all
 course1.cheatsheets.create! code: 'cheatsheet'
+course1.cheatsheets.create! code: 'ruby'
 
 task = Tasks::Courses::UnlockChapters.new(course: course1.reload, user: user)
 task.run
