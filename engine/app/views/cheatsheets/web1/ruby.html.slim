@@ -1,5 +1,5 @@
 .cheatsheet ng-app='chapter'
-  .col-lg-4
+  .col-lg-4.col-sm-4.col-xs-4
     table
       tr
         th Local variables
@@ -10,21 +10,15 @@
               name = "John"
               first_name = "John"
               default = true
-      tr
-        th String interpolation
-      tr
-        td
-          code-example type='ruby'
-            | name = 'John'
-              puts "Hello, \#{name}!"  #=> "Hello, John!"
+    table
       tr
         th Strings
       tr
         td
           strong String creation methods
           code-example type='ruby'
-            | str = ‘’  #=> creates an empty string using literal notation
-              str = ‘some text’  #=> creates a string containing some text
+            | str = ''  #=> new empty string
+              str = 'some text'  #=> new string 'some text'
 
           strong String manipulation methods
           code-example type='ruby'
@@ -41,78 +35,17 @@
 
               str_3 = "  one more piece of text  "
               str_3.strip  #=> "one more piece of text"
-              str_3.include?("piece")  # => true
+              str_3.include?("piece")  #=> true
               str_3.split  #=> ["one", "more", "piece", "of", "text"]
 
               str_1 + str_2  #=> "some textSome Other Text"
 
-              Get particular character by index from the string
+              # Get particular character by index from the string:
               str = "oranges"
               str[3]  #=> "n"
 
-              str_4 = ‘35’
+              str_4 = '35'
               str_4.to_i  #=> 35  (default base = 10)
-      tr
-        th Arrays
-      tr
-        td
-          strong Array creation methods
-          code-example type='ruby'
-            | arr = []  #=> creates an empty array using literal notation
-              arr = [1, 2, ‘word’, 3, {key: ‘value’}]  #=> creates an array with different types of data
-
-          strong Array manipulation methods
-          code-example type='ruby'
-            | arr = [1, 2, 3, 4, 5, 6]
-              arr[2]  #=> 3
-              arr[2, 3]  #=> [3, 4, 5]
-              arr.first  #=> 1
-              arr.last  #=> 6
-              arr.length  #=> 6
-              arr.include?(3)  #=> true
-
-              arr = [1, 2, 3, 4]
-              arr.push(5)  #=> [1, 2, 3, 4, 5]
-              arr << 6  #=> [1, 2, 3, 4, 5, 6]
-              arr.shift  #=> 1; arr #=> [2, 3, 4, 5, 6]
-              arr.unshift(7)  #=> [7, 2, 3, 4, 5, 6]
-
-              [1, 2, 3].concat([4, 5, 6])  #=> [1, 2, 3, 4, 5, 6]
-
-              arr = [3, 6, 7, 3, 8, 9, 12, 3]
-              arr.uniq  #=> [3, 6, 7, 8, 9, 12]
-              arr.count(3)  #=> 3
-
-              arr = [9, 0, 7, 3, 5, 4, 6, 1, 8, 2]
-              arr.sort  #=> [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-      tr
-        th Hashes
-      tr
-        td
-          strong Hash creation methods
-          code-example type='ruby'
-            | hash = Hash.new  #=> creates an empty hash using Hash class
-              hash = {}  #=> creates an empty hash using literal notation
-              hash = { "key_1" => "value_1", "key_2" => "value_2" }  #=> creates a hash with 2 key/value pairs - both key and value are string type objects
-
-              hash = { first_name: "John", last_name: "Doe", email: "johndoe@example.com" }  #=> creates a hash with 3 key/value pairs - keys are symbols, values are strings
-
-          strong Hash manipulation methods
-          code-example type='ruby'
-            | hash = { first_name: "John", last_name: "Doe", email: "johndoe@example.com" }
-              hash.keys  #=> [:first_name, :last_name, :email]
-              hash.values  #=> ["John", "Doe", "johndoe@example.com"]
-              hash.length  #=> 3
-              hash.has_key?(:first_name)  #=> true
-              hash.has_value?("random text")  #=> false
-              hash[:first_name]  #=> "John"
-              hash[:dob] = "10/21/2001"  #=> puts hash => {:first_name=>"John", :last_name=>"Doe", :email=>"johndoe@example.com’, :dob=>"10/21/2001" }
-
-              hash_one = { first_name: "John", last_name: "Doe" }
-              hash_two = { first_name: "Jack", email: "jack@example.com" }
-              hash_one.merge(hash_two)  #=> { :first_name=>"Jack", :last_name=>"Doe", :email=>"jack@example.com" }
-  .col-lg-4
     table
       tr
         th Conditions
@@ -124,17 +57,17 @@
               if product == "Apples"
                 puts "red"
               end
-              # => "red"
+              #=> "red"
 
               # The condition above can be replaced with one-row statement:
-              puts "red" if product == "Apples"  # => "red"
+              puts "red" if product == "Apples"  #=> "red"
 
               if product == "Oranges"
                 puts "orange"
               else
                 puts "red"
               end
-              # => "red"
+              #=> "red"
 
               # The condition above can be replaced with one-row statement:
               product == "Oranges" ? product == "Oranges" : puts "red"  #=> "red"
@@ -161,7 +94,73 @@
                 puts "unknown"
               end
               #=> "orange"
+    table
+      tr
+        th Classes and instance variables
+      tr
+        td
+          strong Definition
+          code-example type='ruby'
+            | class Book
+                def initialize(name, pages)
+                  @name = name
+                  @pages = pages
+                end
 
+                def pages
+                  @pages
+                end
+              end
+
+          strong Create new object
+          code-example type='ruby'
+            | book = Book.new('Book', 100)
+  .col-lg-4.col-sm-4.col-xs-4
+    table
+      tr
+        th Arrays
+      tr
+        td
+          strong Array creation methods
+          code-example type='ruby'
+            | arr = []  #=> creates an empty array using literal notation
+              arr = [1, 2, 'word', 3, {key: 'value'}]  #=> creates an array with different types of data
+
+          strong Array manipulation methods
+          code-example type='ruby'
+            | arr = [1, 2, 3, 4, 5, 6]
+              arr[2]  #=> 3
+              arr[2, 3]  #=> [3, 4, 5]
+              arr.first  #=> 1
+              arr.last  #=> 6
+              arr.length  #=> 6
+              arr.include?(3)  #=> true
+
+              arr = [1, 2, 3, 4]
+              arr.push(5)  #=> [1, 2, 3, 4, 5]
+              arr << 6  #=> [1, 2, 3, 4, 5, 6]
+              arr.shift  #=> 1; arr #=> [2, 3, 4, 5, 6]
+              arr.unshift(7)  #=> [7, 2, 3, 4, 5, 6]
+
+              [1, 2, 3].concat([4, 5, 6])  #=> [1, 2, 3, 4, 5, 6]
+
+              arr = [3, 6, 7, 3, 8, 9, 12, 3]
+              arr.uniq  #=> [3, 6, 7, 8, 9, 12]
+              arr.count(3)  #=> 3
+
+              arr = [9, 0, 7, 3, 5, 4, 6, 1, 8, 2]
+              arr.sort  #=> [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    table
+      tr
+        th String interpolation
+      tr
+        td
+          code-example type='ruby'
+            | name = 'John'
+              puts "Hello, \#{name}!"  #=> "Hello, John!"
+    table
+      tr
+        td
           strong Combined conditions
           code-example type='ruby'
             | # && - logical "AND"
@@ -183,7 +182,6 @@
                 puts "I have number of apples either less or more than 5"
               end
 
-
           strong Avoiding negate operator
           code-example type='ruby'
             | product = "Bananas"
@@ -191,28 +189,7 @@
                 puts "Not Apples, but still tasty"
               end
               #=> "Not Apples, but still tasty"
-
-      tr
-        th Classes and instance variables
-      tr
-        td
-          strong Definition
-          code-example type='ruby'
-            | class Book
-                def initialize(name, pages)
-                  @name = name
-                  @pages = pages
-                end
-
-                def pages
-                  @pages
-                end
-              end
-
-          strong Create new object
-          code-example type='ruby'
-            | book = Book.new(‘Book name’, 100)
-
+    table
       tr
         th Modules
       tr
@@ -226,108 +203,7 @@
                 def helper2
                 end
               end
-
-  .col-lg-4
     table
-      tr
-        th Loops, iterators and code blocks
-      tr
-        td
-          strong Loops
-          code-example type='ruby'
-            | for i in 0..5
-                  puts "Value of local variable is \#{i}"
-              end
-              # Value of local variable is 0
-              # Value of local variable is 1
-              # …
-              # Value of local variable is 5
-
-              i = 0
-              num = 5
-              until i > num do
-                  puts "Inside the loop i = \#{i}"
-                  i += 1
-              end
-              # Inside the loop i = 0
-              # Inside the loop i = 1
-              # …
-              # Inside the loop i = 5
-
-              # The example above can be overwritten to allow code within the loop to be executed at least once till condition evaluation:
-
-              i = 0
-              num = 5
-              begin
-                  puts "Inside the loop i = \#{i}"
-                  i += 1
-              end until i > num
-              # Inside the loop i = 0
-              # Inside the loop i = 1
-              # …
-              # Inside the loop i = 5
-
-              i = 0
-              num = 5
-              while i < num do
-                  puts "Inside the loop i = \#{i}"
-                  i += 1
-              end
-              # Inside the loop i = 0
-              # Inside the loop i = 1
-              # …
-              # Inside the loop i = 4
-
-              # The example above can be overwritten to allow code within the loop to be executed at least once till condition evaluation:
-
-              i = 0
-              num = 5
-              begin
-                  puts "Inside the loop i = \#{i}"
-                  i += 1
-              end while i < num
-              # Inside the loop i = 0
-              # Inside the loop i = 1
-              # …
-              # Inside the loop i = 4
-
-          strong Iterators and code blocks
-          code-example type='ruby'
-            | 5.times { puts "Text within iterator!" }
-              # Text within iterator!
-              # Text within iterator!
-              # …
-              # Text within iterator!
-              # => 5
-
-              5.times { |i| puts "The value of iterator is \#{i} " }
-              # The value of iterator is 0
-              # The value of iterator is 1
-              # …
-              # The value of iterator is 4
-              # => 5
-
-              products = ["Apple", "Banana", "Cucumber", "Orange"]
-              products.each do |product|
-                  puts product
-              end
-              # Apple
-              # Banana
-              # Cucumber
-              # Orange
-
-              # The example above can be overwritten with one-row code block
-              products.each { |product| puts product }
-              # Apple
-              # Banana
-              # Cucumber
-              # Orange
-
-              arr = [1, 2, 3]
-              arr.map { |item| puts item * 10 }
-              # 10
-              # 20
-              # 30
       tr
         th Type conversion
       tr
@@ -341,3 +217,112 @@
           strong Integers to Floats conversion
           code-example type='ruby'
             | 12.to_f  #=> 12.0 (data type - Float)
+
+  .col-lg-4.col-sm-4.col-xs-4
+    table
+      tr
+        th Hashes
+      tr
+        td
+          strong Hash creation methods
+          code-example type='ruby'
+            | hash = Hash.new  #=> new empty hash
+              hash = {}  #=> new empty hash
+              # new hash with 2 key/value pairs:
+              hash = { "key1"=> "val1", "key2"=> "val2" }
+              # new hash with 3 key/value pairs - keys are symbols:
+              hash = { first_name: "John",
+                       last_name: "Doe",
+                       email: "johndoe@example.com" }
+
+          strong Hash manipulation methods
+          code-example type='ruby'
+            | hash = { first_name: "John",
+                       last_name: "Doe",
+                       email: "johndoe@example.com" }
+              hash.keys  #=> [:first_name, :last_name, :email]
+              hash.values  #=> ["John", "Doe", "johndoe@example.com"]
+              hash.length  #=> 3
+              hash.has_key?(:first_name)  #=> true
+              hash.has_value?("random text")  #=> false
+              hash[:first_name]  #=> "John" # set new value
+              hash[:dob] = "10/21/2001" # append new key, set value
+
+              hash_one = { first_name: "John", last_name: "Doe" }
+              hash_two = { first_name: "Jack", email: "jack@example.com" }
+              hash_one.merge(hash_two)
+              #=> { :first_name=>"Jack", :last_name=>"Doe", :email=>"jack@example.com" }
+
+    table
+      tr
+        th Loops, iterators and code blocks
+      tr
+        td
+          strong Loops
+          code-example type='ruby'
+            | for i in 0..5
+                puts "i = \#{i}"
+              end
+              #=> i = 0, i = 1, ... , i = 5
+
+              i = 0
+              num = 5
+              until i > num do
+                puts "i = \#{i}"
+                i += 1
+              end
+              #=> i = 0, i = 1, ... , i = 5
+
+              # The example above can be overwritten to allow code
+              # within the loop to be executed at least once till condition evaluation:
+
+              i = 0
+              num = 5
+              begin
+                puts "i = \#{i}"
+                i += 1
+              end until i > num
+              # i = 0, i = 1, ..., i = 5
+
+              i = 0
+              num = 5
+              while i < num do
+                puts "i = \#{i}"
+                i += 1
+              end
+              #=> i = 0, i = 1, ... , i = 5
+
+              # The example above can be overwritten to allow code within
+              # the loop to be executed at least once till condition evaluation:
+
+              i = 0
+              num = 5
+              begin
+                puts "i = \#{i}"
+                i += 1
+              end while i < num
+              #=> i = 0, i = 1, ... , i = 4
+
+    table
+      tr
+        td
+          strong Iterators and code blocks
+          code-example type='ruby'
+            | 5.times { |i| puts "i = \#{i} " }
+              #=> i = 0, ... , i = 4
+              #=> 5
+
+              products = ["Apple", "Banana", "Cucumber", "Orange"]
+              products.each do |product|
+                puts product
+              end
+              #=> Apple, Banana, Cucumber, Orange
+
+              # The example above can be overwritten with one-row code block
+              products.each { |product| puts product }
+              #=> Apple, Banana, Cucumber, Orange
+
+              arr = [1, 2, 3]
+              arr.map { |item| puts item * 10 }
+              #=> 10, 20, 30
+

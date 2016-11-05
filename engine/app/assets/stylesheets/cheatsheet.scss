@@ -1,5 +1,24 @@
-@import "bootstrap";
+@import "bootstrap-337/bootstrap/variables";
+@import "bootstrap-337/bootstrap/mixins";
+@import "bootstrap-337/bootstrap/normalize";
+
+@import "bootstrap-337/bootstrap/type";
+@import "bootstrap-337/bootstrap/code";
+@import "bootstrap-337/bootstrap/scaffolding";
+@import "bootstrap-337/bootstrap/grid";
+@import "bootstrap-337/bootstrap/tables";
+
+@import "bootstrap-337/bootstrap/utilities";
+@import "bootstrap-337/bootstrap/responsive-utilities";
+
 @import "highlightjs";
+
+@import "all/common";
+
+.container-fluid {
+  margin: 0px 0px;
+  padding: 0px;
+}
 
 .cheatsheet {
   pre {
@@ -9,6 +28,8 @@
   }
 
   table {
+    width: 100%;
+
     th {
       background-color: #a4c2f4;
       padding: 0.5em;
@@ -19,5 +40,11 @@
       code {
       }
     }
+  }
+}
+
+@media print {
+  table {
+    page-break-inside: avoid;
   }
 }
