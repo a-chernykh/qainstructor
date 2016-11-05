@@ -15,9 +15,15 @@
 
 @import "all/common";
 
-.container-fluid {
-  margin: 0px 0px;
-  padding: 0px;
+.header {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  h1 {
+    text-align: right;
+    font-size: 1.8em;
+    margin: 0px;
+    line-height: 44px;
+  }
 }
 
 .cheatsheet {
