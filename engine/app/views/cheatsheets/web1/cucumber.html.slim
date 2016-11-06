@@ -1,0 +1,192 @@
+- content_for(:title) { 'Cucumber Cheatsheet' }
+.row.cheatsheet ng-app='chapter'
+  .col-lg-6.col-sm-6.col-xs-6
+    table
+      tr
+        th Command line
+      tr
+        td
+          strong Initialize Cucumber project
+          code-example type='bash'
+            | $ cucumber --init
+          strong Run all scenarios
+          code-example type='bash'
+            | $ cucumber
+          strong Run particular feature
+          code-example type='bash'
+            | $ cucumber features/login_logout.feature
+          strong Run single scenario by line number
+          code-example type='bash'
+            | $ cucumber features/login_logout.feature:15
+          strong Run all scenarios having @regression tag
+          code-example type='bash'
+            | $ cucumber --tags @regression
+          strong Generating test report in *.html format
+          code-example type='bash'
+            | $ cucumber &lt;featurename&gt;.feature --format html --out report.html --format pretty
+    table
+      tr
+        th Feature file example
+      tr
+        td
+          code-example type='gherkin'
+            | Feature: Create new user account
+
+                &lt;optional long feature description&gt;
+
+                Scenario: User creates new account
+                  Given I am on registration page  #=&gt; the context
+                  When I fill-in email field with "user.example.com"  #=&gt; the event(-s)
+                  And I fill-in password field with "mycoolpass"  #=&gt; the event(-s)
+                  And I fill-in password confirmation field with "mycoolpass"  #=&gt; the event(-s)
+                  When I click 'Register' button  #=&gt; the event(-s)
+                  Then I should be registered  #=&gt; the outcome(-s)
+    table
+      tr
+        th Step definitions
+      tr
+        td
+          strong Integer parameter
+          code-example type='gherkin'
+            | Given I define step with number 5
+          code-example type='ruby'
+            | Given(/^I define step with number (\d+)$/) do |num_str|
+                num = num_str.to_i #=> 5
+              end
+          strong String parameter
+          code-example type='gherkin'
+            | Given I define step with text "Name"
+          code-example type='ruby'
+            | Given(/^I define step with text "([^\"]+)"$/) do |text|
+                puts text #=> "Name"
+              end
+          strong Table
+          code-example type='gherkin'
+            | Then I should see the following team rankings:
+                | Name    | Steps   | Rank  |
+                | Alpha   | 4000    | 1     |
+                | Beta    | 3500    | 2     |
+                | Charlie | 3000    | 3     |
+          code-example type='ruby'
+            | Then(/^I should see the following team rankings:$/) do |table|
+                # table is a table.hashes.keys # =&gt; [:Name, :Steps, :Rank]
+                table.hashes.each do |team|
+                  puts "The team \#{team['Name']} has \#{team['Steps']} and \#{team['Rank']} rank"
+                end
+              end
+    table
+      tr
+        th Organazing with tags
+      tr
+        td
+          code-example type='gherkin'
+            | @regression @smoke @acceptance #=&gt; tags
+              Feature: Create new user account
+
+                Scenario: User creates new account
+                  Given I am on registration page
+  .col-lg-6.col-sm-6.col-xs-6
+    table
+      tr
+        th Background section
+      tr
+        td
+          code-example type='gherkin'
+            | Feature: Navigation within application
+
+                This feature file contains various navigation test scenarios
+
+                Background:
+                  Given I logged in to application  #=&gt; this step will be executed before each scenario
+
+                Scenario: Navigation to user Profile page
+                  When I click "My Profile" link
+                  Then I should be on "My Profile" page
+                  And Text "Alex" should be present
+
+                Scenario: Navigation to Account page
+                  When I click "My Account" link
+                  Then I should be on "My Account" page
+                  And My total balance should be "$12"
+    table
+      tr
+        th Tables
+      tr
+        td
+          code-example type='gherkin'
+            | Feature: Find the oldest user
+
+                Scenario: Find the oldest user in the given list
+                  Given I have the list of users:
+                    |name            | dob        |
+                    | Michael Jackson | 08/29/1958 |
+                    | Elvis Presley   | 01/08/1935 |
+                    | John Lennon     | 10/09/1940 |
+                  Then The oldest user should be "Elvis Presley"
+    table
+      tr
+        th Scenario Outline
+      tr
+        td
+          code-example type='gherkin'
+            | Feature: Withdraw Fixed Amount
+
+                The 'Withdraw Cash' menu contains several fixed amounts
+                to speed up transactions for customers
+
+                Scenario Outline:
+                  Given I have &lt;Balance&gt; in my account
+                  When I choose to withdraw the fixed amount of &lt;Withdrawal&gt;
+                  Then I should receive &lt;Received&gt; cash
+                  And The balance of my account should be &lt;Remaining&gt;
+
+                  Examples:
+                    | Balance | Withdrawal | Received | Remaining |
+                    | $500    | $50        | $50      | $450      |
+                    | $500    | $100       | $100     | $400      |
+                    | $500    | $200       | $200     | $300      |
+    table
+      tr
+        th Calling other steps
+      tr
+        td
+          strong One step
+          code-example type='ruby'
+            | Given(/^I am registered$/) do
+                # ...
+              end
+
+              Given(/^I am signed in$/) do
+                step 'I am registered'  #=&gt; this will call step above
+              end
+          strong Multiple steps
+          code-example type='ruby'
+            | Given(/^I am registered with email "(.*)"$/) do |email|
+                steps %Q{
+                  When I go to registration page
+                  And I fill-in email field with "\#{email}"
+                  And I fill-in password field with "password"
+                  And I click on "Create Account" button
+                }
+              end
+    table
+      tr
+        th Hooks
+      tr
+        td
+          code-example type='ruby'
+            | Before do |scenario|
+                # code to be executed before each test scenario
+              end
+
+              After do |scenario|
+                # code to be executed after each test scenario
+              end
+
+              Before('@smoke, @regression') do
+                # code to be executed before tagged scenarios
+              end
+
+              at_exit do
+                # code to be executed once after current run
+              end

@@ -279,6 +279,11 @@ end
 course1.cheatsheets.destroy_all
 course1.cheatsheets.create! code: 'cheatsheet'
 course1.cheatsheets.create! code: 'ruby'
+course1.cheatsheets.create! code: 'git'
+course1.cheatsheets.create! code: 'regexp'
+course1.cheatsheets.create! code: 'linux'
+course1.cheatsheets.create! code: 'cucumber'
+course1.cheatsheets.create! code: 'selenium'
 
 task = Tasks::Courses::UnlockChapters.new(course: course1.reload, user: user)
 task.run
