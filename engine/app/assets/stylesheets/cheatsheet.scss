@@ -1,4 +1,6 @@
 @import "bootstrap-337/bootstrap/variables";
+$grid-gutter-width: 20px;
+
 @import "bootstrap-337/bootstrap/mixins";
 @import "bootstrap-337/bootstrap/normalize";
 
@@ -31,6 +33,10 @@
     border: 0;
     padding: 0;
     background: none;
+  }
+
+  .col-lg-4 + .col-lg-4 {
+    padding-left: 0px;
   }
 
   table {

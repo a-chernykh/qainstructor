@@ -23,30 +23,30 @@
 
           strong String manipulation methods
           code-example type='ruby'
-            | str_1 = "some text"
-              str_1.capitalize  #=> "Some text"
-              str_1.upcase  #=> "SOME TEXT"
-              str_1.length  #=> 9
-              str_1.reverse  #=> "txet emos"
+            | s1 = "some text"
+              s1.capitalize  #=> "Some text"
+              s1.upcase  #=> "SOME TEXT"
+              s1.length  #=> 9
+              s1.reverse  #=> "txet emos"
 
-              str_2 = "Some Other Text"
-              str_2.downcase  #=> "some other text"
-              str_2.count("e")  #=> 3
-              str_2.gsub("e", "A")  #=> "SomA OthAr TAxt"
+              s2 = "Other Text"
+              s2.downcase  #=> "other text"
+              s2.count("e")  #=> 2
+              s2.gsub("e", "A")  #=> "OthAr TAxt"
 
-              str_3 = "  one more piece of text  "
-              str_3.strip  #=> "one more piece of text"
-              str_3.include?("piece")  #=> true
-              str_3.split  #=> ["one", "more", "piece", "of", "text"]
+              s3 = "  piece of text  "
+              s3.strip  #=> "piece of text"
+              s3.include?("piece")  #=> true
+              s3.split  #=> ["piece", "of", "text"]
 
-              str_1 + str_2  #=> "some textSome Other Text"
+              s1 + s2  #=> "some textOther Text"
 
-              # Get particular character by index from the string:
+              # Get char by index:
               str = "oranges"
               str[3]  #=> "n"
 
-              str_4 = '35'
-              str_4.to_i  #=> 35  (default base = 10)
+              s4 = '35'
+              s4.to_i  #=> 35 (to integer)
     table
       tr
         th Conditions
@@ -60,8 +60,8 @@
               end
               #=> "red"
 
-              # The condition above can be replaced with one-row statement:
-              puts "red" if product == "Apples"  #=> "red"
+              # One-line replacement:
+              puts "red" if product == "Apples" #=> "red"
 
               if product == "Oranges"
                 puts "orange"
@@ -70,7 +70,7 @@
               end
               #=> "red"
 
-              # The condition above can be replaced with one-row statement:
+              # One-line replacement:
               product == "Oranges" ? product == "Oranges" : puts "red"  #=> "red"
 
               if product == "Oranges"
@@ -82,7 +82,6 @@
               end
               #=> "red"
 
-              # In case of more than 2 options to choose it is better to use case statement:
               product = "Oranges"
               case product
               when "Apples"
@@ -124,8 +123,8 @@
         td
           strong Array creation methods
           code-example type='ruby'
-            | arr = []  #=> creates an empty array using literal notation
-              arr = [1, 2, 'word', 3, {key: 'value'}]  #=> creates an array with different types of data
+            | arr = []  #=> new empty array
+              arr = [1, 2, 'word', 3, {key: 'value'}]  #=> new array
 
           strong Array manipulation methods
           code-example type='ruby'
@@ -138,12 +137,19 @@
               arr.include?(3)  #=> true
 
               arr = [1, 2, 3, 4]
-              arr.push(5)  #=> [1, 2, 3, 4, 5]
-              arr << 6  #=> [1, 2, 3, 4, 5, 6]
-              arr.shift  #=> 1; arr #=> [2, 3, 4, 5, 6]
-              arr.unshift(7)  #=> [7, 2, 3, 4, 5, 6]
+              arr.push(5)
+              #=> [1, 2, 3, 4, 5]
+              arr << 6
+              #=> [1, 2, 3, 4, 5, 6]
+              arr.shift
+              #=> 1;
+              arr
+              #=> [2, 3, 4, 5, 6]
+              arr.unshift(7)
+              #=> [7, 2, 3, 4, 5, 6]
 
-              [1, 2, 3].concat([4, 5, 6])  #=> [1, 2, 3, 4, 5, 6]
+              [1, 2, 3].concat([4, 5, 6])
+              #=> [1, 2, 3, 4, 5, 6]
 
               arr = [3, 6, 7, 3, 8, 9, 12, 3]
               arr.uniq  #=> [3, 6, 7, 8, 9, 12]
@@ -171,16 +177,16 @@
               apples = 5
               oranges = 3
               if apples == 5 && oranges == 5
-                puts "I have number of oranges and apples equal 5"
+                puts "oranges: 5, apples: 5"
               elsif apples > 5 || oranges > 5
-                puts "I have more than 5 oranges and apples"
+                puts "apples > 5 or oranges > 5"
               else
-                puts "I have different numbers of oranges and apples"
+                puts "different number"
               end
-              #=> "I have different numbers of oranges and apples"
+              #=> "different number"
 
               if apples != 5
-                puts "I have number of apples either less or more than 5"
+                puts "I don't have 5 apples"
               end
 
           strong Avoiding negate operator
@@ -211,13 +217,17 @@
         td
           strong Strings to Integers conversion
           code-example type='ruby'
-            | "12".to_i  #=> 12 (data type - Fixnum)
-              "abc12".to_i  #=> 0 (data type - Fixnum)
-              12.to_s  #=> "12" (data type - String)
+            | "12".to_i
+              #=> 12 (data type - Fixnum)
+              "abc12".to_i
+              #=> 0 (data type - Fixnum)
+              12.to_s
+              #=> "12" (data type - String)
 
           strong Integers to Floats conversion
           code-example type='ruby'
-            | 12.to_f  #=> 12.0 (data type - Float)
+            | 12.to_f
+              #=> 12.0 (data type - Float)
 
   .col-lg-4.col-sm-4.col-xs-4
     table
@@ -227,8 +237,8 @@
         td
           strong Hash creation methods
           code-example type='ruby'
-            | hash = Hash.new  #=> new empty hash
-              hash = {}  #=> new empty hash
+            | hash = Hash.new  #=> new hash
+              hash = {}  #=> new hash
               # new hash with 2 key/value pairs:
               hash = { "key1"=> "val1", "key2"=> "val2" }
               # new hash with 3 key/value pairs - keys are symbols:
@@ -241,8 +251,12 @@
             | hash = { first_name: "John",
                        last_name: "Doe",
                        email: "johndoe@example.com" }
-              hash.keys  #=> [:first_name, :last_name, :email]
-              hash.values  #=> ["John", "Doe", "johndoe@example.com"]
+              hash.keys  #=> [:first_name,
+                              :last_name,
+                              :email]
+              hash.values  #=> ["John",
+                                "Doe",
+                                "johndoe@example.com"]
               hash.length  #=> 3
               hash.has_key?(:first_name)  #=> true
               hash.has_value?("random text")  #=> false
