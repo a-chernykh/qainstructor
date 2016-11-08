@@ -2,7 +2,7 @@ doctype html
 html lang="en"
   head
     = render 'shared/head'
-    title Cheatsheet
+    title= yield(:title) || 'Cheatsheet'
     = stylesheet_link_tag "cheatsheet", :media => "all"
     = javascript_include_tag "cheatsheet"
 

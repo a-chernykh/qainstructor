@@ -85,6 +85,27 @@
 
                 Scenario: User creates new account
                   Given I am on registration page
+    table
+      tr
+        th Hooks
+      tr
+        td
+          code-example type='ruby'
+            | Before do |scenario|
+                # code to be executed before each test scenario
+              end
+
+              After do |scenario|
+                # code to be executed after each test scenario
+              end
+
+              Before('@smoke, @regression') do
+                # code to be executed before tagged scenarios
+              end
+
+              at_exit do
+                # code to be executed once after current run
+              end
   .col-lg-6.col-sm-6.col-xs-6
     table
       tr
@@ -168,25 +189,4 @@
                   And I fill-in password field with "password"
                   And I click on "Create Account" button
                 }
-              end
-    table
-      tr
-        th Hooks
-      tr
-        td
-          code-example type='ruby'
-            | Before do |scenario|
-                # code to be executed before each test scenario
-              end
-
-              After do |scenario|
-                # code to be executed after each test scenario
-              end
-
-              Before('@smoke, @regression') do
-                # code to be executed before tagged scenarios
-              end
-
-              at_exit do
-                # code to be executed once after current run
               end

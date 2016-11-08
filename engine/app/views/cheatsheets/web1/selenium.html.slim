@@ -1,9 +1,237 @@
 - content_for(:title) { 'Selenium Cheatsheet' }
 .row.cheatsheet ng-app='chapter'
-  .col-lg-4.col-sm-4.col-xs-4
+  .col-lg-6.col-sm-6.col-xs-6
     table
       tr
-        th Local variables
+        th Browser and Driver actions
       tr
         td
           code-example type='ruby'
+            | require 'selenium-webdriver'
+              #=&gt; allows Ruby to use Selenium WebDriver methods
+
+          strong Launch browser instance
+          code-example type='ruby'
+            | @browser = Selenium<wbr>::</wbr>WebDriver.for(:firefox)
+              @browser = Selenium<wbr>::</wbr>WebDriver.for(:chrome)
+
+          strong Quit browser instance
+          code-example type='ruby'
+            | @browser.quit
+
+          strong Navigate to page
+          code-example type='ruby'
+            | @browser.get('http://google.com')
+
+          strong Simulate click 'back' and 'forward' buttons
+          code-example type='ruby'
+            | @browser.navigate.back
+              @browser.navigate.forward
+
+          strong Simulate page refreshing
+          code-example type='ruby'
+            | @browser.navigate.refresh
+
+          strong Change default window size
+          code-example type='ruby'
+            | @browser.manage.window.resize_to(width, height)
+
+          strong Get list of all cookies
+          code-example type='ruby'
+            | @browser.manage.all_cookies
+
+          strong Delete all cookies
+          code-example type='ruby'
+            | @browser.manage.delete_all_cookies
+
+          strong Set explicit wait for page to be loaded
+          code-example type='ruby'
+            | @browser.manage.timeouts.page_load = 20 #=&gt; set timeout = 20 sec
+
+          strong Set implicit wait for element to be present:
+          code-example type='ruby'
+            | @browser.manage.timeouts.implicit_wait = 10 #=&gt; set timeout = 10 sec
+
+          strong Set explicit wait for element to be present and waits that amount of time
+          code-example type='ruby'
+            | wait = Selenium<wbr>::</wbr>WebDriver<wbr>::</wbr>Wait.new(timeout: 15) #=&gt; set timeout = 20 sec
+              wait.until { @browser.find_element(:id, 'my-link') }
+
+    table
+      tr
+        th Using different locator types
+      tr
+        td
+          strong By ID
+          code-example type='ruby'
+            | # &lt;button id="my-button"&gt;Click me&lt;/button&gt;
+              element = @browser.find_element(:id, "my-button")
+
+          strong By Class name
+          code-example type='ruby'
+            | # &lt;button class="my-button"&gt;Click me&lt;/button&gt;
+              element = @browser.find_element(:class, "my-button")
+              elements = @browser.find_elements(:class, "my-button")
+
+          strong By value of attribute 'name'
+          code-example type='ruby'
+            | # &lt;button name="my-name"&gt;Click me&lt;/button&gt;
+              element = @browser.find_element(:name, 'my-name')
+              elements = @browser.find_elements(:name, 'my-name')
+
+          strong By Tag name
+          code-example type='ruby'
+            | # &lt;button&gt;Click me&lt;/button&gt;
+              element = @browser.find_element(:tag_name, "button")
+              elements = @browser.find_elements(:tag_name, "button")
+
+          strong By Link text
+          code-example type='ruby'
+            | # &lt;a href="http://google.com"&gt;Google&lt;/a&gt;
+              element = @browser.find_element(:link_text, "Google")
+              elements = @browser.find_elements(:link_text, "Google")
+
+          strong By Partial Link text
+          code-example type='ruby'
+            | # &lt;a href="http://google.com"&gt;Visit Google&lt;/a&gt;
+              element = @browser.find_element(:partial_link_text, "Google")
+              elements = @browser.find_elements(:partial_link_text, "Google")
+
+          strong By CSS selector
+          code-example type='ruby'
+            | # &lt;a name="google" href="http://google.com"&gt;Go&lt;/a&gt;
+              element = @browser.find_element(:css, "a[name='google']")
+              elements = @browser.find_elements(:css, "a[name='google']")
+
+          strong By XPath selector
+          code-example type='ruby'
+            | # &lt;button&gt;Btn&lt;button&gt;
+              element = @browser.find_element(:xpath, "//button[contains(text(), 'Btn')]")
+              elements = @browser.find_elements(:xpath, "//button[contains(text(), 'Btn')]")
+
+  .col-lg-6.col-sm-6.col-xs-6
+    table
+      tr
+        th Browser and Driver actions
+      tr
+        td
+          strong Execute JavaScript
+          code-example type='ruby'
+            | height = @browser.execute_script("return window.InnerHeight;")
+
+          strong Get page title
+          code-example type='ruby'
+            | title = @browser.title
+
+          strong Get page source
+          code-example type='ruby'
+            | source = @browser.page_source
+
+          strong Get current page URL
+          code-example type='ruby'
+            | url = @browser.current_url
+
+          strong Saving screenshot
+          code-example type='ruby'
+            | @browser.save_screenshot('screenshot.png')
+
+    table
+      tr
+        th Locating elements
+      tr
+        td
+          strong Find one element
+          code-example type='ruby'
+            | element = @browser.find_element(&lt;locator&gt;)
+              #=&gt; returns one element, raises exception if not found
+
+          strong Find multiple elements
+          code-example type='ruby'
+            | elements = @browser.find_elements(&lt;locator&gt;)
+              #=&gt; returns an array of elements or empty array if no matches found
+
+    table
+      tr
+        th Interacting with elements
+      tr
+        td
+          strong Get element text
+          code-example type='ruby'
+            | page_text = @browser.find_element(:tag_name, 'body').text
+
+          strong Get value of element attribute
+          code-example type='ruby'
+            | url = @browser.find_element(:link_text, 'Google').attribute('href')
+
+          strong Check if element is visible
+          code-example type='ruby'
+            | @browser.find_element(:link_text, 'Google').displayed?
+              #=&gt; returns 'true' or 'false'
+
+          strong Click element or check checkbox/radio-button
+          code-example type='ruby'
+            | @browser.find_element(:id, 'link-id').click
+
+          strong Fill in text input field
+          code-example type='ruby'
+            | @browser.find_element(:id, 'input-id').send_keys('some text')
+
+          strong Simulate click keyboard key
+          code-example type='ruby'
+            | @browser.find_element(:id, 'input-id').send_keys :enter
+
+          strong Clear text input field
+          code-example type='ruby'
+            | @browser.find_element(:id, 'input-id').clear
+
+          strong Check if checkbox/radio-button is checked
+          code-example type='ruby'
+            | @browser.find_element(:id, 'checkbox-id').selected?
+              #=&gt; returns 'true' or 'false'
+
+          strong Select element from drop-down list
+          code-example type='ruby'
+            | countries = @browser.find_element(:name, 'countries')
+              select_list = Selenium<wbr>::</wbr>WebDriver<wbr>::</wbr>Support<wbr>::</wbr>Select.new(countries)
+              select_list.select_by(:text, 'United States')
+
+          strong De-select all elements in drop-down list
+          code-example type='ruby'
+            | countries = @browser.find_element(:name, 'countries')
+              select_list = Selenium<wbr>::</wbr>WebDriver<wbr>::</wbr>Support<wbr>::</wbr>Select.new(countries)
+              select_list.deselect_all()
+
+          strong Accepting and dismissing alerts
+          code-example type='ruby'
+            | @browser.switch_to.alert.accept
+              @browser.switch_to.alert.dismiss
+
+          strong Switch to new window (tab)
+          code-example type='ruby'
+            | windows = @browser.window_handles  #=&gt; returns list of all windows/tabs open
+              window = windows.last  #=&gt; returns last open window
+              @browser.switch_to.window window
+              @browser.switch_to.window @browser.switch_to.window.last
+
+          strong Switch to frame
+          code-example type='ruby'
+            | @browser.switch_to.frame "FrameName"
+
+          strong Switch back from frame to default content
+          code-example type='ruby'
+            | @browser.switch_to.default_content
+
+          strong Scrolling to particular element
+          code-example type='ruby'
+            | element = @browser.find_element(:id, 'my-field')
+              @browser.action.move_to(element).perform
+
+          strong Scrolling to the last visible element to make all the rest also visible
+          code-example type='ruby'
+            | @browser.find_elements(:css, 'div.pic').last.location_once_scrolled_into_view
+
+          strong Get style value of particular element
+          code-example type='ruby'
+            | @browser.find_element(:id, 'my-field').style('background-color')
+              #=&gt; returns value of 'background-color' CSS property of given element
+
