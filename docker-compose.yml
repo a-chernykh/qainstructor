@@ -46,7 +46,7 @@ services:
     extends:
       file: docker-compose.common.yml
       service: service
-    image: qainstructor.com:5043/qainstructor/nginx:0.0.1
+    image: qainstructor.com:5043/qainstructor/nginx:0.0.2
     links:
       - rails
       - sample-app
