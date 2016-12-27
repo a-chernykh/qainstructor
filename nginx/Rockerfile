@@ -12,5 +12,5 @@ COPY ./ssl /etc/nginx/ssl
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
 
-TAG qainstructor.com:5043/qainstructor/nginx:0.0.1
-PUSH qainstructor.com:5043/qainstructor/nginx:0.0.1
+TAG qainstructor.com:5043/qainstructor/nginx:0.0.2
+PUSH qainstructor.com:5043/qainstructor/nginx:0.0.2
