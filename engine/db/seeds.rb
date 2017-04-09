@@ -7,7 +7,7 @@ user = User.first_or_create!(email: 'andrey.chernih@gmail.com', password: '17087
 
 course1 = Course.find_or_initialize_by code: 'WEB1'
 course1.update_attributes! name: 'Automating Web Applications',
-                           price_cents: 3900,
+                           price_cents: 2900,
                            level: 'beginning',
                            completion_time_hours: 14,
                            description: <<-EOT
