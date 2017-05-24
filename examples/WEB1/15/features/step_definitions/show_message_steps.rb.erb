@@ -5,6 +5,7 @@ end
 When /^I click "([^\"]+)" link$/ do |text|
   link = @browser.find_element(:link_text, text)
   link.click
+  sleep 3 # Can be removed after https://github.com/mozilla/geckodriver/issues/308 is fixed
 end
 
 Then /^I should see "([^\"]+)"$/ do |message|

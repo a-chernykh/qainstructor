@@ -5,6 +5,7 @@ end
 When(/^I click on "([^"]*)" button$/) do |button_name|
   button = @browser.find_element(:css, "input[value='#{button_name}']")
   button.click
+  sleep 3 # Can be removed after https://github.com/mozilla/geckodriver/issues/308 is fixed
 end
 
 Then(/^I should see "([^"]*)" message$/) do |message|

@@ -4,4 +4,5 @@ end
 
 When /^I click "(.*)" button$/ do |button_name|
   @browser.find_element(:css, "input[value~=#{button_name}]").click
+  sleep 3 # Can be removed after https://github.com/mozilla/geckodriver/issues/308 is fixed
 end

@@ -38,6 +38,11 @@ The following command will create all necessary volumes and database:
 
     bin/bootstrap.sh
 
+# Run locally
+
+Run
+    bin/development.sh up -d
+
 # Deploy the app
 
 Run

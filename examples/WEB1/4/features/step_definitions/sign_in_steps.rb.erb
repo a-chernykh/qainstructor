@@ -4,9 +4,10 @@ end
 
 When /^I click "(.*)" link$/ do |link_name|
   @browser.find_element(:link_text, link_name).click
+  sleep 3 # Can be removed after https://github.com/mozilla/geckodriver/issues/308 is fixed
 end
 
 Then(/^I should be on the sign in page$/) do
   body = @browser.find_element(:tag_name, 'body')
-  expect(body.text).to include 'Sign in with your Google Account'
+  expect(body.text).to include 'with your Google Account'
 end

@@ -6,6 +6,16 @@ p ng-hide='hideInstructions'
 
 .collapse id='{{ instructionsElementId }}' ng-class='{in: expandInstructions}'
   .well
+    h3 Download Mozilla Firefox and geckodriver
+
+    p Most of the examples are using Firefox for interacting with web pages. Selenium WebDriver controls Firefox using geckodriver which is a command tool for interacting with Gecko-based browsers.
+
+    ol
+      li Download Firefox for your platform: <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank">https://www.mozilla.org/en-US/firefox/new/</a>
+      li Download geckodriver: <a href="https://github.com/mozilla/geckodriver/releases">https://github.com/mozilla/geckodriver/releases</a>
+      li Install Firefox
+      li Put <kbd>geckodriver</kbd> binary into one of the system directories (included in PATH environment variable). On Mac: <kbd>/usr/local/bin</kbd> or <kbd>/usr/bin</kbd>. Make sure it has executable flags set (i.e. run <kbd>chmod +x geckodriver</kbd>). You can verify that it is installed correctly by running <kbd>geckodriver -V</kbd> in your Terminal window. It should show the version of geckodriver which is installed.
+
     h3 Unzip downloaded example
 
     p Double click downloaded file or run the following command to unzip the archive:

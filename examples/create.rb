@@ -6,13 +6,21 @@ require 'fileutils'
 require 'erb'
 require 'optparse'
 
+require 'yaml'
+require 'ostruct'
+
+CONFIG_FILE = '.config.yml'
+CONFIG_DEFAULTS = {
+  "browser": true
+}
+
 Dotenv.load '../env/common.env'
 
 options = {environment: 'development'}
 OptionParser.new do |opts|
   opts.banner = 'Usage: ruby create.rb [options]'
 
-  opts.on('-eENRIVONMENT', '--environment=ENVIRONMENT', 'Set environment (developmenr or production)') do |e|
+  opts.on('-eENRIVONMENT', '--environment=ENVIRONMENT', 'Set environment (development or production)') do |e|
     options[:environment] = e
   end
 
@@ -33,6 +41,7 @@ Dotenv.load "../env/#{options[:environment]}.env"
 raise 'Env variable SAMPLE_APP_HOST is not defined' unless ENV['SAMPLE_APP_HOST']
 
 output_dir = 'output'
+FileUtils.rm_rf output_dir
 FileUtils.mkdir_p output_dir
 
 template_dir = 'template'
@@ -52,12 +61,20 @@ if options[:compile]
       `cp -rf #{course}/#{template_dir}/* #{example_dir}/` if Dir.exists?(File.join(file, 'features'))
       `cp -rf #{file}/* #{example_dir}/`
 
+      config_file = File.join(file, CONFIG_FILE)
+      config = if File.exists?(config_file)
+        YAML.load_file(config_file)
+      else
+        {}
+      end
+      config = CONFIG_DEFAULTS.merge(config)
+
       Dir[File.join(example_dir, '**', '*.erb')].each do |erb|
         input = erb
         output = erb.gsub '.erb', ''
 
-        erb = ERB.new(File.read(input))
-        result = erb.result(binding)
+        erb = ERB.new(File.read(input), 0, '>')
+        result = erb.result(OpenStruct.new(config).instance_eval { binding })
 
         File.open(output, 'w') { |f| f.write result }
         FileUtils.rm_f input
