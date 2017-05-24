@@ -43,6 +43,17 @@ The following command will create all necessary volumes and database:
 Run
     bin/development.sh up -d
 
+# Build Docker image
+
+To build all images run:
+
+    bin/build.sh
+
+To build one image:
+
+    cd engine
+    rocker build . --push
+
 # Deploy the app
 
 Run
