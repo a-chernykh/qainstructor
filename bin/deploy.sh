@@ -22,7 +22,7 @@ $CONTROL_CMD pull
 
 echo '*** Precompiling assets, hold on'
 # First, make sure that qainstructor-engine-assets volume has up to date version of public folder from rails container
-docker run --rm -u root -v qainstructor-engine-assets:/assets-volume qainstructor_rails /bin/bash -c 'cp -rf /app/public/* /assets-volume/'
+docker run --rm -u root -v qainstructor-engine-assets:/assets-volume qainstructor.com:5043/qainstructor/engine:latest /bin/bash -c 'cp -rf /app/public/* /assets-volume/'
 # Next precompile all assets (qainstructor-engine-assets is mounted as /app/public in docker-compose)
 $CONTROL_CMD run --rm -u root rails /bin/bash -c 'bundle exec rake assets:precompile && chmod -R a+r /app/public'
 
